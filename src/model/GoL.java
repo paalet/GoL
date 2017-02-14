@@ -5,19 +5,18 @@ package model;
  */
 public class GoL {
 
-    public double cellSize;
+    private static double cellSize;
 
-    GoL() {
-        this.cellSize = 10.0;
+
+   public static void setCellSize(double size){
+
+       cellSize = size;
+
     }
 
-    public void setCellSize(double size){
-        this.cellSize = size;
-    }
+    public static double getCellSize(){
 
-    public double getCellSize(){
-        return this.cellSize;
-
+        return cellSize;
 
     }
 }

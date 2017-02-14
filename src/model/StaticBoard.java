@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class StaticBoard extends Board{
 
+
     public byte[][] board = {{1,0,0,1,0,0,1,1}
                             ,{0,1,1,0,0,1,0,1}
                             ,{0,1,1,0,1,0,1,0}
@@ -18,6 +19,7 @@ public class StaticBoard extends Board{
 
     @Override
     public void draw(GraphicsContext gc, double size){
+        gc.clearRect(0, 0, 440, 500);
         for (int i = 0; i < board.length; i++){
             for (int j = 0; j < board.length; j++){
                 if (board[i][j] == 1) {

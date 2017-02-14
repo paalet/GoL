@@ -1,5 +1,6 @@
 package controller;
 
+
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -16,21 +17,31 @@ public class mainScreenController implements Initializable {
 
     @FXML private Canvas boardCanvas;
     @FXML private Slider cellSizeSlider;
+    StaticBoard staticBoard = new StaticBoard();
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
-        GoL gol = new GoL();
-        StaticBoard staticBoard = new StaticBoard();
-        draw(staticBoard);
+
+        cellSizeSlider.setValue(10.0);
+        draw();
+
     }
 
-    private void draw(StaticBoard staticBoard){
+
+    private void draw(){
+
         GraphicsContext gc = boardCanvas.getGraphicsContext2D();
-        staticBoard.draw(gc, gol.getCelllSize);
+        staticBoard.draw(gc, GoL.getCellSize());
+
+
+
     }
 
     public void setCellSizeEvent(){
-        gol.setCellSize(cellSizeSlider.getValue());
+
+
+        GoL.setCellSize(cellSizeSlider.getValue());
+        draw();
 
     }
 }

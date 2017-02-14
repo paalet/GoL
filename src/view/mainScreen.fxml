@@ -57,7 +57,7 @@
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="94.0" prefHeight="39.0" prefWidth="119.0">
                     <children>
-                        <ColorPicker prefHeight="27.0" prefWidth="47.0" />
+                        <ColorPicker fx:id="cellColorPicker" onAction="#setCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="178.0" prefHeight="18.0" prefWidth="119.0">

@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
  */
 public abstract class Board {
 
-    public abstract void draw(GraphicsContext gc, double size, Color cellColor);
+    public abstract void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
 
 
 

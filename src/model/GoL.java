@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
 public class GoL {
 
     private static double cellSize;
-    private static Color cellColor;
+    private static Color aliveCellColor;
+    private static Color deadCellColor;
 
 
    public static void setCellSize(double size){
@@ -23,13 +24,53 @@ public class GoL {
 
     }
 
-    public static void setCellColor(Color color) {
-        cellColor = color;
+    public static void setAliveCellColor(Color aliveColor) {
+
+        aliveCellColor = aliveColor;
     }
 
-    public static Color getCellColor() {
+    public static void setDeadCellColor(Color deadColor) {
 
-        return cellColor;
+        deadCellColor = deadColor;
+    }
+
+    public static Color getAliveCellColor() {
+
+        return aliveCellColor;
+    }
+
+    public static Color getDeadCellColor() {
+
+        return deadCellColor;
+    }
+
+
+
+    public static byte rules(int neighbors, int aliveStatus) {
+        byte nextStatus = 0;
+
+        if (aliveStatus == 1) {
+
+            if (neighbors <= 1 ) {
+                nextStatus = 0;
+            }
+            else if (neighbors >= 4) {
+                nextStatus = 0;
+            }
+            else if (neighbors == 2 || neighbors == 3 ) {
+                nextStatus = 1;
+            }
+        }
+        else if (aliveStatus == 0) {
+
+            if (neighbors == 3 ) {
+                nextStatus = 1;
+            }
+            else {
+                nextStatus = 0;
+            }
+        }
+        return nextStatus;
     }
 }
 

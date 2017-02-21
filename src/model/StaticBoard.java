@@ -37,14 +37,14 @@ public class StaticBoard extends Board{
             for (int j = 0; j < board.length; j++){
                 if (board[i][j] == 1) {
                     gc.setFill(aliveCellColor);
-                    gc.fillRect((i*size), (j*size), size, size);
-                    gc.strokeRect((i*size), (j*size), size, size);
+                    gc.fillRect((j*size), (i*size), size, size);
+                    gc.strokeRect((j*size), (i*size), size, size);
                 }
                 else
                 {
                     gc.setFill(deadCellColor);
-                    gc.fillRect((i*size), (j*size), size, size);
-                    gc.strokeRect((i*size), (j*size), size, size);
+                    gc.fillRect((j*size), (i*size), size, size);
+                    gc.strokeRect((j*size), (i*size), size, size);
                 }
             }
         }

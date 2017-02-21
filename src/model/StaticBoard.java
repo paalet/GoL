@@ -25,9 +25,9 @@ public class StaticBoard extends Board{
                             ,{0,0,0,0,0,1,1,0}
                             ,{0,0,0,0,0,0,0,0}
                             ,{0,0,0,0,0,0,0,0}
-                            ,{0,1,1,1,0,0,0,0}
-                            ,{0,0,0,0,0,0,0,0}
-                            ,{0,0,0,0,0,0,0,0}};
+                            ,{0,1,1,1,0,0,1,0}
+                            ,{0,0,0,0,0,0,1,1}
+                            ,{0,0,0,0,0,1,1,0}};
 
     @Override
     public void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){

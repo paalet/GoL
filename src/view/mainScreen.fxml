@@ -18,12 +18,12 @@
             <children>
                 <StackPane prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button mnemonicParsing="false" text="Start" fx:id="Start" onAction="#callNextGenerationEvent" textAlignment="CENTER" />
+                        <Button fx:id="Start" mnemonicParsing="false" onAction="#callNextGenerationEvent" text="Start" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button mnemonicParsing="false" text="Pause" textAlignment="CENTER" />
+                        <Button fx:id="pause" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="52.0" prefHeight="42.0" prefWidth="104.0">
@@ -76,9 +76,14 @@
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="235.0" prefHeight="42.0" prefWidth="104.0">
-                    <children>
-                        <TextField alignment="CENTER" maxWidth="50.0" prefWidth="50.0" />
-                    </children>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="decreaseSpeed" mnemonicParsing="false" onAction="#decreaseSpeedEvent" prefHeight="25.0" prefWidth="30.0" text="-" />
+                        <Button fx:id="increaseSpeed" mnemonicParsing="false" onAction="#increaseSpeedEvent" prefHeight="25.0" prefWidth="30.0" text="+" />
+                     </children>
+                  </HBox>
+               </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="190.0" prefHeight="42.0" prefWidth="104.0">
                     <children>

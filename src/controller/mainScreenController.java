@@ -1,6 +1,9 @@
 package controller;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -9,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import model.StaticBoard;
 import model.GoL;
 
@@ -181,8 +185,17 @@ public class mainScreenController implements Initializable {
     }
 
     public void callNextGenerationEvent() {
-        nextGeneration();
-        draw();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                nextGeneration();
+                draw();
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
     }
 
 }

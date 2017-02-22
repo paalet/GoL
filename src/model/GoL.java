@@ -10,6 +10,8 @@ public class GoL {
     private static double cellSize;
     private static Color aliveCellColor;
     private static Color deadCellColor;
+    private static int msPerGen;
+
 
 
    public static void setCellSize(double size){
@@ -45,6 +47,15 @@ public class GoL {
     }
 
 
+    public static void setMsPerGen(int ms) {
+
+        msPerGen = ms;
+    }
+
+    public static int getMsPerGen() {
+
+        return msPerGen;
+    }
 
     public static byte rules(int neighbors, int aliveStatus) {
         byte nextStatus = 0;

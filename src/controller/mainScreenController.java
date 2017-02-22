@@ -29,7 +29,7 @@ public class mainScreenController implements Initializable {
 
     StaticBoard staticBoard = new StaticBoard();
 //TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GoL.getMsPerGen()), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
             nextGeneration();
@@ -47,7 +47,7 @@ public class mainScreenController implements Initializable {
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(50.0);
-        GoL.setMsPerGen(1);
+        GoL.setMsPerGen(1000);
         draw();
 
     }

@@ -13,8 +13,8 @@ import javafx.util.Duration;
 public class GoLTimeline {
 
     private static GoLTimeline instance = null;
-    protected golTimeline() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
+    protected GoLTimeline() {
+        Timeline instance = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 nextGeneration();

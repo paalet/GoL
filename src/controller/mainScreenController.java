@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -26,6 +27,7 @@ public class mainScreenController implements Initializable {
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
+    @FXML private Label fpsLabel;
 
     StaticBoard staticBoard = new StaticBoard();
 //TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
@@ -44,6 +46,7 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
+        fpsLabel.setText("1 FPS");
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(50.0);
@@ -100,6 +103,9 @@ public class mainScreenController implements Initializable {
         int currSpeed = GoL.getMsPerGen();
         if (currSpeed <= 2000) {
             GoL.setMsPerGen(currSpeed+250);
+            double fps = 1000 / GoL.getMsPerGen();
+            String fpsString = fps + " FPS";
+            fpsLabel.setText(fpsString);
         }
     }
 
@@ -108,6 +114,9 @@ public class mainScreenController implements Initializable {
         int currSpeed = GoL.getMsPerGen();
         if (currSpeed > 250) {
             GoL.setMsPerGen(currSpeed-250);
+            double fps = 1000 / GoL.getMsPerGen();
+            String fpsString = fps + " FPS";
+            fpsLabel.setText(fpsString);
         }
     }
 }

@@ -60,7 +60,7 @@ public class StaticBoard extends Board{
                 int neighbors = 0;
                 int aliveStatus = 0;
 
-                //Checks the status of the cell, whether ist alive or dead.
+                //Checks the status of the cell, whether it is alive or dead.
                 //Tries and catches ArrayOutOfBoundsExceptions which may occur, like fex. if you
                 //base your position from board[0[0] and you try to find x-1 which will result in board[-1][0] which is out of bounds.
                 //Nothing happens if exception is caught.

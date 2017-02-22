@@ -28,14 +28,7 @@ public class mainScreenController implements Initializable {
     @FXML private ColorPicker deadCellColorPicker;
 
     StaticBoard staticBoard = new StaticBoard();
-//TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GoL.getMsPerGen()), new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            nextGeneration();
-            draw();
-        }
-    }));
+
 
 
     @Override
@@ -173,6 +166,7 @@ public class mainScreenController implements Initializable {
 
     }
 
+
     public void setCellSizeEvent(){
 
 
@@ -196,6 +190,11 @@ public class mainScreenController implements Initializable {
     }
 
     public void callNextGenerationEvent() {
+
+
+        //TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
+        private int ms = GoL.getMsPerGen();
+        
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

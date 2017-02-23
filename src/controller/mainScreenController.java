@@ -28,19 +28,20 @@ public class mainScreenController implements Initializable {
     @FXML private ColorPicker deadCellColorPicker;
 
     StaticBoard staticBoard = new StaticBoard();
-//TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            staticBoard.nextGeneration();
-            draw();
-        }
-    }));
+    Timeline timeline;
 
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
+        timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameLoop();
+            }
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
@@ -60,10 +61,7 @@ public class mainScreenController implements Initializable {
 
     }
 
-
-
     public void setCellSizeEvent(){
-
 
         GoL.setCellSize(cellSizeSlider.getValue());
         draw();
@@ -84,30 +82,36 @@ public class mainScreenController implements Initializable {
 
     }
 
-    public void callNextGenerationEvent() {
+    private void gameLoop() {
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        staticBoard.nextGeneration();
+        draw();
+    }
+
+    public void startGameEvent() {
+
         timeline.play();
     }
 
-    public void pauseEvent() {
+    public void pauseGameEvent() {
 
         timeline.pause();
     }
 
     public void decreaseSpeedEvent() {
 
-        int currSpeed = GoL.getMsPerGen();
-        if (currSpeed <= 2000) {
-            GoL.setMsPerGen(currSpeed+250);
+        if (timeline.getRate() > 0.2 ) {
+            timeline.setRate(timeline.getRate()-0.2);
+            System.out.println(timeline.getRate());
         }
+
     }
 
     public void increaseSpeedEvent() {
 
-        int currSpeed = GoL.getMsPerGen();
-        if (currSpeed > 250) {
-            GoL.setMsPerGen(currSpeed-250);
+        if (timeline.getRate() < 20 ) {
+            timeline.setRate(timeline.getRate()+0.2);
+            System.out.println(timeline.getRate());
         }
     }
 }

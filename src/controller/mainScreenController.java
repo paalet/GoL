@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -27,26 +26,25 @@ public class mainScreenController implements Initializable {
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
-    @FXML private Label fpsLabel;
 
     StaticBoard staticBoard = new StaticBoard();
-//TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            staticBoard.nextGeneration();
-            draw();
-        }
-    }));
+    Timeline timeline;
 
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
+        timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameLoop();
+            }
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
-        fpsLabel.setText("1 FPS");
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(50.0);
@@ -63,10 +61,7 @@ public class mainScreenController implements Initializable {
 
     }
 
-
-
     public void setCellSizeEvent(){
-
 
         GoL.setCellSize(cellSizeSlider.getValue());
         draw();
@@ -87,36 +82,36 @@ public class mainScreenController implements Initializable {
 
     }
 
-    public void callNextGenerationEvent() {
+    private void gameLoop() {
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        staticBoard.nextGeneration();
+        draw();
+    }
+
+    public void startGameEvent() {
+
         timeline.play();
     }
 
-    public void pauseEvent() {
+    public void pauseGameEvent() {
 
         timeline.pause();
     }
 
     public void decreaseSpeedEvent() {
 
-        int currSpeed = GoL.getMsPerGen();
-        if (currSpeed <= 2000) {
-            GoL.setMsPerGen(currSpeed+250);
-            double fps = 1000 / GoL.getMsPerGen();
-            String fpsString = fps + " FPS";
-            fpsLabel.setText(fpsString);
+        if (timeline.getRate() > 0.2 ) {
+            timeline.setRate(timeline.getRate()-0.2);
+            System.out.println(timeline.getRate());
         }
+
     }
 
     public void increaseSpeedEvent() {
 
-        int currSpeed = GoL.getMsPerGen();
-        if (currSpeed > 250) {
-            GoL.setMsPerGen(currSpeed-250);
-            double fps = 1000 / GoL.getMsPerGen();
-            String fpsString = fps + " FPS";
-            fpsLabel.setText(fpsString);
+        if (timeline.getRate() < 20 ) {
+            timeline.setRate(timeline.getRate()+0.2);
+            System.out.println(timeline.getRate());
         }
     }
 }

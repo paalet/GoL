@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -26,7 +25,7 @@ public class mainScreenController implements Initializable {
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
-    @FXML private Label fpsLabel;
+
 
     private StaticBoard staticBoard = new StaticBoard();
     private boolean hasStarted = false;
@@ -44,17 +43,27 @@ public class mainScreenController implements Initializable {
 
 
 
+
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
+        timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameLoop();
+            }
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
+
         fpsLabel.setText("Paused");
+
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(50.0);
-        GoL.setMsPerGen(1000);
         draw();
 
     }
@@ -67,10 +76,7 @@ public class mainScreenController implements Initializable {
 
     }
 
-
-
     public void setCellSizeEvent(){
-
 
         GoL.setCellSize(cellSizeSlider.getValue());
         draw();
@@ -91,6 +97,7 @@ public class mainScreenController implements Initializable {
 
     }
 
+
     public void startEvent() {
         if (!isRunning) {
 
@@ -106,9 +113,10 @@ public class mainScreenController implements Initializable {
             fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
 
         }
+
     }
 
-    public void pauseEvent() {
+    public void pauseGameEvent() {
 
         if (isRunning) {
             timeline.pause();
@@ -128,9 +136,11 @@ public class mainScreenController implements Initializable {
             fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
 
         }
+
     }
 
     public void increaseSpeedEvent() {
+
 
         double currSpeed = timeline.getCurrentRate();
         if (currSpeed < 20.0 && (currSpeed != 0.0)) {
@@ -138,6 +148,7 @@ public class mainScreenController implements Initializable {
             timeline.setRate(currSpeed + 0.5);
             System.out.println(timeline.getCurrentRate());
             fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+
         }
     }
 }

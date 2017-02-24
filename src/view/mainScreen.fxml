@@ -18,12 +18,14 @@
             <children>
                 <StackPane prefHeight="42.0" prefWidth="104.0">
                     <children>
+
                         <Button fx:id="Start" mnemonicParsing="false" onAction="#startEvent" text="Start" textAlignment="CENTER" />
+
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button fx:id="pause" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" textAlignment="CENTER" />
+                        <Button fx:id="pause" mnemonicParsing="false" onAction="#pauseGameEvent" text="Pause" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="52.0" prefHeight="42.0" prefWidth="104.0">

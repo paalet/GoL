@@ -11,7 +11,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.StaticBoard;
@@ -27,8 +26,22 @@ public class mainScreenController implements Initializable {
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
 
-    StaticBoard staticBoard = new StaticBoard();
-    Timeline timeline;
+
+    private StaticBoard staticBoard = new StaticBoard();
+    private boolean hasStarted = false;
+    private boolean isRunning = false;
+
+    private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+
+            staticBoard.nextGeneration();
+            draw();
+        }
+    }));
+
+
+
 
 
     @Override
@@ -45,6 +58,9 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
+
+        fpsLabel.setText("Paused");
+
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(450.0/8.0);
@@ -81,36 +97,58 @@ public class mainScreenController implements Initializable {
 
     }
 
-    private void gameLoop() {
 
-        staticBoard.nextGeneration();
-        draw();
-    }
+    public void startEvent() {
+        if (!isRunning) {
 
-    public void startGameEvent() {
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+            isRunning = true;
+            System.out.println("Start");
+            if (!hasStarted) {
+                timeline.setRate(5.0);
+                hasStarted = true;
 
-        timeline.play();
+            }
+            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+
+        }
+
     }
 
     public void pauseGameEvent() {
 
-        timeline.pause();
+        if (isRunning) {
+            timeline.pause();
+            isRunning = false;
+            System.out.println("Pause");
+            fpsLabel.setText("Paused");
+        }
+
     }
 
     public void decreaseSpeedEvent() {
+        double currSpeed = timeline.getCurrentRate();
+        if (currSpeed > 0.6 && (currSpeed != 0.0)) {
 
-        if (timeline.getRate() > 0.2 ) {
-            timeline.setRate(timeline.getRate()-0.2);
-            System.out.println(timeline.getRate());
+            timeline.setRate(currSpeed - 0.5);
+            System.out.println(timeline.getCurrentRate());
+            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+
         }
 
     }
 
     public void increaseSpeedEvent() {
 
-        if (timeline.getRate() < 20 ) {
-            timeline.setRate(timeline.getRate()+0.2);
-            System.out.println(timeline.getRate());
+
+        double currSpeed = timeline.getCurrentRate();
+        if (currSpeed < 20.0 && (currSpeed != 0.0)) {
+
+            timeline.setRate(currSpeed + 0.5);
+            System.out.println(timeline.getCurrentRate());
+            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+
         }
     }
 }

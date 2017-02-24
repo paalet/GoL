@@ -47,7 +47,7 @@ public class mainScreenController implements Initializable {
         deadCellColorPicker.setValue(Color.WHITE);
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
-        GoL.setCellSize(50.0);
+        GoL.setCellSize(450.0/8.0);
         draw();
 
     }

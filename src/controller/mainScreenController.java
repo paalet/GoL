@@ -17,6 +17,8 @@ import javafx.util.Duration;
 import model.StaticBoard;
 import model.GoL;
 
+import java.awt.event.MouseEvent;
+
 /**
  * Created by Pål on 09.02.2017.
  */
@@ -153,5 +155,10 @@ public class mainScreenController implements Initializable {
             fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
 
         }
+    }
+
+    public void cellClickEvent(MouseEvent event) {
+
+        
     }
 }

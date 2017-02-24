@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -25,7 +26,8 @@ public class mainScreenController implements Initializable {
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
-    
+    @FXML private Label fpsLabel;
+
 
 
     private StaticBoard staticBoard = new StaticBoard();
@@ -48,13 +50,6 @@ public class mainScreenController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gameLoop();
-            }
-        }));
-
         timeline.setCycleCount(Timeline.INDEFINITE);
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
@@ -64,7 +59,7 @@ public class mainScreenController implements Initializable {
 
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
-        GoL.setCellSize(50.0);
+        GoL.setCellSize(450.0/8.0);
         draw();
 
     }

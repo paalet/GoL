@@ -44,7 +44,7 @@ public class GoL {
 
         return deadCellColor;
     }
-    
+
 
     public static byte rules(int neighbors, int aliveStatus) {
         byte nextStatus = 0;

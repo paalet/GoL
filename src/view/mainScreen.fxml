@@ -18,7 +18,7 @@
             <children>
                 <StackPane prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button fx:id="Start" mnemonicParsing="false" onAction="#startEvent" text="Start" textAlignment="CENTER" />
+                        <Button fx:id="Start" mnemonicParsing="false" onAction="#callNextGenerationEvent" text="Start" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">

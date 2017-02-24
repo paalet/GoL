@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.StaticBoard;
@@ -28,20 +29,15 @@ public class mainScreenController implements Initializable {
     @FXML private ColorPicker deadCellColorPicker;
     @FXML private Label fpsLabel;
 
-    private StaticBoard staticBoard = new StaticBoard();
-    private boolean hasStarted = false;
-    private boolean isRunning = false;
-
-    private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
+    StaticBoard staticBoard = new StaticBoard();
+//TODO make use of GoL.getMsPerGen instead of raw 1000 ms Durarion on Keyframe
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-
             staticBoard.nextGeneration();
             draw();
         }
     }));
-
-
 
 
     @Override
@@ -50,7 +46,7 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
-        fpsLabel.setText("Paused");
+        fpsLabel.setText("1 FPS");
         GoL.setAliveCellColor(Color.BLACK);
         GoL.setDeadCellColor(Color.WHITE);
         GoL.setCellSize(50.0);
@@ -91,53 +87,36 @@ public class mainScreenController implements Initializable {
 
     }
 
-    public void startEvent() {
-        if (!isRunning) {
+    public void callNextGenerationEvent() {
 
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-            isRunning = true;
-            System.out.println("Start");
-            if (!hasStarted) {
-                timeline.setRate(5.0);
-                hasStarted = true;
-
-            }
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
-
-        }
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     public void pauseEvent() {
 
-        if (isRunning) {
-            timeline.pause();
-            isRunning = false;
-            System.out.println("Pause");
-            fpsLabel.setText("Paused");
-        }
-
+        timeline.pause();
     }
 
     public void decreaseSpeedEvent() {
-        double currSpeed = timeline.getCurrentRate();
-        if (currSpeed > 0.6 && (currSpeed != 0.0)) {
 
-            timeline.setRate(currSpeed - 0.5);
-            System.out.println(timeline.getCurrentRate());
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
-
+        int currSpeed = GoL.getMsPerGen();
+        if (currSpeed <= 2000) {
+            GoL.setMsPerGen(currSpeed+250);
+            double fps = 1000 / GoL.getMsPerGen();
+            String fpsString = fps + " FPS";
+            fpsLabel.setText(fpsString);
         }
     }
 
     public void increaseSpeedEvent() {
 
-        double currSpeed = timeline.getCurrentRate();
-        if (currSpeed < 20.0 && (currSpeed != 0.0)) {
-
-            timeline.setRate(currSpeed + 0.5);
-            System.out.println(timeline.getCurrentRate());
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+        int currSpeed = GoL.getMsPerGen();
+        if (currSpeed > 250) {
+            GoL.setMsPerGen(currSpeed-250);
+            double fps = 1000 / GoL.getMsPerGen();
+            String fpsString = fps + " FPS";
+            fpsLabel.setText(fpsString);
         }
     }
 }

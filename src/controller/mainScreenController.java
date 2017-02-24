@@ -25,6 +25,7 @@ public class mainScreenController implements Initializable {
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
+    
 
 
     private StaticBoard staticBoard = new StaticBoard();

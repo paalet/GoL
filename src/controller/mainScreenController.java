@@ -31,6 +31,7 @@ public class mainScreenController implements Initializable {
     @FXML private Label fpsLabel;
 
 
+
     private StaticBoard staticBoard = new StaticBoard();
     private boolean hasStarted = false;
     private boolean isRunning = false;
@@ -50,14 +51,6 @@ public class mainScreenController implements Initializable {
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
-
-        timeline = new Timeline(new KeyFrame(Duration.millis(250), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                staticBoard.nextGeneration();
-                draw();
-            }
-        }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         cellSizeSlider.setValue(50.0);

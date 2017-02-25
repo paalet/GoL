@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -17,7 +18,6 @@ import javafx.util.Duration;
 import model.StaticBoard;
 import model.GoL;
 
-import java.awt.event.MouseEvent;
 
 /**
  * Created by Pål on 09.02.2017.
@@ -33,6 +33,7 @@ public class mainScreenController implements Initializable {
 
 
     private StaticBoard staticBoard = new StaticBoard();
+    private GraphicsContext gc;
     private boolean hasStarted = false;
     private boolean isRunning = false;
 
@@ -56,6 +57,7 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(50.0);
         aliveCellColorPicker.setValue(Color.BLACK);
         deadCellColorPicker.setValue(Color.WHITE);
+        gc = boardCanvas.getGraphicsContext2D();
 
         fpsLabel.setText("Paused");
 
@@ -69,7 +71,6 @@ public class mainScreenController implements Initializable {
 
     private void draw(){
 
-        GraphicsContext gc = boardCanvas.getGraphicsContext2D();
         staticBoard.draw(gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
 
     }
@@ -152,6 +153,6 @@ public class mainScreenController implements Initializable {
 
     public void cellClickEvent(MouseEvent event) {
 
-        
+        staticBoard.cellClickDraw(event, gc);
     }
 }

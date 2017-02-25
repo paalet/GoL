@@ -2,8 +2,9 @@ package model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import java.lang.Object;
-import java.awt.Graphics;
+import javafx.scene.input.MouseEvent;
+
+
 
 /**
  * Created by Pål on 09.02.2017.
@@ -161,5 +162,30 @@ public class StaticBoard extends Board{
             }
         }
 
+    }
+
+    public void cellClickDraw(MouseEvent event, GraphicsContext gc) {
+
+        // Calculate hovered cell from mouse position
+        double posX = event.getX();
+        double posY = event.getY();
+
+        double cellPosX = posX/(450.0/board.length);
+        double cellPosY = posY/(450.0/board.length);
+
+        int cellX = (int) cellPosX;
+        int cellY = (int) cellPosY;
+
+        // Change cell status
+        if (board[cellY][cellX] == 0) {
+            board[cellY][cellX] = 1;
+        }
+        else {
+            board[cellY][cellX] = 0;
+        }
+
+        // Draw new board
+        //TODO maybe only redraw clicked cell
+        draw(gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 }

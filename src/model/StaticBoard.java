@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
@@ -11,48 +12,48 @@ import javafx.scene.input.MouseEvent;
  */
 public class StaticBoard extends Board{
 
-    public byte [][] nextBoard =
-            {{1,0,0,1,0,0,1,1}
-            ,{0,1,1,0,0,1,0,1}
-            ,{0,1,1,0,1,0,1,0}
-            ,{1,0,0,1,0,1,0,1}
-            ,{1,0,0,1,0,1,0,1}
-            ,{1,0,0,1,0,1,0,1}
-            ,{1,0,0,1,0,1,0,1}
-            ,{1,0,0,1,0,1,0,1}};
+    private byte[][] board = {{0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,1,1,0},
+                              {0,0,0,0,0,1,1,0},
+                              {0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,1},
+                              {0,1,1,1,0,0,1,0},
+                              {0,0,0,0,0,0,1,1},
+                              {0,0,0,0,0,1,1,0}};
 
-    public byte[][] board = {{0,0,0,0,0,0,0,0}
-                            ,{0,0,0,0,0,1,1,0}
-                            ,{0,0,0,0,0,1,1,0}
-                            ,{0,0,0,0,0,0,0,0}
-                            ,{0,0,0,0,0,0,0,1}
-                            ,{0,1,1,1,0,0,1,0}
-                            ,{0,0,0,0,0,0,1,1}
-                            ,{0,0,0,0,0,1,1,0}};
+    private byte[][] nextBoard = {{0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0},
+                                  {0,0,0,0,0,0,0,0}};
+
 
     @Override
     public void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
+
         gc.clearRect(0, 0, 450, 450);
         gc.strokeRect(0,0, 450, 450);
-        for (int i = 0; i < board.length; i++){
-            for (int j = 0; j < board.length; j++){
-                if (board[i][j] == 1) {
+        for (int x = 0; x < board.length; x++){
+            for (int y = 0; y < board.length; y++){
+                if (board[y][x] == 1) {
                     gc.setFill(aliveCellColor);
-                    gc.fillRect((j*size), (i*size), size, size);
-                    gc.strokeRect((j*size), (i*size), size, size);
+                    gc.fillRect((y*size), (x*size), size, size);
+                    gc.strokeRect((y*size), (x*size), size, size);
                 }
                 else
                 {
                     gc.setFill(deadCellColor);
-                    gc.fillRect((j*size), (i*size), size, size);
-                    gc.strokeRect((j*size), (i*size), size, size);
+                    gc.fillRect((y*size), (x*size), size, size);
+                    gc.strokeRect((y*size), (x*size), size, size);
                 }
             }
         }
     }
 
     public void nextGeneration() {
-
 
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board.length; y++) {
@@ -155,18 +156,18 @@ public class StaticBoard extends Board{
             }
 
         }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                board[i][j] = nextBoard[i][j];
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board.length; y++) {
+                board[y][x] = nextBoard[y][x];
 
             }
         }
 
     }
 
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc) {
+    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
 
-        // Calculate hovered cell from mouse position
+        // Calculate target cell from mouse position
         double posX = event.getX();
         double posY = event.getY();
 
@@ -177,11 +178,11 @@ public class StaticBoard extends Board{
         int cellY = (int) cellPosY;
 
         // Change cell status
-        if (board[cellY][cellX] == 0) {
-            board[cellY][cellX] = 1;
+        if (board[cellY][cellX] == 1) {
+            board[cellY][cellX] = 0;
         }
         else {
-            board[cellY][cellX] = 0;
+            board[cellY][cellX] = 1;
         }
 
         // Draw new board

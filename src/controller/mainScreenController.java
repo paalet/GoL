@@ -53,17 +53,17 @@ public class mainScreenController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        cellSizeSlider.setValue(50.0);
-        aliveCellColorPicker.setValue(Color.BLACK);
-        deadCellColorPicker.setValue(Color.WHITE);
-        gc = boardCanvas.getGraphicsContext2D();
+        GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
+        GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
+        GoL.setCellSize(450.0/8.0);
 
+        cellSizeSlider.setValue(GoL.getCellSize());
+        aliveCellColorPicker.setValue(GoL.getAliveCellColor());
+        deadCellColorPicker.setValue(GoL.getDeadCellColor());
         fpsLabel.setText("Paused");
 
-        GoL.setAliveCellColor(Color.BLACK);
-        GoL.setDeadCellColor(Color.WHITE);
-        GoL.setCellSize(450.0/8.0);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        gc = boardCanvas.getGraphicsContext2D();
         draw();
 
     }
@@ -86,6 +86,7 @@ public class mainScreenController implements Initializable {
 
         GoL.setAliveCellColor(aliveCellColorPicker.getValue());
         draw();
+        System.out.println(aliveCellColorPicker.getValue());
 
     }
 
@@ -93,7 +94,7 @@ public class mainScreenController implements Initializable {
 
         GoL.setDeadCellColor(deadCellColorPicker.getValue());
         draw();
-
+        System.out.println(deadCellColorPicker.getValue());
     }
 
 
@@ -153,6 +154,6 @@ public class mainScreenController implements Initializable {
 
     public void cellClickEvent(MouseEvent event) {
 
-        staticBoard.cellClickDraw(event, gc);
+        staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
 }

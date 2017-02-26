@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -25,6 +26,7 @@ import model.GoL;
 public class mainScreenController implements Initializable {
 
     @FXML private Canvas boardCanvas;
+    @FXML private Button playButton;
     @FXML private Slider cellSizeSlider;
     @FXML private ColorPicker aliveCellColorPicker;
     @FXML private ColorPicker deadCellColorPicker;
@@ -34,7 +36,6 @@ public class mainScreenController implements Initializable {
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
-    private boolean hasStarted = false;
     private boolean isRunning = false;
 
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
@@ -63,6 +64,7 @@ public class mainScreenController implements Initializable {
         fpsLabel.setText("Paused");
 
         timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setRate(5.0);
         gc = boardCanvas.getGraphicsContext2D();
         draw();
 
@@ -73,6 +75,35 @@ public class mainScreenController implements Initializable {
 
         staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
 
+    }
+
+
+
+
+    public void playEvent() {
+
+        if (!isRunning) {
+            play();
+        }
+        else {
+            pause();
+        }
+
+    }
+
+    public void play() {
+
+        timeline.play();
+        isRunning = true;
+        playButton.setText("Pause");
+        fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+    }
+
+    public void pause() {
+
+        timeline.pause();
+        isRunning = false;
+        playButton.setText("Resume");
     }
 
     public void setCellSizeEvent(){
@@ -94,36 +125,6 @@ public class mainScreenController implements Initializable {
 
         GoL.setDeadCellColor(deadCellColorPicker.getValue());
         draw();
-
-    }
-
-
-    public void startEvent() {
-        if (!isRunning) {
-
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-            isRunning = true;
-            System.out.println("Start");
-            if (!hasStarted) {
-                timeline.setRate(5.0);
-                hasStarted = true;
-
-            }
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
-
-        }
-
-    }
-
-    public void pauseGameEvent() {
-
-        if (isRunning) {
-            timeline.pause();
-            isRunning = false;
-            System.out.println("Pause");
-            fpsLabel.setText("Paused");
-        }
 
     }
 

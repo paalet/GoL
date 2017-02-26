@@ -19,13 +19,13 @@
                 <StackPane prefHeight="42.0" prefWidth="104.0">
                     <children>
 
-                        <Button fx:id="Start" mnemonicParsing="false" onAction="#startEvent" text="Start" textAlignment="CENTER" />
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#playEvent" text="Start" textAlignment="CENTER" />
 
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button fx:id="pause" mnemonicParsing="false" onAction="#pauseGameEvent" text="Pause" textAlignment="CENTER" />
+                        <Button fx:id="pause" mnemonicParsing="false" text="Pause" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="52.0" prefHeight="42.0" prefWidth="104.0">

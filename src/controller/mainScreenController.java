@@ -32,40 +32,39 @@ public class mainScreenController implements Initializable {
     @FXML private ColorPicker deadCellColorPicker;
     @FXML private Label fpsLabel;
 
-
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
-    private boolean isRunning;
-    private double currRate;
-    private Timeline timeline;
+    private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+
+            staticBoard.nextGeneration();
+            draw();
+        }
+    }));
 
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources){
 
+        //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
+        gc = boardCanvas.getGraphicsContext2D();
+
+        // Initialise game values
+        GoL.setIsRunning(false);
+        GoL.setCellSize(boardCanvas.getHeight()/staticBoard.getBoard().length);
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
-        GoL.setCellSize(450.0/8.0);
+        GoL.setCurrRate(5.0);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setRate(GoL.getCurrRate());
 
-        cellSizeSlider.setValue(GoL.getCellSize());
+        // Display values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
+        cellSizeSlider.setValue(GoL.getCellSize());
+        fpsLabel.setText(GoL.getCurrRate() + " gen/s");
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                staticBoard.nextGeneration();
-                draw();
-            }
-        }));
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setRate(5.0);
-        currRate = 5.0;
-        fpsLabel.setText(currRate + " gen/s");
-        isRunning = false;
-        gc = boardCanvas.getGraphicsContext2D();
         draw();
     }
 
@@ -78,7 +77,7 @@ public class mainScreenController implements Initializable {
 
     public void playEvent() {
 
-        if (!isRunning) {
+        if (!GoL.getIsRunning()) {
 
             play();
         }
@@ -91,9 +90,9 @@ public class mainScreenController implements Initializable {
 
     private void play() {
 
-        timeline.setRate(currRate);
+        timeline.setRate(GoL.getCurrRate());
         timeline.play();
-        isRunning = true;
+        GoL.setIsRunning(true);
         playButton.setText("Pause");
     }
 
@@ -101,7 +100,7 @@ public class mainScreenController implements Initializable {
     private void pause() {
 
         timeline.pause();
-        isRunning = false;
+        GoL.setIsRunning(false);
         playButton.setText("Resume");
     }
 
@@ -129,21 +128,21 @@ public class mainScreenController implements Initializable {
 
     public void decreaseSpeedEvent() {
 
-        if (isRunning) {
+        if (GoL.getIsRunning()) {
 
-            if (currRate > 0.6 && (currRate != 0.0)) {
+            if (GoL.getCurrRate() > 0.6) {
 
-                currRate -= 0.5;
-                timeline.setRate(currRate);
-                fpsLabel.setText(currRate + " gen/s");
+                GoL.setCurrRate(GoL.getCurrRate() - 0.5);
+                timeline.setRate(GoL.getCurrRate());
+                fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
         }
         else {
 
-            if (currRate > 0.6 && (currRate != 0.0)) {
+            if (GoL.getCurrRate() > 0.6) {
 
-                currRate -= 0.5;
-                fpsLabel.setText(currRate + " gen/s");
+                GoL.setCurrRate(GoL.getCurrRate() - 0.5);
+                fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
         }
     }
@@ -151,21 +150,21 @@ public class mainScreenController implements Initializable {
 
     public void increaseSpeedEvent() {
 
-        if (isRunning) {
+        if (GoL.getIsRunning()) {
 
-            if (currRate < 20.0 && (currRate != 0.0)) {
+            if (GoL.getCurrRate() < 20.0) {
 
-                currRate += 0.5;
-                timeline.setRate(currRate);
-                fpsLabel.setText(currRate + " gen/s");
+                GoL.setCurrRate(GoL.getCurrRate() + 0.5);
+                timeline.setRate(GoL.getCurrRate());
+                fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
         }
         else {
 
-            if (currRate < 20.0 && (currRate != 0.0)) {
+            if (GoL.getCurrRate() < 20.0) {
 
-                currRate += 0.5;
-                fpsLabel.setText(currRate + " gen/s");
+                GoL.setCurrRate(GoL.getCurrRate() + 0.5);
+                fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
         }
     }

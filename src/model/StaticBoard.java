@@ -192,4 +192,10 @@ public class StaticBoard extends Board{
         //TODO maybe only redraw clicked cell
         draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
+
+
+    public byte[][] getBoard() {
+
+        return board;
+    }
 }

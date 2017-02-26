@@ -33,22 +33,11 @@ public class mainScreenController implements Initializable {
     @FXML private Label fpsLabel;
 
 
-
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
-    private boolean isRunning = false;
-
-    private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-
-            staticBoard.nextGeneration();
-            draw();
-        }
-    }));
-
-
-
+    private boolean isRunning;
+    private double currRate;
+    private Timeline timeline;
 
 
     @Override
@@ -61,97 +50,126 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(GoL.getCellSize());
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
-        fpsLabel.setText("Paused");
+
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                staticBoard.nextGeneration();
+                draw();
+            }
+        }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(5.0);
+        currRate = 5.0;
+        fpsLabel.setText(currRate + " gen/s");
+        isRunning = false;
         gc = boardCanvas.getGraphicsContext2D();
         draw();
-
     }
 
 
     private void draw(){
 
         staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
-
     }
-
-
 
 
     public void playEvent() {
 
         if (!isRunning) {
+
             play();
         }
         else {
+
             pause();
         }
-
     }
 
-    public void play() {
 
+    private void play() {
+
+        timeline.setRate(currRate);
         timeline.play();
         isRunning = true;
         playButton.setText("Pause");
-        fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
     }
 
-    public void pause() {
+
+    private void pause() {
 
         timeline.pause();
         isRunning = false;
         playButton.setText("Resume");
     }
 
+
     public void setCellSizeEvent(){
 
         GoL.setCellSize(cellSizeSlider.getValue());
         draw();
-
     }
+
 
     public void setAliveCellColorEvent() {
 
         GoL.setAliveCellColor(aliveCellColorPicker.getValue());
         draw();
-
-
     }
+
 
     public void setDeadCellColorEvent() {
 
         GoL.setDeadCellColor(deadCellColorPicker.getValue());
         draw();
-
     }
+
 
     public void decreaseSpeedEvent() {
-        double currSpeed = timeline.getCurrentRate();
-        if (currSpeed > 0.6 && (currSpeed != 0.0)) {
 
-            timeline.setRate(currSpeed - 0.5);
-            System.out.println(timeline.getCurrentRate());
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+        if (isRunning) {
 
+            if (currRate > 0.6 && (currRate != 0.0)) {
+
+                currRate -= 0.5;
+                timeline.setRate(currRate);
+                fpsLabel.setText(currRate + " gen/s");
+            }
         }
+        else {
 
+            if (currRate > 0.6 && (currRate != 0.0)) {
+
+                currRate -= 0.5;
+                fpsLabel.setText(currRate + " gen/s");
+            }
+        }
     }
+
 
     public void increaseSpeedEvent() {
 
+        if (isRunning) {
 
-        double currSpeed = timeline.getCurrentRate();
-        if (currSpeed < 20.0 && (currSpeed != 0.0)) {
+            if (currRate < 20.0 && (currRate != 0.0)) {
 
-            timeline.setRate(currSpeed + 0.5);
-            System.out.println(timeline.getCurrentRate());
-            fpsLabel.setText(timeline.getCurrentRate() + " gen/s");
+                currRate += 0.5;
+                timeline.setRate(currRate);
+                fpsLabel.setText(currRate + " gen/s");
+            }
+        }
+        else {
 
+            if (currRate < 20.0 && (currRate != 0.0)) {
+
+                currRate += 0.5;
+                fpsLabel.setText(currRate + " gen/s");
+            }
         }
     }
+
 
     public void cellClickEvent(MouseEvent event) {
 

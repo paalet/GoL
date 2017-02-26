@@ -23,11 +23,6 @@
 
                     </children>
                 </StackPane>
-                <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">
-                    <children>
-                        <Button fx:id="pause" mnemonicParsing="false" text="Pause" textAlignment="CENTER" />
-                    </children>
-                </StackPane>
                 <StackPane layoutX="10.0" layoutY="52.0" prefHeight="42.0" prefWidth="104.0">
                     <children>
                         <Button mnemonicParsing="false" text="Stop" textAlignment="CENTER" />

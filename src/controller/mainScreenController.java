@@ -86,7 +86,7 @@ public class mainScreenController implements Initializable {
 
         GoL.setAliveCellColor(aliveCellColorPicker.getValue());
         draw();
-        System.out.println(aliveCellColorPicker.getValue());
+
 
     }
 
@@ -94,7 +94,7 @@ public class mainScreenController implements Initializable {
 
         GoL.setDeadCellColor(deadCellColorPicker.getValue());
         draw();
-        System.out.println(deadCellColorPicker.getValue());
+
     }
 
 

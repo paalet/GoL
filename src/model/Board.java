@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -8,7 +9,7 @@ import javafx.scene.paint.Color;
  */
 public abstract class Board {
 
-    public abstract void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
+    public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
 
 
 

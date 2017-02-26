@@ -12,14 +12,14 @@ import javafx.scene.input.MouseEvent;
  */
 public class StaticBoard extends Board{
 
-    private byte[][] board = {{0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,1,1,0},
-                              {0,0,0,0,0,1,1,0},
-                              {0,0,0,0,0,0,0,0},
+    private byte[][] board = {{0,1,0,1,0,0,0,0},
+                              {0,0,1,1,0,0,0,0},
+                              {0,0,1,0,0,0,0,0},
+                              {0,0,0,0,0,0,1,0},
                               {0,0,0,0,0,0,0,1},
-                              {0,1,1,1,0,0,1,0},
-                              {0,0,0,0,0,0,1,1},
-                              {0,0,0,0,0,1,1,0}};
+                              {1,1,0,1,0,0,1,0},
+                              {0,0,0,0,0,0,0,1},
+                              {1,0,0,1,0,0,1,0}};
 
     private byte[][] nextBoard = {{0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0},
@@ -32,10 +32,10 @@ public class StaticBoard extends Board{
 
 
     @Override
-    public void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
+    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
-        gc.clearRect(0, 0, 450, 450);
-        gc.strokeRect(0,0, 450, 450);
+        gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
+        gc.strokeRect(0,0, boardCanvas.getWidth(), boardCanvas.getHeight());
         for (int y = 0; y < board.length; y++){
             for (int x = 0; x < board.length; x++){
                 if (board[y][x] == 1) {
@@ -171,22 +171,25 @@ public class StaticBoard extends Board{
         double posX = event.getX();
         double posY = event.getY();
 
-        double cellPosX = posX/(450.0/board.length);
-        double cellPosY = posY/(450.0/board.length);
+        double cellPosX = posX/(boardCanvas.getWidth()/board.length);
+        double cellPosY = posY/(boardCanvas.getHeight()/board.length);
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
 
         // Change cell status
         if (board[cellY][cellX] == 1) {
+
             board[cellY][cellX] = 0;
         }
+
         else {
+
             board[cellY][cellX] = 1;
         }
 
         // Draw new board
         //TODO maybe only redraw clicked cell
-        draw(gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+        draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 }

@@ -71,7 +71,7 @@ public class mainScreenController implements Initializable {
 
     private void draw(){
 
-        staticBoard.draw(gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+        staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
 
     }
 

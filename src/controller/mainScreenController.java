@@ -106,9 +106,33 @@ public class mainScreenController implements Initializable {
 
 
     public void setCellSizeEvent(){
+        double canvasSize = 450.0;
+        double sizeFromSlider = cellSizeSlider.getValue();
 
-        GoL.setCellSize(cellSizeSlider.getValue());
+        double newCellAmount = canvasSize / sizeFromSlider;
+
+        double roundedAmount = Math.round(newCellAmount);
+        double floorAmount = Math.floor(newCellAmount);
+        double ceilAmount = Math.ceil(newCellAmount);
+
+        if (roundedAmount == floorAmount) {
+            GoL.setCellSize(450/floorAmount);
+            cellSizeSlider.setValue(450/floorAmount);
+        }
+        else {
+            GoL.setCellSize(450/ceilAmount);
+            cellSizeSlider.setValue(450/ceilAmount);
+        }
+        calculateBoardEvent();
         draw();
+
+
+    }
+
+    public void calculateBoardEvent () {
+
+        staticBoard.calculateBoard();
+
     }
 
 

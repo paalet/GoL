@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class StaticBoard extends Board{
 
-    private byte[][] board = {{0,1,0,1,0,0,0,0},
+    public byte[][] board = {{0,1,0,1,0,0,0,0},
                               {0,0,1,1,0,0,0,0},
                               {0,0,1,0,0,0,0,0},
                               {0,0,0,0,0,0,1,0},
@@ -21,7 +21,7 @@ public class StaticBoard extends Board{
                               {0,0,0,0,0,0,0,1},
                               {1,0,0,1,0,0,1,0}};
 
-    private byte[][] nextBoard = {{0,0,0,0,0,0,0,0},
+    public byte[][] nextBoard = {{0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0},
@@ -29,6 +29,7 @@ public class StaticBoard extends Board{
                                   {0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0},
                                   {0,0,0,0,0,0,0,0}};
+
 
 
     @Override
@@ -191,6 +192,37 @@ public class StaticBoard extends Board{
         // Draw new board
         //TODO maybe only redraw clicked cell
         draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+    }
+
+    public void calculateBoard() {
+        double canvasSize = 450.0;
+        double cellAmountDouble = canvasSize / GoL.getCellSize();
+        int cellAmount = (int) cellAmountDouble;
+        byte[][] newBoard = new byte[cellAmount][cellAmount];
+
+        if(newBoard.length > board.length) {
+
+
+
+            for (int x = 0; x < board.length; x++) {
+                for (int y = 0; y < board.length; y++) {
+
+                    newBoard[x][y] = board[x][y];
+                }
+            }
+
+            for (int i = 1; i < ((newBoard.length - board.length) + 1); i++) {
+
+                for (int x = 0; x < newBoard.length; x++) {
+                    newBoard[newBoard.length - i][x] = 0;
+                    newBoard[x][newBoard.length - i] = 0;
+
+                }
+            }
+
+
+            board = newBoard;
+        }
     }
 
 

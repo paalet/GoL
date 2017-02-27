@@ -18,12 +18,9 @@
             <children>
                 <StackPane prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button fx:id="Start" mnemonicParsing="false" onAction="#startGameEvent" text="Start" textAlignment="CENTER" />
-                    </children>
-                </StackPane>
-                <StackPane layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="104.0">
-                    <children>
-                        <Button fx:id="pause" mnemonicParsing="false" onAction="#pauseGameEvent" text="Pause" textAlignment="CENTER" />
+
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#playEvent" text="Start" textAlignment="CENTER" />
+
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="52.0" prefHeight="42.0" prefWidth="104.0">
@@ -87,7 +84,7 @@
             </StackPane>
                 <StackPane layoutX="10.0" layoutY="235.0" prefHeight="21.0" prefWidth="122.0">
                <children>
-                  <Label text="FPS" fx:id="fpsLabel" />
+                  <Label fx:id="fpsLabel" text="FPS" />
                </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="190.0" prefHeight="42.0" prefWidth="104.0">
@@ -102,6 +99,6 @@
                 </StackPane>
             </children>
         </VBox>
-        <Canvas fx:id="boardCanvas" height="450.0" layoutX="118.0" width="450.0" />
+        <Canvas fx:id="boardCanvas" height="450.0" layoutX="118.0" onMouseReleased="#cellClickEvent" width="450.0" />
     </children>
 </Pane>

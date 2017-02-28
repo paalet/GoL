@@ -1,6 +1,9 @@
 package model;
 
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+
+import javafx.scene.canvas.Canvas;
 
 /**
  * Created by Pål on 09.02.2017.
@@ -72,6 +75,25 @@ public class GoL {
     public static double getCurrRate() {
 
         return currRate;
+    }
+
+    public static void calculateCellSize (double canvasSize, Slider cellSizeSlider) {
+        double sizeFromSlider = cellSizeSlider.getValue();
+
+        double newCellAmount = canvasSize / sizeFromSlider;
+
+        double roundedAmount = Math.round(newCellAmount);
+        double floorAmount = Math.floor(newCellAmount);
+        double ceilAmount = Math.ceil(newCellAmount);
+
+        if (roundedAmount == floorAmount) {
+            setCellSize(450/floorAmount);
+            cellSizeSlider.setValue(450/floorAmount);
+        }
+        else {
+            setCellSize(450/ceilAmount);
+            cellSizeSlider.setValue(450/ceilAmount);
+        }
     }
 
 

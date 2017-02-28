@@ -40,7 +40,7 @@
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="136.0" prefHeight="24.0" prefWidth="122.0">
                     <children>
-                        <Slider fx:id="cellSizeSlider" onMouseReleased="#setCellSizeEvent" value="10.0">
+                        <Slider fx:id="cellSizeSlider" onMouseReleased="#setCellSizeEvent" value="10.0" min="5.0">
                             <StackPane.margin>
                                 <Insets left="15.0" right="15.0" />
                             </StackPane.margin>

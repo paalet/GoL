@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 public abstract class Board {
 
-    private byte [][] currentBoard = {{0,0,0,1,1,0,0,1},
+    private byte[][] currentBoard = {{0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
@@ -19,7 +19,7 @@ public abstract class Board {
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1}};
 
-    private byte [][] nextBoard = {{0,0,0,1,1,0,0,1},
+    private byte[][] nextBoard = {{0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1},
@@ -228,5 +228,22 @@ public abstract class Board {
     }
 
 
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        for (int y = 0; y < currentBoard.length; y++) {
+            for (int x = 0; x < currentBoard.length; x++) {
+                byte b = currentBoard[y][x];
+                sb.append(b);
+            }
+        }
+        String boardString = new String(sb);
+        return boardString;
+    }
+
+    public void setBoard(byte[][] testBoard) {
+        currentBoard = testBoard;
+    }
 
 }

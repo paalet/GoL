@@ -107,15 +107,15 @@ public class mainScreenController implements Initializable {
 
     public void setCellSizeEvent(){
         GoL.calculateCellSize(boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoard();
+        calculateBoardSize();
         draw();
 
 
     }
 
-    public void calculateBoard () {
+    private void calculateBoardSize () {
 
-        staticBoard.calculateBoard();
+        staticBoard.calculateBoardSize();
 
     }
 

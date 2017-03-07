@@ -5,9 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-/**
- * Created by Pål on 09.02.2017.
- */
 public abstract class Board {
 
     private byte[][] currentBoard = {{0,0,0,1,1,0,0,1},
@@ -242,8 +239,8 @@ public abstract class Board {
         return boardString;
     }
 
-    public void setBoard(byte[][] testBoard) {
-        currentBoard = testBoard;
+    public void setBoard(byte[][] newBoard) {
+        currentBoard = newBoard;
     }
 
 }

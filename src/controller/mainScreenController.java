@@ -183,3 +183,4 @@ public class mainScreenController implements Initializable {
         staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
 }
+

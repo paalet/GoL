@@ -1,11 +1,8 @@
-import org.junit.Assert;
+/*import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Pål on 02.03.2017.
- */
 public class BoardTest {
     @Test
     public void testNextGeneration() {
@@ -22,5 +19,6 @@ public class BoardTest {
             {0,0,0,1,1,0,0,1},
             {0,0,0,1,1,0,0,1}};
     staticBoard.setBoard(testBoard);
-  */
+
 }
+*/

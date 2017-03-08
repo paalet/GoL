@@ -10,23 +10,14 @@ import javafx.scene.paint.Color;
  */
 public abstract class Board {
 
-    private byte[][] currentBoard = {{0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1}};
+    private int WIDTH = 10;
 
-    private byte[][] nextBoard = {{0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1}};
+    private int HEIGHT = 10;
+
+
+    private byte[][] currentBoard = new byte[WIDTH][HEIGHT];
+
+    private byte[][] nextBoard = new byte[WIDTH][HEIGHT];
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
@@ -227,8 +218,24 @@ public abstract class Board {
         return currentBoard;
     }
 
+    public int getWIDTH() {
+        return WIDTH;
+    }
 
-    @Override
+    public void setWIDTH(int newWidth) {
+        this.WIDTH = newWidth;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public void setHEIGHT(int newHeight) {
+        this.HEIGHT = newHeight;
+    }
+
+
+    /*@Override
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
@@ -243,7 +250,9 @@ public abstract class Board {
     }
 
     public void setBoard(byte[][] testBoard) {
+
         currentBoard = testBoard;
     }
+    */
 
 }

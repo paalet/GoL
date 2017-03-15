@@ -16,6 +16,8 @@ public class GoL {
     private static Color aliveCellColor;
     private static Color deadCellColor;
     private static double currRate;
+    private static int[] bornAmount;
+    private static int[] surviveAmount;
 
 
     public static void setIsRunning(boolean running) {
@@ -75,6 +77,28 @@ public class GoL {
     public static double getCurrRate() {
 
         return currRate;
+    }
+
+    public static void setBornAmount(int[] newBornAmount) {
+        bornAmount = newBornAmount;
+        System.out.println(bornAmount[0]);
+        System.out.println(bornAmount[1]);
+    }
+
+    public static int[] getBornAmount() {
+        return bornAmount;
+
+    }
+
+    public static void setSurviveAmount(int[] newSurviveAmount) {
+        surviveAmount = newSurviveAmount;
+        System.out.println(surviveAmount[0]);
+        System.out.println(surviveAmount[1]);
+    }
+
+    public static int[] getSurviveAmount() {
+        return surviveAmount;
+
     }
 
     public static void calculateCellSize (double canvasSize, Slider cellSizeSlider) {

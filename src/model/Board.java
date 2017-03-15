@@ -180,8 +180,7 @@ public abstract class Board {
         draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 
-    public void calculateBoardSize() {
-        double canvasSize = 450.0;
+    public void calculateBoardSize(double canvasSize) {
         double cellAmountDouble = Math.ceil(canvasSize / GoL.getCellSize());
         int cellAmount = (int) cellAmountDouble;
         byte[][] newBoard = new byte[cellAmount][cellAmount];

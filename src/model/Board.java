@@ -232,7 +232,7 @@ public abstract class Board {
     }
 
 
-    /*@Override
+    @Override
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
@@ -246,15 +246,14 @@ public abstract class Board {
         return boardString;
     }
 
-<<<<<<< HEAD
-    public void setBoard(byte[][] newBoard) {
+
+ /*   public void setBoard(byte[][] newBoard) {
+
         currentBoard = newBoard;
-=======
-    public void setBoard(byte[][] testBoard) {
+    }
+ */   public void setTestBoard(byte[][] testBoard) {
 
         currentBoard = testBoard;
->>>>>>> SimenBranchSeven
     }
-    */
 
 }

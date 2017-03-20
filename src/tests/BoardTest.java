@@ -24,7 +24,7 @@ public class BoardTest {
         String expectedBoardString = new String("0000000001110000000000000000000000000000000000000000001100000011");
         StaticBoard staticBoard = new StaticBoard();
 
-        staticBoard.setBoard(testBoard);
+        staticBoard.setTestBoard(testBoard);
         staticBoard.nextGeneration();
         String boardString = staticBoard.toString();
         Assert.assertEquals(boardString, expectedBoardString);

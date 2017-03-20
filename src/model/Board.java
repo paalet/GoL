@@ -7,23 +7,14 @@ import javafx.scene.paint.Color;
 
 public abstract class Board {
 
-    private byte[][] currentBoard = {{0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1}};
+    private int WIDTH = 10;
 
-    private byte[][] nextBoard = {{0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1},
-            {0,0,0,1,1,0,0,1}};
+    private int HEIGHT = 10;
+
+
+    private byte[][] currentBoard = new byte[WIDTH][HEIGHT];
+
+    private byte[][] nextBoard = new byte[WIDTH][HEIGHT];
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
@@ -186,9 +177,9 @@ public abstract class Board {
         draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 
-    public void calculateBoard() {
+    public void calculateBoardSize() {
         double canvasSize = 450.0;
-        double cellAmountDouble = canvasSize / GoL.getCellSize();
+        double cellAmountDouble = Math.ceil(canvasSize / GoL.getCellSize());
         int cellAmount = (int) cellAmountDouble;
         byte[][] newBoard = new byte[cellAmount][cellAmount];
 
@@ -224,8 +215,24 @@ public abstract class Board {
         return currentBoard;
     }
 
+    public int getWIDTH() {
+        return WIDTH;
+    }
 
-    @Override
+    public void setWIDTH(int newWidth) {
+        this.WIDTH = newWidth;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public void setHEIGHT(int newHeight) {
+        this.HEIGHT = newHeight;
+    }
+
+
+    /*@Override
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
@@ -239,8 +246,15 @@ public abstract class Board {
         return boardString;
     }
 
+<<<<<<< HEAD
     public void setBoard(byte[][] newBoard) {
         currentBoard = newBoard;
+=======
+    public void setBoard(byte[][] testBoard) {
+
+        currentBoard = testBoard;
+>>>>>>> SimenBranchSeven
     }
+    */
 
 }

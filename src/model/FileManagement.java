@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Scanner;
 
 /**
@@ -34,19 +35,61 @@ public class FileManagement {
 
     }
 
-    public static int readDimension(Reader r) throws IOException {
-        Scanner heightScanner = new Scanner(r);
+
+    public static String readDimensions(Reader r, int data) throws IOException {
+        StringBuilder dimensionString = new StringBuilder();
+        while (data != 114) {
+            char exitChar = (char) data;
+            dimensionString.append(exitChar);
+            data = r.read();
+        }
+        String dimensionStringResult = new String(dimensionString);
+        return dimensionStringResult;
+    }
+
+
+    public static void implementDimensions(String d, StaticBoard staticBoard) throws IOException {
+        Scanner dimensionScanner = new Scanner(d);
+        dimensionScanner.useDelimiter(",| ");
+        boolean widthIsSet = false;
         boolean isDone = false;
-        int dimension = 0;
-        while (heightScanner.hasNext() && !isDone) {
-            if (heightScanner.hasNextInt()) {
-                dimension = heightScanner.nextInt();
+        while (dimensionScanner.hasNext() && !isDone) {
+            if (dimensionScanner.hasNextInt() && !widthIsSet) {
+                staticBoard.setWIDTH(dimensionScanner.nextInt());
+                widthIsSet = true;
+            }
+            else if (dimensionScanner.hasNextInt() && widthIsSet) {
+                staticBoard.setHEIGHT(dimensionScanner.nextInt());
                 isDone = true;
             }
             else{
-                System.out.println(heightScanner.next() + " is no int.");
+                dimensionScanner.next();
             }
         }
-        return dimension;
+    }
+
+
+    public static String readRules(Reader r, int data) throws IOException {
+        StringBuilder ruleString = new StringBuilder();
+        while (data != 10) {
+            char exitChar = (char) data;
+            ruleString.append(exitChar);
+            data = r.read();
+        }
+        String ruleStringResult = new String(ruleString);
+        return ruleStringResult;
+    }
+
+
+    public static void implementRules(String rs) throws IOException {
+        Reader rr = new StringReader(rs);
+        int stringLength = rs.length();
+        int i;
+        for (i = 0; i < stringLength; i++) {
+            int data = rr.read();
+            if (data >= 48 && data <= 57) {
+                System.out.println(data);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
 public class BoardTest {
 
     @Test
-    public void testBoard(){
+    public void testNestGeneration1(){
         byte[][] testBoard = {
                 {0,0,1,0,0,0,0,0},
                 {0,0,1,0,0,0,0,0},
@@ -21,13 +21,47 @@ public class BoardTest {
                 {0,0,0,0,0,0,1,1},
                 {0,0,0,0,0,0,1,1}
         };
-        String expectedBoardString = new String("0000000001110000000000000000000000000000000000000000001100000011");
+        String expectedBoardString = new String(
+                "00000000" +
+                        "01110000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000011" +
+                        "00000011");
         StaticBoard staticBoard = new StaticBoard();
 
         staticBoard.setTestBoard(testBoard);
         staticBoard.nextGeneration();
-        String boardString = staticBoard.toString();
-        Assert.assertEquals(boardString, expectedBoardString);
+        Assert.assertEquals(staticBoard.toString(), expectedBoardString);
     }
 
+    @Test
+    public void testNestGeneration2(){
+        byte[][] testBoard = {
+                {0,0,0,0,0,0,0,0},
+                {0,1,1,0,0,0,0,0},
+                {0,1,1,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,1,1},
+                {0,0,0,0,0,0,1,1}
+        };
+        String expectedBoardString = new String(
+                "00000000" +
+                        "01110000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000011" +
+                        "00000011");
+        StaticBoard staticBoard = new StaticBoard();
+
+        staticBoard.setTestBoard(testBoard);
+        staticBoard.nextGeneration();
+        Assert.assertEquals(staticBoard.toString(), expectedBoardString);
+    }
 }

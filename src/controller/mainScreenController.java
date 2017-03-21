@@ -3,27 +3,24 @@ package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import model.StaticBoard;
-import model.GoL;
 import model.FileManagement;
-import controller.Main;
+import model.GoL;
+import model.StaticBoard;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -223,15 +220,19 @@ public class mainScreenController implements Initializable {
                     data = r.read();
                 } else {
                     char exitChar = (char) data;
-                    System.out.println("False character followed by #:" + exitChar);
+                    System.out.println("False character following #:" + exitChar);
                 }
             }
             else if (data == 120) {
-                System.out.println(FileManagement.readDimension(r));
+                String dimensionString = FileManagement.readDimensions(r, data);
+                FileManagement.implementDimensions(dimensionString, staticBoard);
+                staticBoard.setBlankBoard();
                 data = r.read();
             }
-            else if (data == 121) {
-                System.out.println(FileManagement.readDimension(r));
+            else if (data == 117) {
+                String ruleString = FileManagement.readRules(r, data);
+                System.out.println(ruleString);
+                FileManagement.implementRules(ruleString);
                 data = r.read();
             }
             else {
@@ -243,7 +244,7 @@ public class mainScreenController implements Initializable {
         String fileStringResult = new String(fileString);
         System.out.println("Data: " + fileStringResult);
 
-
+        draw();
 
     /*Scanner testScanner = new Scanner(r);
     System.out.println(testScanner.next());

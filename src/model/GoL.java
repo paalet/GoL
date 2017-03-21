@@ -3,8 +3,6 @@ package model;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
-import javafx.scene.canvas.Canvas;
-
 /**
  * Created by Pål on 09.02.2017.
  */
@@ -16,6 +14,8 @@ public class GoL {
     private static Color aliveCellColor;
     private static Color deadCellColor;
     private static double currRate;
+    private static int[] birth = {3};
+    private static int[] survival = {2,3};
 
 
     public static void setIsRunning(boolean running) {
@@ -77,6 +77,19 @@ public class GoL {
         return currRate;
     }
 
+
+    public void setBirth(int[] b) {
+
+        birth = b;
+    }
+
+
+    public void setSurvival(int[] s) {
+
+        survival = s;
+    }
+
+
     public static void calculateCellSize (double canvasSize, Slider cellSizeSlider) {
         double sizeFromSlider = cellSizeSlider.getValue();
 
@@ -103,26 +116,22 @@ public class GoL {
 
         if (aliveStatus == 1) {
 
-            if (neighbors <= 1 ) {
-                nextStatus = 0;
-            }
+            for (int i = 0; i < survival.length; i++) {
 
-            else if (neighbors >= 4) {
-                nextStatus = 0;
-            }
+                if (neighbors == survival[i]) {
 
-            else if (neighbors == 2 || neighbors == 3 ) {
-                nextStatus = 1;
+                    nextStatus = 1;
+                }
             }
         }
         else if (aliveStatus == 0) {
 
-            if (neighbors == 3 ) {
-                nextStatus = 1;
-            }
+            for (int i = 0; i < birth.length; i++) {
 
-            else {
-                nextStatus = 0;
+                if (neighbors == birth[i]) {
+
+                    nextStatus = 1;
+                }
             }
         }
         return nextStatus;

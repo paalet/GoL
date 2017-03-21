@@ -247,11 +247,14 @@ public abstract class Board {
     }
 
 
- /*   public void setBoard(byte[][] newBoard) {
+    public void setBlankBoard() {
 
-        currentBoard = newBoard;
+        currentBoard = new byte[WIDTH][HEIGHT];
+        nextBoard = new byte[WIDTH][HEIGHT];
     }
- */   public void setTestBoard(byte[][] testBoard) {
+
+
+    public void setTestBoard(byte[][] testBoard) {
 
         currentBoard = testBoard;
     }

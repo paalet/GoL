@@ -87,6 +87,7 @@ public class FileManagement {
         int i;
         for (i = 0; i < stringLength; i++) {
             int data = rr.read();
+            // Tester om det leses inn siffer
             if (data >= 48 && data <= 57) {
                 System.out.println(data);
             }

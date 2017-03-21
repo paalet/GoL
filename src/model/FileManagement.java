@@ -48,19 +48,19 @@ public class FileManagement {
 
     public static byte readDimension(String inputString) throws IOException {
 
-        Scanner heightScanner = new Scanner(inputString);
+        Scanner dimensionScanner = new Scanner(inputString);
+        dimensionScanner.useDelimiter(' |,');
         boolean isDone = false;
         int dimension = 0;
-        while (heightScanner.hasNext() && !isDone) {
-            if (heightScanner.hasNextInt()) {
-                dimension = heightScanner.nextInt();
+        while (dimensionScanner.hasNext() && !isDone) {
+            if (dimensionScanner.hasNextInt()) {
+                dimension = dimensionScanner.nextInt();
                 isDone = true;
             } else {
                 break;
             }
         }
-        byte dimensionInByte = (byte) dimension;
-        return dimensionInByte;
+        return (byte) dimension;
 
     }
 

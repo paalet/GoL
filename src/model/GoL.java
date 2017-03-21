@@ -127,29 +127,26 @@ public class GoL {
 
         if (aliveStatus == 1) {
 
-            if (neighbors <= 1 ) {
-                nextStatus = 0;
-            }
+            for (int i = 0; i < surviveAmount.length; i++) {
 
-            else if (neighbors >= 4) {
-                nextStatus = 0;
-            }
+                if (neighbors == surviveAmount[i]) {
 
-            else if (neighbors == 2 || neighbors == 3 ) {
-                nextStatus = 1;
+                    nextStatus = 1;
+                }
             }
         }
         else if (aliveStatus == 0) {
 
-            if (neighbors == 3 ) {
-                nextStatus = 1;
-            }
+            for (int i = 0; i < bornAmount.length; i++) {
 
-            else {
-                nextStatus = 0;
+                if (neighbors == bornAmount[i]) {
+
+                    nextStatus = 1;
+                }
             }
         }
         return nextStatus;
     }
+}
 }
 

@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Scanner;
 
 
 /**
@@ -35,13 +36,20 @@ import java.io.Reader;
  */
 public class mainScreenController implements Initializable {
 
-    @FXML private Canvas boardCanvas;
-    @FXML private Button playButton;
-    @FXML private Slider cellSizeSlider;
-    @FXML private ColorPicker aliveCellColorPicker;
-    @FXML private ColorPicker deadCellColorPicker;
-    @FXML private Label fpsLabel;
-    @FXML private Button openFileButton;
+    @FXML
+    private Canvas boardCanvas;
+    @FXML
+    private Button playButton;
+    @FXML
+    private Slider cellSizeSlider;
+    @FXML
+    private ColorPicker aliveCellColorPicker;
+    @FXML
+    private ColorPicker deadCellColorPicker;
+    @FXML
+    private Label fpsLabel;
+    @FXML
+    private Button openFileButton;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
@@ -56,14 +64,14 @@ public class mainScreenController implements Initializable {
 
 
     @Override
-    public void initialize(java.net.URL location, java.util.ResourceBundle resources){
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
 
         // Initialise game values
         GoL.setIsRunning(false);
-        GoL.setCellSize(boardCanvas.getHeight()/staticBoard.getCurrentBoard().length);
+        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getCurrentBoard().length);
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
@@ -80,7 +88,7 @@ public class mainScreenController implements Initializable {
     }
 
 
-    private void draw(){
+    private void draw() {
 
         staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
@@ -91,8 +99,7 @@ public class mainScreenController implements Initializable {
         if (!GoL.getIsRunning()) {
 
             play();
-        }
-        else {
+        } else {
 
             pause();
         }
@@ -116,17 +123,17 @@ public class mainScreenController implements Initializable {
     }
 
 
-    public void setCellSizeEvent(){
+    public void setCellSizeEvent() {
         GoL.calculateCellSize(boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoardSize();
+        calculateBoardSize(boardCanvas.getWidth());
         draw();
 
 
     }
 
-    private void calculateBoardSize () {
+    private void calculateBoardSize(double canvasSize) {
 
-        staticBoard.calculateBoardSize();
+        staticBoard.calculateBoardSize(canvasSize);
 
     }
 
@@ -155,8 +162,7 @@ public class mainScreenController implements Initializable {
                 timeline.setRate(GoL.getCurrRate());
                 fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
-        }
-        else {
+        } else {
 
             if (GoL.getCurrRate() > 0.6) {
 
@@ -177,8 +183,7 @@ public class mainScreenController implements Initializable {
                 timeline.setRate(GoL.getCurrRate());
                 fpsLabel.setText(GoL.getCurrRate() + " gen/s");
             }
-        }
-        else {
+        } else {
 
             if (GoL.getCurrRate() < 20.0) {
 
@@ -193,13 +198,14 @@ public class mainScreenController implements Initializable {
 
         staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
-    public void readGameBoardFromDisk() throws IOException {
+
+    public void readFileFromDisk() throws IOException {
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choose Game of Life file");
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {
-            readGameBoard(new FileReader(returnFile));
+            readFile(new FileReader(returnFile));
         } else {
             System.out.println("User aborted");
         }
@@ -208,40 +214,65 @@ public class mainScreenController implements Initializable {
 
         //
     }
-    private void readGameBoard(Reader r)  throws IOException {
+
+    private void readFile(Reader r) throws IOException {
         StringBuilder fileString = new StringBuilder();
         int data = r.read();
-        int i = 0;
         while (data != -1) {
-            if (data == 35) {
-                data = r.read();
-                if (data == 78) {
-                    FileManagement.readTitle(r);
-                    data = r.read();
-                } else if (data == 67) {
-                    FileManagement.readComment(r);
-                    data = r.read();
-                } else {
-                    char exitChar = (char) data;
-                    System.out.println("False character followed by #:" + exitChar);
-                }
-            }
-            else if (data == 120) {
-                System.out.println(FileManagement.readDimension(r));
-                data = r.read();
-            }
-            else if (data == 121) {
-                System.out.println(FileManagement.readDimension(r));
-                data = r.read();
-            }
-            else {
-                char exitChar = (char) data;
-                fileString.append(exitChar);
-                data = r.read();
-            }
+            char exitChar = (char) data;
+            fileString.append(exitChar);
+            data = r.read();
         }
         String fileStringResult = new String(fileString);
-        System.out.println("Data: " + fileStringResult);
+        int i = 0;
+        //Sifting out tile and comments
+        while (fileStringResult.indexOf(35, i) != -1) {
+            int hashTag = fileStringResult.indexOf(35, i);
+            char nextChar = fileStringResult.charAt(hashTag + 1);
+            int endOfLine = fileStringResult.indexOf(10, i);
+            i = endOfLine + 1;
+            switch (nextChar) {
+                case 78:
+                    FileManagement.readTitle(fileStringResult.substring(hashTag + 2, endOfLine));
+                    break;
+                case 67:
+                    FileManagement.readComment(fileStringResult.substring(hashTag + 2, endOfLine));
+                    break;
+                case 79: FileManagement.readOrigin(fileStringResult.substring(hashTag + 2, endOfLine));
+                    break;
+                default: break;
+
+            }
+
+
+       }
+       //Finds x-size
+       int x = fileStringResult.indexOf(120, i);
+       int comma = fileStringResult.indexOf(44, x);
+       String coordSubString = fileStringResult.substring(x,comma);
+       staticBoard.setWIDTH(FileManagement.readDimension(coordSubString));
+       //Finds y-size
+       int y = fileStringResult.indexOf(121, i);
+       comma = fileStringResult.indexOf(44, y);
+       coordSubString = fileStringResult.substring(y,comma);
+       staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
+       calculateBoardSize(boardCanvas.getWidth());
+       draw();
+
+       //Finds rules if there is any
+       if (fileStringResult.contains("rules")) {
+           int rulesIndex = fileStringResult.indexOf("rules");
+           int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
+           String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
+           FileManagement.readRules(rulesString);
+
+
+       }
+
+
+
+
+
 
 
 

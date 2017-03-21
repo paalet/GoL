@@ -89,7 +89,7 @@
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="190.0" prefHeight="42.0" prefWidth="104.0">
                     <children>
-                        <Button mnemonicParsing="false" text="Open" fx:id="openFileButton" onAction="#readGameBoardFromDisk" textAlignment="CENTER" />
+                        <Button mnemonicParsing="false" text="Open" fx:id="openFileButton" onAction="#readFileFromDisk" textAlignment="CENTER" />
                     </children>
                 </StackPane>
                 <StackPane layoutX="10.0" layoutY="94.0" prefHeight="42.0" prefWidth="104.0">

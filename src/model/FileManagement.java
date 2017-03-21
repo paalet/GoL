@@ -46,27 +46,29 @@ public class FileManagement {
         System.out.println("Origin; " + inputString);
     }
 
-    public static byte readDimension(String inputString) throws IOException {
+    public static int readDimension(String inputString) throws IOException {
 
         Scanner dimensionScanner = new Scanner(inputString);
-        dimensionScanner.useDelimiter(' |,');
+        dimensionScanner.useDelimiter(" ");
         boolean isDone = false;
         int dimension = 0;
-        while (dimensionScanner.hasNext() && !isDone) {
+        while (!isDone) {
             if (dimensionScanner.hasNextInt()) {
                 dimension = dimensionScanner.nextInt();
                 isDone = true;
-            } else {
-                break;
+            }
+            else {
+                dimensionScanner.next();
             }
         }
-        return (byte) dimension;
+        return dimension;
 
     }
 
     public static void readRules(String rulesString) {
 
         //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
+        int stringLength = rulesString.length();
         int index = rulesString.indexOf(66);
         index++;
         int bornNumbers = 0;
@@ -91,7 +93,7 @@ public class FileManagement {
         index = rulesString.indexOf(83);
         index++;
         int surviveNumbers = 0;
-        while (rulesString.charAt(index) != -1) {
+        while (index < stringLength) {
             char indexChar = rulesString.charAt(index);
             int indexInt = (int) indexChar;
             System.out.println(indexInt);

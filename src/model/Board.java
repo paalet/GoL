@@ -12,9 +12,10 @@ public abstract class Board {
     private int HEIGHT = 10;
 
 
-    private byte[][] currentBoard = new byte[WIDTH][HEIGHT];
+    private byte[][] currentBoard;
 
-    private byte[][] nextBoard = new byte[WIDTH][HEIGHT];
+    private byte[][] nextBoard;
+
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
@@ -35,6 +36,15 @@ public abstract class Board {
                 }
             }
         }
+    }
+
+    public void newBoard() {
+        byte[][] currentBoard = new byte[WIDTH][HEIGHT];
+
+        byte[][] nextBoard = new byte[WIDTH][HEIGHT];
+        this.currentBoard = currentBoard;
+        this.nextBoard = nextBoard;
+
     }
 
     public void nextGeneration() {

@@ -70,6 +70,7 @@ public class mainScreenController implements Initializable {
         gc = boardCanvas.getGraphicsContext2D();
 
         // Initialise game values
+        staticBoard.newBoard();
         GoL.setIsRunning(false);
         GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getCurrentBoard().length);
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
@@ -215,6 +216,14 @@ public class mainScreenController implements Initializable {
         //
     }
 
+    public void calculateCellSizeOnPatternLoad (){
+        double canvasHeightDouble = boardCanvas.getHeight();
+        int boardHeightInt = staticBoard.getHEIGHT();
+        double boardHeightDouble = (double) boardHeightInt;
+        GoL.setCellSize(canvasHeightDouble/boardHeightDouble);
+        cellSizeSlider.setValue(GoL.getCellSize());
+    }
+
     private void readFile(Reader r) throws IOException {
         StringBuilder fileString = new StringBuilder();
         int data = r.read();
@@ -269,32 +278,11 @@ public class mainScreenController implements Initializable {
 
        }
 
+       staticBoard.newBoard();
+       calculateCellSizeOnPatternLoad();
 
+       draw();
 
-
-
-
-
-
-    /*Scanner testScanner = new Scanner(r);
-    System.out.println(testScanner.next());
-    System.out.println(testScanner.next());
-    System.out.println(testScanner.next());
-    System.out.println(testScanner.next());
-    */
-
-
-    /*try {
-        int cbuf = r.read();
-        char x = (char) cbuf;
-        System.out.println(x);
-        r.
-    }
-    catch(IOException e) {
-        e.printStackTrace();
-    }
-    @
-    */
     }
 }
 

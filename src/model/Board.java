@@ -39,12 +39,9 @@ public abstract class Board {
     }
 
     public void newBoard() {
-        byte[][] currentBoard = new byte[WIDTH][HEIGHT];
 
-        byte[][] nextBoard = new byte[WIDTH][HEIGHT];
-        this.currentBoard = currentBoard;
-        this.nextBoard = nextBoard;
-
+        currentBoard = new byte[WIDTH][HEIGHT];
+        nextBoard = new byte[WIDTH][HEIGHT];
     }
 
     public void nextGeneration() {
@@ -260,9 +257,9 @@ public abstract class Board {
 
         currentBoard = newBoard;
     }
- */   public void setTestBoard(byte[][] testBoard) {
+    public void setTestBoard(byte[][] testBoard) {
 
         currentBoard = testBoard;
     }
-
+*/
 }

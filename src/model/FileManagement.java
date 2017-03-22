@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.SyncFailedException;
 import java.util.Scanner;
 import model.GoL;
 
@@ -94,10 +95,10 @@ public class FileManagement {
         index++;
         int surviveNumbers = 0;
         while (index < stringLength) {
-            char indexChar = rulesString.charAt(index);
+   /*         char indexChar = rulesString.charAt(index);
             int indexInt = (int) indexChar;
             System.out.println(indexInt);
-            surviveNumbers++;
+  */          surviveNumbers++;
             index++;
         }
         int [] surviveAmount = new int[surviveNumbers];
@@ -113,6 +114,17 @@ public class FileManagement {
         }
 
         GoL.setSurviveAmount(surviveAmount);
+
+    }
+
+    public static void readPattern(String patternString) {
+
+        Scanner patternScanner = new Scanner(patternString);
+        patternScanner.useDelimiter("\\$");
+        while (patternScanner.hasNext()) {
+            String line = new String(patternScanner.next());
+
+        }
 
     }
 }

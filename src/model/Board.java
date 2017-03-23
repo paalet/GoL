@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -10,6 +11,8 @@ public abstract class Board {
     private int WIDTH = 10;
 
     private int HEIGHT = 10;
+
+    private int [] visitedCellWithDrag = new int[2];
 
 
     private byte[][] currentBoard;
@@ -168,20 +171,57 @@ public abstract class Board {
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
 
-        // Change cell status
-        if (currentBoard[cellY][cellX] == 1) {
+        if(visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+            visitedCellWithDrag[0] = 999999999;
+            visitedCellWithDrag[1] = 999999999;
+        }
+        else {
+            // Change cell status
+            if (currentBoard[cellY][cellX] == 1) {
 
-            currentBoard[cellY][cellX] = 0;
+                currentBoard[cellY][cellX] = 0;
+            } else {
+
+                currentBoard[cellY][cellX] = 1;
+            }
+
+            // Draw new currentBoard
+            //TODO maybe only redraw clicked cell
+            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
         }
 
+    }
+
+    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
+        double posX = event.getX();
+        double posY = event.getY();
+
+        double cellPosX = posX/(boardCanvas.getWidth()/ currentBoard.length);
+        double cellPosY = posY/(boardCanvas.getHeight()/ currentBoard.length);
+
+        int cellX = (int) cellPosX;
+        int cellY = (int) cellPosY;
+
+        if(visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+            //Do nothing
+        }
         else {
 
-            currentBoard[cellY][cellX] = 1;
+            if (currentBoard[cellY][cellX] == 1) {
+
+                currentBoard[cellY][cellX] = 0;
+            } else {
+
+                currentBoard[cellY][cellX] = 1;
+            }
+
+
+            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+
+            visitedCellWithDrag[0] = cellX;
+            visitedCellWithDrag[1] = cellY;
         }
 
-        // Draw new currentBoard
-        //TODO maybe only redraw clicked cell
-        draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 
     public void calculateBoardSize(double canvasSize) {

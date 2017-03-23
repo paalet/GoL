@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -204,6 +205,11 @@ public class mainScreenController implements Initializable {
         staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
 
+    public void boardDragEvent(MouseEvent event) {
+        staticBoard.cellDragDraw(event, gc, boardCanvas);
+
+    }
+
     public void readFileFromDisk() throws IOException {
 
         FileChooser chooser = new FileChooser();
@@ -238,6 +244,7 @@ public class mainScreenController implements Initializable {
         }
         String fileStringResult = new String(fileString);
         int i = 0;
+
         //Sift out tile and comments
         while (fileStringResult.indexOf(35, i) != -1) {
             int hashTag = fileStringResult.indexOf(35, i);

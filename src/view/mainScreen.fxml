@@ -99,6 +99,6 @@
                 </StackPane>
             </children>
         </VBox>
-        <Canvas fx:id="boardCanvas" height="450.0" layoutX="118.0" onMouseReleased="#cellClickEvent" width="450.0" />
+        <Canvas fx:id="boardCanvas" height="450.0" layoutX="118.0" onMouseReleased="#cellClickEvent" onMouseDragged="#boardDragEvent" width="450.0" />
     </children>
 </Pane>

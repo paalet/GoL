@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -68,6 +69,8 @@ public class mainScreenController implements Initializable {
 
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
+        int [] standardBornAmount = {3};
+        int [] standardSurviveAmount = {2,3};
 
         // Initialise game values
         staticBoard.newBoard();
@@ -76,6 +79,8 @@ public class mainScreenController implements Initializable {
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
+        GoL.setBornAmount(standardBornAmount);
+        GoL.setSurviveAmount(standardSurviveAmount);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
 
@@ -200,6 +205,11 @@ public class mainScreenController implements Initializable {
         staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
 
+    public void boardDragEvent(MouseEvent event) {
+        staticBoard.cellDragDraw(event, gc, boardCanvas);
+
+    }
+
     public void readFileFromDisk() throws IOException {
 
         FileChooser chooser = new FileChooser();
@@ -234,7 +244,7 @@ public class mainScreenController implements Initializable {
         }
         String fileStringResult = new String(fileString);
         int i = 0;
-        //Sifting out tile and comments
+        //Sifting out title and comments
         while (fileStringResult.indexOf(35, i) != -1) {
             int hashTag = fileStringResult.indexOf(35, i);
             char nextChar = fileStringResult.charAt(hashTag + 1);

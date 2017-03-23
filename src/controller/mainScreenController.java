@@ -75,6 +75,10 @@ public class mainScreenController implements Initializable {
         // Initialise game values
         staticBoard.newBoard();
         GoL.setIsRunning(false);
+        int[] initBornAmount = {3};
+        int[] initSurviveAmount = {2,3};
+        GoL.setBornAmount(initBornAmount);
+        GoL.setSurviveAmount(initSurviveAmount);
         GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getCurrentBoard().length);
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
@@ -244,7 +248,11 @@ public class mainScreenController implements Initializable {
         }
         String fileStringResult = new String(fileString);
         int i = 0;
+<<<<<<< HEAD
         //Sifting out title and comments
+=======
+        //Sift out tile and comments
+>>>>>>> master
         while (fileStringResult.indexOf(35, i) != -1) {
             int hashTag = fileStringResult.indexOf(35, i);
             char nextChar = fileStringResult.charAt(hashTag + 1);
@@ -265,28 +273,35 @@ public class mainScreenController implements Initializable {
 
 
        }
-       //Finds x-size
+       //Find x-size
        int x = fileStringResult.indexOf(120, i);
        int comma = fileStringResult.indexOf(44, x);
        String coordSubString = fileStringResult.substring(x,comma);
        staticBoard.setWIDTH(FileManagement.readDimension(coordSubString));
-       //Finds y-size
+       //Find y-size
        int y = fileStringResult.indexOf(121, i);
        comma = fileStringResult.indexOf(44, y);
        coordSubString = fileStringResult.substring(y,comma);
        staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
-       calculateBoardSize(boardCanvas.getWidth());
+       staticBoard.calculateBoardSize(boardCanvas.getWidth());
        draw();
 
-       //Finds rules if there is any
-       if (fileStringResult.contains("rules")) {
-           int rulesIndex = fileStringResult.indexOf("rules");
+       //Find rules if there are any
+       if (fileStringResult.contains("rule")) {
+           int rulesIndex = fileStringResult.indexOf("rule");
            int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
            String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
            FileManagement.readRules(rulesString);
 
 
        }
+
+       //Extract Game of Life pattern
+       int endOfLine = fileStringResult.indexOf(10, i);
+       i = endOfLine + 1;
+       String patternString = fileStringResult.substring(i);
+       FileManagement.readPattern(patternString);
+
 
        staticBoard.newBoard();
        calculateCellSizeOnPatternLoad();

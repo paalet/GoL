@@ -2,21 +2,15 @@ package model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public abstract class Board {
 
     private int WIDTH = 10;
-
     private int HEIGHT = 10;
-
     private int [] visitedCellWithDrag = new int[2];
-
-
     private byte[][] currentBoard;
-
     private byte[][] nextBoard;
 
 
@@ -293,11 +287,11 @@ public abstract class Board {
     }
 
 
- /*   public void setBoard(byte[][] newBoard) {
+    public void setBoard(byte[][] newBoard) {
 
         currentBoard = newBoard;
     }
-    public void setTestBoard(byte[][] testBoard) {
+ /*   public void setTestBoard(byte[][] testBoard) {
 
         currentBoard = testBoard;
     }

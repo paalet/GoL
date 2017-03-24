@@ -3,33 +3,28 @@ package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import model.StaticBoard;
-import model.GoL;
 import model.FileManagement;
-import controller.Main;
+import model.GoL;
+import model.StaticBoard;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Scanner;
 
 
 /**
@@ -69,6 +64,10 @@ public class mainScreenController implements Initializable {
 
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         // Initialise game values
         staticBoard.newBoard();
         GoL.setIsRunning(false);
@@ -276,7 +275,7 @@ public class mainScreenController implements Initializable {
        coordSubString = fileStringResult.substring(y,comma);
        staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
        staticBoard.calculateBoardSize(boardCanvas.getWidth());
-       draw();
+       staticBoard.newBoard();
 
        //Find rules if there are any
        if (fileStringResult.contains("rule")) {
@@ -284,20 +283,16 @@ public class mainScreenController implements Initializable {
            int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
            String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
            FileManagement.readRules(rulesString);
-
-
        }
 
-       //Extract Game of Life pattern
+       // Extract Game of Life pattern
        int endOfLine = fileStringResult.indexOf(10, i);
        i = endOfLine + 1;
        String patternString = fileStringResult.substring(i);
-       FileManagement.readPattern(patternString);
-
-
-       staticBoard.newBoard();
+       staticBoard.setBoard(FileManagement.readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
+       System.out.println(staticBoard.toString());
+       // Redraw
        calculateCellSizeOnPatternLoad();
-
        draw();
 
     }

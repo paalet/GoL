@@ -1,10 +1,7 @@
 package model;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.SyncFailedException;
 import java.util.Scanner;
-import model.GoL;
 
 /**
  * Created by simenperschandersen on 07.03.2017.
@@ -117,14 +114,62 @@ public class FileManagement {
 
     }
 
-    public static void readPattern(String patternString) {
+    public static byte[][] readPattern(String patternString, int height, int width) throws IOException {
 
+        // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);
         patternScanner.useDelimiter("\\$");
+        byte[][] board = new byte[width][height];
+        int rowNo = 0;
+
+        // Create charArray with pattern info for each row
         while (patternScanner.hasNext()) {
-            String line = new String(patternScanner.next());
+            String row = new String(patternScanner.next());
+            char[] charArray = row.toCharArray();
+            String cellCountString = new String("");
+            int columnNo = 0;
 
+            // Go through each row char by char
+            for (int i = 0; i < charArray.length; i++) {
+
+                // Numbers
+                if (charArray[i] >= 48 && charArray[i] <= 57) {
+                    cellCountString = cellCountString + charArray[i];
+                }
+
+                // Dead cells
+                else if (charArray[i] == 98) {
+                    if (cellCountString.equals("")) {
+                        board[rowNo][columnNo] = 0;
+                        columnNo++;
+                    } else {
+                        int cellCountInt = Integer.parseInt(cellCountString);
+                        for (int j = 0; j < cellCountInt; j++) {
+                            board[rowNo][columnNo] = 0;
+                            columnNo++;
+                        }
+                    }
+                    cellCountString = "";
+                }
+
+                // Alive cell
+                else if (charArray[i] == 111) {
+                    if (cellCountString.equals("")) {
+                        board[rowNo][columnNo] = 1;
+                        columnNo++;
+                    } else {
+                        int cellCountInt = Integer.parseInt(cellCountString);
+                        for (int j = 0; j < cellCountInt; j++) {
+                            board[rowNo][columnNo] = 1;
+                            columnNo++;
+                        }
+                    }
+                    cellCountString = "";
+                }
+            }
+            rowNo++;
         }
-
+        System.out.println(board);
+        return board;
     }
 }

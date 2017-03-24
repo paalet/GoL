@@ -69,9 +69,6 @@ public class mainScreenController implements Initializable {
 
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
-        int [] standardBornAmount = {3};
-        int [] standardSurviveAmount = {2,3};
-
         // Initialise game values
         staticBoard.newBoard();
         GoL.setIsRunning(false);
@@ -83,8 +80,6 @@ public class mainScreenController implements Initializable {
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
-        GoL.setBornAmount(standardBornAmount);
-        GoL.setSurviveAmount(standardSurviveAmount);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
 
@@ -248,11 +243,8 @@ public class mainScreenController implements Initializable {
         }
         String fileStringResult = new String(fileString);
         int i = 0;
-<<<<<<< HEAD
-        //Sifting out title and comments
-=======
+
         //Sift out tile and comments
->>>>>>> master
         while (fileStringResult.indexOf(35, i) != -1) {
             int hashTag = fileStringResult.indexOf(35, i);
             char nextChar = fileStringResult.charAt(hashTag + 1);

@@ -96,10 +96,10 @@ public class GoL {
         return surviveAmount;
     }
 
-    public static void calculateCellSize (double canvasSize, Slider cellSizeSlider) {
+    public static void calculateCellSize (double canvasHeight, Slider cellSizeSlider) {
         double sizeFromSlider = cellSizeSlider.getValue();
 
-        double newCellAmount = canvasSize / sizeFromSlider;
+        double newCellAmount = canvasHeight / sizeFromSlider;
 
         double roundedAmount = Math.round(newCellAmount);
         double floorAmount = Math.floor(newCellAmount);
@@ -114,6 +114,8 @@ public class GoL {
             cellSizeSlider.setValue(450/ceilAmount);
         }
     }
+
+
 
 
     public static byte rules(int neighbors, int aliveStatus) {

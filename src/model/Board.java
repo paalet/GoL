@@ -9,8 +9,8 @@ import java.lang.reflect.Array;
 
 public abstract class Board {
 
-    private int WIDTH = 12;
-    private int HEIGHT = 10;
+    private int WIDTH = 11;
+    private int HEIGHT = 8;
     private int [] visitedCellWithDrag = new int[2];
     private byte[][] currentBoard;
     private byte[][] nextBoard;
@@ -21,9 +21,9 @@ public abstract class Board {
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         gc.strokeRect(0,0, boardCanvas.getWidth(), boardCanvas.getHeight());
         try {
-            for (int y = 0; y < currentBoard.length; y++){
+            for (int y = 0; y < HEIGHT; y++){
                 try {
-                    for (int x = 0; x < currentBoard.length; x++){
+                    for (int x = 0; x < WIDTH; x++){
                         if (currentBoard[y][x] == 1) {
                             gc.setFill(aliveCellColor);
                             gc.fillRect((x*size), (y*size), size, size);
@@ -49,8 +49,8 @@ public abstract class Board {
 
     public void newBoard() {
 
-        currentBoard = new byte[WIDTH][HEIGHT];
-        nextBoard = new byte[WIDTH][HEIGHT];
+        currentBoard = new byte[HEIGHT][WIDTH];
+        nextBoard = new byte[HEIGHT][WIDTH];
     }
 
     public void nextGeneration() {
@@ -192,8 +192,8 @@ public abstract class Board {
         double posX = event.getX();
         double posY = event.getY();
 
-        double cellPosX = posX/(boardCanvas.getWidth()/ currentBoard.length);
-        double cellPosY = posY/(boardCanvas.getHeight()/ currentBoard.length);
+        double cellPosX = posX/(boardCanvas.getWidth()/ getWIDTH());
+        double cellPosY = posY/(boardCanvas.getHeight()/ getHEIGHT());
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
@@ -223,8 +223,8 @@ public abstract class Board {
         double posX = event.getX();
         double posY = event.getY();
 
-        double cellPosX = posX/(boardCanvas.getWidth()/ currentBoard.length);
-        double cellPosY = posY/(boardCanvas.getHeight()/ currentBoard.length);
+        double cellPosX = posX/(boardCanvas.getWidth()/ getWIDTH());
+        double cellPosY = posY/(boardCanvas.getHeight()/ getHEIGHT());
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
@@ -251,23 +251,23 @@ public abstract class Board {
 
     }
 
-    public void calculateBoardSize(double canvasWidth, double canvasHeight) {
+    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
-        int cellAmountWidth = (int) cellAmountDoubleWidth;
+        int newCellAmountWidth = (int) cellAmountDoubleWidth;
         double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
-        int cellAmountHeight = (int) cellAmountDoubleHeight;
-        byte[][] newBoard = new byte[cellAmountWidth][cellAmountHeight];
+        int newCellAmountHeight = (int) cellAmountDoubleHeight;
+        byte[][] newBoard = new byte[newCellAmountWidth][newCellAmountHeight];
 
-        if(newBoard.length > currentBoard.length) {
+        if(newCellAmountHeight > HEIGHT) {
 
 
 
             try {
-                for (int x = 0; x < currentBoard.length; x++) {
+                for (int y = 0; y < HEIGHT; y++) {
                     try {
-                        for (int y = 0; y < currentBoard.length; y++) {
+                        for (int x = 0; x < WIDTH; x++) {
 
-                            newBoard[x][y] = currentBoard[x][y];
+                            newBoard[y][x] = currentBoard[y][x];
                         }
                     }
                     catch(ArrayIndexOutOfBoundsException e) {
@@ -281,12 +281,12 @@ public abstract class Board {
             }
 
             try {
-                for (int i = 1; i < ((newBoard.length - currentBoard.length) + 1); i++) {
+                for (int i = 1; i < ((newCellAmountHeight - HEIGHT) + 1); i++) {
 
                     try {
-                        for (int x = 0; x < newBoard.length; x++) {
-                            newBoard[newBoard.length - i][x] = 0;
-                            newBoard[x][newBoard.length - i] = 0;
+                        for (int x = 0; x < newCellAmountHeight; x++) {
+                            newBoard[newCellAmountHeight - i][x] = 0;
+                            newBoard[x][newCellAmountWidth- i] = 0;
 
                         }
                     }

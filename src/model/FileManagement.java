@@ -127,46 +127,50 @@ public class FileManagement {
             int columnNo = 0;
 
             // Go through each row char by char
-            for (int i = 0; i < charArray.length; i++) {
+            try {
+                for (int i = 0; i < charArray.length; i++) {
 
-                // Numbers
-                if (charArray[i] >= 48 && charArray[i] <= 57) {
-                    cellCountString = cellCountString + charArray[i];
-                }
-
-                // Dead cells
-                else if (charArray[i] == 98) {
-
-                    if (cellCountString.equals("")) {
-                        board[rowNo][columnNo] = 0;
-                        columnNo++;
+                    // Numbers
+                    if (charArray[i] >= 48 && charArray[i] <= 57) {
+                        cellCountString = cellCountString + charArray[i];
                     }
-                    else {
-                        int cellCountInt = Integer.parseInt(cellCountString);
-                        for (int j = 0; j < cellCountInt; j++) {
+
+                    // Dead cells
+                    else if (charArray[i] == 98) {
+
+                        if (cellCountString.equals("")) {
                             board[rowNo][columnNo] = 0;
                             columnNo++;
+                        } else {
+                            int cellCountInt = Integer.parseInt(cellCountString);
+                            for (int j = 0; j < cellCountInt; j++) {
+                                board[rowNo][columnNo] = 0;
+                                columnNo++;
+                            }
                         }
+                        cellCountString = "";
                     }
-                    cellCountString = "";
-                }
 
-                // Alive cell
-                else if (charArray[i] == 111) {
-                    if (cellCountString.equals("")) {
-                        board[rowNo][columnNo] = 1;
-                        columnNo++;
-                    } else {
-                        int cellCountInt = Integer.parseInt(cellCountString);
-                        for (int j = 0; j < cellCountInt; j++) {
+                    // Alive cell
+                    else if (charArray[i] == 111) {
+                        if (cellCountString.equals("")) {
                             board[rowNo][columnNo] = 1;
                             columnNo++;
+                        } else {
+                            int cellCountInt = Integer.parseInt(cellCountString);
+                            for (int j = 0; j < cellCountInt; j++) {
+                                board[rowNo][columnNo] = 1;
+                                columnNo++;
+                            }
                         }
+                        cellCountString = "";
                     }
-                    cellCountString = "";
                 }
+                rowNo++;
             }
-            rowNo++;
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
+            }
         }
         System.out.println(board);
         return board;

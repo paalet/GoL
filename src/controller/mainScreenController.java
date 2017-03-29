@@ -67,9 +67,9 @@ public class mainScreenController implements Initializable {
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
-        boardCanvas.setWidth(380.0);
         GoL.setSurviveAmount(initSurviveAmount);
-        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getCurrentBoard().length);
+        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHEIGHT());
+        boardCanvas.setWidth(calculateCanvasWidth(staticBoard.getWIDTH()));
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
@@ -89,6 +89,12 @@ public class mainScreenController implements Initializable {
     private void draw() {
 
         staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+    }
+
+    public double calculateCanvasWidth(int boardWidth) {
+        double boardWidthDouble = (double) boardWidth;
+        System.out.println("Ny boardwidth skal være: " + GoL.getCellSize() * boardWidthDouble);
+        return GoL.getCellSize() * boardWidthDouble;
     }
 
 
@@ -122,8 +128,8 @@ public class mainScreenController implements Initializable {
 
 
     public void setCellSizeEvent() {
-        GoL.calculateCellSize(boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight());
+        GoL.calculateCellSize(boardCanvas.getHeight(), cellSizeSlider);
+        calculateBoardSize(boardCanvas.getHeight(),  boardCanvas.getHeight());
         draw();
 
 

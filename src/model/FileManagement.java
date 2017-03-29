@@ -92,10 +92,7 @@ public class FileManagement {
         index++;
         int surviveNumbers = 0;
         while (index < stringLength) {
-   /*         char indexChar = rulesString.charAt(index);
-            int indexInt = (int) indexChar;
-            System.out.println(indexInt);
-  */          surviveNumbers++;
+            surviveNumbers++;
             index++;
         }
         int [] surviveAmount = new int[surviveNumbers];
@@ -139,10 +136,12 @@ public class FileManagement {
 
                 // Dead cells
                 else if (charArray[i] == 98) {
+
                     if (cellCountString.equals("")) {
                         board[rowNo][columnNo] = 0;
                         columnNo++;
-                    } else {
+                    }
+                    else {
                         int cellCountInt = Integer.parseInt(cellCountString);
                         for (int j = 0; j < cellCountInt; j++) {
                             board[rowNo][columnNo] = 0;

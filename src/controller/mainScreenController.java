@@ -64,16 +64,13 @@ public class mainScreenController implements Initializable {
 
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
         // Initialise game values
         staticBoard.newBoard();
         GoL.setIsRunning(false);
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
+        boardCanvas.setWidth(380.0);
         GoL.setSurviveAmount(initSurviveAmount);
         GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getCurrentBoard().length);
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
@@ -129,15 +126,15 @@ public class mainScreenController implements Initializable {
 
     public void setCellSizeEvent() {
         GoL.calculateCellSize(boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getWidth());
+        calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight());
         draw();
 
 
     }
 
-    private void calculateBoardSize(double canvasSize) {
+    private void calculateBoardSize(double canvasWidth, double canvasHeight) {
 
-        staticBoard.calculateBoardSize(canvasSize);
+        staticBoard.calculateBoardSize(canvasWidth, canvasHeight);
 
     }
 
@@ -274,7 +271,7 @@ public class mainScreenController implements Initializable {
        comma = fileStringResult.indexOf(44, y);
        coordSubString = fileStringResult.substring(y,comma);
        staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
-       staticBoard.calculateBoardSize(boardCanvas.getWidth());
+       staticBoard.calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight());
        staticBoard.newBoard();
 
        //Find rules if there are any

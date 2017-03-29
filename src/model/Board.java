@@ -5,9 +5,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Array;
+
 public abstract class Board {
 
-    private int WIDTH = 10;
+    private int WIDTH = 12;
     private int HEIGHT = 10;
     private int [] visitedCellWithDrag = new int[2];
     private byte[][] currentBoard;
@@ -18,20 +20,30 @@ public abstract class Board {
 
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         gc.strokeRect(0,0, boardCanvas.getWidth(), boardCanvas.getHeight());
-        for (int y = 0; y < currentBoard.length; y++){
-            for (int x = 0; x < currentBoard.length; x++){
-                if (currentBoard[y][x] == 1) {
-                    gc.setFill(aliveCellColor);
-                    gc.fillRect((x*size), (y*size), size, size);
-                    gc.strokeRect((x*size), (y*size), size, size);
+        try {
+            for (int y = 0; y < currentBoard.length; y++){
+                try {
+                    for (int x = 0; x < currentBoard.length; x++){
+                        if (currentBoard[y][x] == 1) {
+                            gc.setFill(aliveCellColor);
+                            gc.fillRect((x*size), (y*size), size, size);
+                            gc.strokeRect((x*size), (y*size), size, size);
+                        }
+                        else
+                        {
+                            gc.setFill(deadCellColor);
+                            gc.fillRect((x*size), (y*size), size, size);
+                            gc.strokeRect((x*size), (y*size), size, size);
+                        }
+                    }
                 }
-                else
-                {
-                    gc.setFill(deadCellColor);
-                    gc.fillRect((x*size), (y*size), size, size);
-                    gc.strokeRect((x*size), (y*size), size, size);
+                catch(ArrayIndexOutOfBoundsException e) {
+
                 }
             }
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+
         }
     }
 
@@ -43,112 +55,133 @@ public abstract class Board {
 
     public void nextGeneration() {
 
-        for (int x = 0; x < currentBoard.length; x++) {
-            for (int y = 0; y < currentBoard.length; y++) {
+        try {
+            for (int x = 0; x < currentBoard.length; x++) {
+                try {
+                    for (int y = 0; y < currentBoard.length; y++) {
 
-                //Counts the neighbors of the particular cell
-                int neighbors = 0;
-                int aliveStatus = 0;
+                        //Counts the neighbors of the particular cell
+                        int neighbors = 0;
+                        int aliveStatus = 0;
 
-                //Checks the status of the cell, whether it is alive or dead.
-                //Tries and catches ArrayOutOfBoundsExceptions which may occur, like fex. if you
-                //base your position from currentBoard[0[0] and you try to find x-1 which will result in currentBoard[-1][0] which is out of bounds.
-                //Nothing happens if exception is caught.
+                        //Checks the status of the cell, whether it is alive or dead.
+                        //Tries and catches ArrayOutOfBoundsExceptions which may occur, like fex. if you
+                        //base your position from currentBoard[0[0] and you try to find x-1 which will result in currentBoard[-1][0] which is out of bounds.
+                        //Nothing happens if exception is caught.
 
-                try  {
-                    if (currentBoard[x][y] == 1) {
-                        aliveStatus = 1;
+                        try  {
+                            if (currentBoard[x][y] == 1) {
+                                aliveStatus = 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x][y] == 0) {
+                                aliveStatus = 0;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x - 1][y] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x][y-1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+
+                        try  {
+                            if (currentBoard[x - 1][y-1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x + 1][y] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x][y+1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x+1][y+1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[x - 1][y+1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+
+                        try  {
+                            if (currentBoard[x + 1][y-1] == 1) {
+                                neighbors = neighbors + 1;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+
+                        //Returns a value to a temporary nextboard based on the rules method in the GoL class.
+                        nextBoard[x][y] = GoL.rules(neighbors, aliveStatus);
+
                     }
+
                 }
                 catch(ArrayIndexOutOfBoundsException e) {
+                    //
                 }
-
-                try  {
-                    if (currentBoard[x][y] == 0) {
-                        aliveStatus = 0;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x - 1][y] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x][y-1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-
-                try  {
-                    if (currentBoard[x - 1][y-1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x + 1][y] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x][y+1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x+1][y+1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-                try  {
-                    if (currentBoard[x - 1][y+1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-
-                try  {
-                    if (currentBoard[x + 1][y-1] == 1) {
-                        neighbors = neighbors + 1;
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                }
-
-
-                //Returns a value to a temporary nextboard based on the rules method in the GoL class.
-                nextBoard[x][y] = GoL.rules(neighbors, aliveStatus);
-
             }
-
         }
-        for (int x = 0; x < currentBoard.length; x++) {
-            for (int y = 0; y < currentBoard.length; y++) {
-                currentBoard[y][x] = nextBoard[y][x];
+        catch(ArrayIndexOutOfBoundsException e) {
+            //
+        }
 
+        try {
+            for (int x = 0; x < currentBoard.length; x++) {
+                 try {
+                     for (int y = 0; y < currentBoard.length; y++) {
+                         currentBoard[y][x] = nextBoard[y][x];
+
+                     }
+                 }
+                 catch(ArrayIndexOutOfBoundsException e) {
+                     //
+                 }
             }
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+            //
         }
 
     }
@@ -218,29 +251,52 @@ public abstract class Board {
 
     }
 
-    public void calculateBoardSize(double canvasSize) {
-        double cellAmountDouble = Math.ceil(canvasSize / GoL.getCellSize());
-        int cellAmount = (int) cellAmountDouble;
-        byte[][] newBoard = new byte[cellAmount][cellAmount];
+    public void calculateBoardSize(double canvasWidth, double canvasHeight) {
+        double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
+        int cellAmountWidth = (int) cellAmountDoubleWidth;
+        double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
+        int cellAmountHeight = (int) cellAmountDoubleHeight;
+        byte[][] newBoard = new byte[cellAmountWidth][cellAmountHeight];
 
         if(newBoard.length > currentBoard.length) {
 
 
 
-            for (int x = 0; x < currentBoard.length; x++) {
-                for (int y = 0; y < currentBoard.length; y++) {
+            try {
+                for (int x = 0; x < currentBoard.length; x++) {
+                    try {
+                        for (int y = 0; y < currentBoard.length; y++) {
 
-                    newBoard[x][y] = currentBoard[x][y];
+                            newBoard[x][y] = currentBoard[x][y];
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        //
+                    }
                 }
+
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
             }
 
-            for (int i = 1; i < ((newBoard.length - currentBoard.length) + 1); i++) {
+            try {
+                for (int i = 1; i < ((newBoard.length - currentBoard.length) + 1); i++) {
 
-                for (int x = 0; x < newBoard.length; x++) {
-                    newBoard[newBoard.length - i][x] = 0;
-                    newBoard[x][newBoard.length - i] = 0;
+                    try {
+                        for (int x = 0; x < newBoard.length; x++) {
+                            newBoard[newBoard.length - i][x] = 0;
+                            newBoard[x][newBoard.length - i] = 0;
 
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+
+                    }
                 }
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
             }
 
 

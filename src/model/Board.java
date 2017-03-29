@@ -153,7 +153,7 @@ public abstract class Board {
 
     }
 
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
+    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
 
         // Calculate target cell from mouse position
         double posX = event.getX();

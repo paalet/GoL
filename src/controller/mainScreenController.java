@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -21,10 +18,10 @@ import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Optional;
 
 
 /**
@@ -208,7 +205,7 @@ public class mainScreenController implements Initializable {
     public void readFileFromDisk() throws IOException {
 
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Choose Game of Life file");
+        chooser.setTitle("Choose Game of Life pattern file");
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {
             readFile(new FileReader(returnFile));
@@ -217,9 +214,23 @@ public class mainScreenController implements Initializable {
         }
 
         //readGameBoard(new FileReader(returnVal));
-
         //
     }
+
+
+    public void readFileFromURL() throws IOException {
+
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setHeaderText("Please enter the destination URL to your .rle pattern file");
+        Optional<String> input = inputDialog.showAndWait();
+        if (input.isPresent()) {
+            String url = input.get();
+            URL destination = new URL(url);
+            URLConnection conn = destination.openConnection();
+            readFile(new InputStreamReader(conn.getInputStream()));
+        }
+    }
+
 
     public void calculateCellSizeOnPatternLoad (){
         double canvasHeightDouble = boardCanvas.getHeight();

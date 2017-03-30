@@ -5,8 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
-
 public abstract class Board {
 
     private int WIDTH = 10;
@@ -257,7 +255,7 @@ public abstract class Board {
 
     }
 
-    public void calculateBoardSize(double canvasHeight, double canvasWidth, Canvas canvas) {
+    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
         int newCellAmountWidth = (int) cellAmountDoubleWidth;
         double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());

@@ -74,7 +74,7 @@ public class MainScreenController implements Initializable {
         // Initialise game values
         GoL.setIsRunning(false);
         int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
+        int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
         GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHEIGHT());
@@ -138,7 +138,7 @@ public class MainScreenController implements Initializable {
 
     public void setCellSizeEvent() {
         GoL.calculateCellSize(boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getHeight(),  boardCanvas.getWidth());
+        calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
         draw();
 
 
@@ -146,7 +146,7 @@ public class MainScreenController implements Initializable {
 
     private void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
-        staticBoard.calculateBoardSize(canvasHeight, canvasWidth, boardCanvas);
+        staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
 
     }
 
@@ -251,34 +251,35 @@ public class MainScreenController implements Initializable {
     }
 
 
-    public static void displayMetadata(String title, String origin, List<String> comments) {
+    public void displayMetadata(String title, String origin, List<String> comments) {
 
         if (title != null) {
-            //titleText.setText(title); //Gir nullpointerexception. Megawtf
+            titleText.setText(title); //Gir nullpointerexception. Megawtf
             System.out.println(title);
         }
         if (origin != null) {
-            //originText.setText(origin);
+            originText.setText(origin);
             System.out.println(origin);
         }
         if (comments != null) {
             for (String comment : comments) {
-                //commentText.setText(comment);
+                commentText.setText(comment);
                 System.out.println(comment);
             }
         }
     }
 
 
-    public void calculateCellSizeOnPatternLoad (){
+    public void calculateCellSizeOnPatternLoad() {
 
         double canvasHeightDouble = boardCanvas.getHeight();
         int boardHeightInt = staticBoard.getHEIGHT();
         double boardHeightDouble = (double) boardHeightInt;
-        GoL.setCellSize(canvasHeightDouble/boardHeightDouble);
+        GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
     }
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD:src/controller/mainScreenController.java
 
@@ -317,5 +318,7 @@ public class MainScreenController implements Initializable {
     }
 =======
 >>>>>>> master:src/controller/MainScreenController.java
+=======
+>>>>>>> 1bd029c2c50bc189cafc0a282a6513e3708b2910
 }
 

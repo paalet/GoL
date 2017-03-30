@@ -7,7 +7,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileManagementTest {
 
@@ -15,7 +17,7 @@ public class FileManagementTest {
     private Canvas boardCanvas;
 
     @Test
-    public void testReadFile() throws FileNotFoundException, IOException {
+    public void testReadFile() throws IOException {
 
         // Arrange
         String expectedBoardString = new String(
@@ -31,8 +33,7 @@ public class FileManagementTest {
         StaticBoard testStaticBoard = new StaticBoard();
         File rleFile = new File("testpatterns/1beacon.rle");
         if (rleFile != null) {
-
-            FileManagement.readFile(new FileReader(rleFile), testStaticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            FileManagement.readFile(new FileReader(rleFile), testStaticBoard, 585.0, 804.375);
         }
         // Assert
         String actualBoardString = testStaticBoard.toString();

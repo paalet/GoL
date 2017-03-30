@@ -16,6 +16,12 @@ public abstract class Board {
     private byte[][] nextBoard;
 
 
+    public Board() {
+
+        newBoard();
+    }
+
+
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
@@ -251,7 +257,7 @@ public abstract class Board {
 
     }
 
-    public void calculateBoardSize(double canvasHeight, double canvasWidth, Canvas canvas) {
+    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
         int newCellAmountWidth = (int) cellAmountDoubleWidth;
         double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());

@@ -9,7 +9,7 @@ import java.lang.reflect.Array;
 
 public abstract class Board {
 
-    private int WIDTH = 11;
+    private int WIDTH = 10;
     private int HEIGHT = 8;
     private int [] visitedCellWithDrag = new int[2];
     private byte[][] currentBoard;
@@ -168,9 +168,9 @@ public abstract class Board {
         }
 
         try {
-            for (int x = 0; x < currentBoard.length; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
                  try {
-                     for (int y = 0; y < currentBoard.length; y++) {
+                     for (int x = 0; y < WIDTH; y++) {
                          currentBoard[y][x] = nextBoard[y][x];
 
                      }
@@ -251,12 +251,15 @@ public abstract class Board {
 
     }
 
-    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
+    public void calculateBoardSize(double canvasHeight, double canvasWidth, Canvas canvas) {
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
         int newCellAmountWidth = (int) cellAmountDoubleWidth;
+        double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
         double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
         int newCellAmountHeight = (int) cellAmountDoubleHeight;
-        byte[][] newBoard = new byte[newCellAmountWidth][newCellAmountHeight];
+        byte[][] newBoard = new byte[newCellAmountHeight][newCellAmountWidth];
+
+
 
         if(newCellAmountHeight > HEIGHT) {
 
@@ -280,13 +283,18 @@ public abstract class Board {
                 //
             }
 
+
             try {
                 for (int i = 1; i < ((newCellAmountHeight - HEIGHT) + 1); i++) {
 
                     try {
-                        for (int x = 0; x < newCellAmountHeight; x++) {
-                            newBoard[newCellAmountHeight - i][x] = 0;
-                            newBoard[x][newCellAmountWidth- i] = 0;
+                        for (int y = 0; y < newCellAmountHeight; y++) {
+                            for(int x = 0; x < newCellAmountWidth; x++) {
+                                newBoard[y][newCellAmountWidth- i] = 0;
+                                newBoard[newCellAmountHeight - i][x] = 0;
+
+                            }
+
 
                         }
                     }
@@ -299,9 +307,11 @@ public abstract class Board {
                 //
             }
 
-
+            HEIGHT = newCellAmountHeight;
+            WIDTH = newCellAmountWidth;
             currentBoard = newBoard;
             nextBoard = newBoard;
+
         }
     }
 

@@ -96,7 +96,7 @@ public class GoL {
         return surviveAmount;
     }
 
-    public static void calculateCellSize (double canvasHeight, Slider cellSizeSlider) {
+    public static void calculateCellSize (double canvasHeight, double canvasWidth, Slider cellSizeSlider) {
         double sizeFromSlider = cellSizeSlider.getValue();
 
         double newCellAmount = canvasHeight / sizeFromSlider;
@@ -106,12 +106,12 @@ public class GoL {
         double ceilAmount = Math.ceil(newCellAmount);
 
         if (roundedAmount == floorAmount) {
-            setCellSize(450/floorAmount);
-            cellSizeSlider.setValue(450/floorAmount);
+            setCellSize(canvasHeight/floorAmount);
+            cellSizeSlider.setValue(canvasHeight/floorAmount);
         }
         else {
-            setCellSize(450/ceilAmount);
-            cellSizeSlider.setValue(450/ceilAmount);
+            setCellSize(canvasHeight/ceilAmount);
+            cellSizeSlider.setValue(canvasHeight/ceilAmount);
         }
     }
 

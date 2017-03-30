@@ -128,16 +128,16 @@ public class mainScreenController implements Initializable {
 
 
     public void setCellSizeEvent() {
-        GoL.calculateCellSize(boardCanvas.getHeight(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getHeight(),  boardCanvas.getHeight());
+        GoL.calculateCellSize(boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider);
+        calculateBoardSize(boardCanvas.getHeight(),  boardCanvas.getWidth());
         draw();
 
 
     }
 
-    private void calculateBoardSize(double canvasWidth, double canvasHeight) {
+    private void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
-        staticBoard.calculateBoardSize(canvasWidth, canvasHeight);
+        staticBoard.calculateBoardSize(canvasHeight, canvasWidth, boardCanvas);
 
     }
 
@@ -288,7 +288,7 @@ public class mainScreenController implements Initializable {
        comma = fileStringResult.indexOf(44, y);
        coordSubString = fileStringResult.substring(y,comma);
        staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
-       staticBoard.calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight());
+       staticBoard.calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight(), boardCanvas);
        staticBoard.newBoard();
 
        //Find rules if there are any

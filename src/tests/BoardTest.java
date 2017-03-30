@@ -5,9 +5,6 @@ import model.StaticBoard;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by Pål on 03.03.2017.
- */
 public class BoardTest {
 
     @Test

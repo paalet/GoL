@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.mainScreenController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
     <children>
       <HBox layoutX="7.0" layoutY="592.0" prefHeight="123.0" prefWidth="808.0">
          <children>
@@ -122,19 +122,19 @@
                         <VBox prefHeight="36.0" prefWidth="131.0">
                            <children>
                               <Label text="Title" />
-                              <TextArea id="titleText" prefHeight="48.0" prefWidth="176.0" />
+                              <TextArea fx:id="titleText" prefHeight="48.0" prefWidth="176.0" />
                            </children>
                         </VBox>
                         <VBox prefHeight="36.0" prefWidth="144.0">
                            <children>
                               <Label text="Origin" />
-                              <TextArea id="originText" prefHeight="48.0" prefWidth="176.0" />
+                              <TextArea fx:id="originText" prefHeight="48.0" prefWidth="176.0" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                   <Label text="Comment" />
-                  <TextArea id="commentText" prefHeight="56.0" prefWidth="285.0" />
+                  <TextArea fx:id="commentText" prefHeight="56.0" prefWidth="285.0" />
                </children>
             </VBox>
          </children>

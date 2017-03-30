@@ -18,16 +18,20 @@ import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Optional;
 
 
 /**
  * Created by Pål on 09.02.2017.
  */
-public class mainScreenController implements Initializable {
+public class MainScreenController implements Initializable {
 
     @FXML
     private Canvas boardCanvas;
@@ -43,6 +47,12 @@ public class mainScreenController implements Initializable {
     private Label fpsLabel;
     @FXML
     private Button openFileButton;
+    @FXML
+    private static TextArea titleText;
+    @FXML
+    private static TextArea originText;
+    @FXML
+    private static TextArea commentText;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
@@ -62,7 +72,6 @@ public class mainScreenController implements Initializable {
         //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
-        staticBoard.newBoard();
         GoL.setIsRunning(false);
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -214,31 +223,55 @@ public class mainScreenController implements Initializable {
         chooser.setTitle("Choose Game of Life pattern file");
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {
-            readFile(new FileReader(returnFile));
+
+            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            calculateCellSizeOnPatternLoad();
+            draw();
         } else {
+
             System.out.println("User aborted");
         }
-
-        //readGameBoard(new FileReader(returnVal));
-        //
     }
 
 
     public void readFileFromURL() throws IOException {
 
         TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.setHeaderText("Please enter the destination URL to your .rle pattern file");
+        inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
         Optional<String> input = inputDialog.showAndWait();
         if (input.isPresent()) {
+
             String url = input.get();
             URL destination = new URL(url);
             URLConnection conn = destination.openConnection();
-            readFile(new InputStreamReader(conn.getInputStream()));
+            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            calculateCellSizeOnPatternLoad();
+            draw();
+        }
+    }
+
+
+    public static void displayMetadata(String title, String origin, List<String> comments) {
+
+        if (title != null) {
+            //titleText.setText(title); //Gir nullpointerexception. Megawtf
+            System.out.println(title);
+        }
+        if (origin != null) {
+            //originText.setText(origin);
+            System.out.println(origin);
+        }
+        if (comments != null) {
+            for (String comment : comments) {
+                //commentText.setText(comment);
+                System.out.println(comment);
+            }
         }
     }
 
 
     public void calculateCellSizeOnPatternLoad (){
+
         double canvasHeightDouble = boardCanvas.getHeight();
         int boardHeightInt = staticBoard.getHEIGHT();
         double boardHeightDouble = (double) boardHeightInt;
@@ -246,36 +279,8 @@ public class mainScreenController implements Initializable {
         cellSizeSlider.setValue(GoL.getCellSize());
     }
 
-    private void readFile(Reader r) throws IOException {
-        StringBuilder fileString = new StringBuilder();
-        int data = r.read();
-        while (data != -1) {
-            char exitChar = (char) data;
-            fileString.append(exitChar);
-            data = r.read();
-        }
-        String fileStringResult = new String(fileString);
-        int i = 0;
 
-        //Sift out tile and comments
-        while (fileStringResult.indexOf(35, i) != -1) {
-            int hashTag = fileStringResult.indexOf(35, i);
-            char nextChar = fileStringResult.charAt(hashTag + 1);
-            int endOfLine = fileStringResult.indexOf(10, i);
-            i = endOfLine + 1;
-            switch (nextChar) {
-                case 78:
-                    FileManagement.readTitle(fileStringResult.substring(hashTag + 2, endOfLine));
-                    break;
-                case 67:
-                    FileManagement.readComment(fileStringResult.substring(hashTag + 2, endOfLine));
-                    break;
-                case 79: FileManagement.readOrigin(fileStringResult.substring(hashTag + 2, endOfLine));
-                    break;
-                default: break;
-
-            }
-
+<<<<<<< HEAD:src/controller/mainScreenController.java
 
        }
        //Find x-size
@@ -310,5 +315,7 @@ public class mainScreenController implements Initializable {
        draw();
 
     }
+=======
+>>>>>>> master:src/controller/MainScreenController.java
 }
 

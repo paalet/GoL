@@ -22,8 +22,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,14 +50,15 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button openFileButton;
     @FXML
-    private static TextArea titleText;
+    private TextArea titleText;
     @FXML
-    private static TextArea originText;
+    private TextArea originText;
     @FXML
-    private static TextArea commentText;
+    private TextArea commentText;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
+    private String [] metaData = new String[3];
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -224,13 +227,14 @@ public class MainScreenController implements Initializable {
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {
 
-            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
             calculateCellSizeOnPatternLoad();
             draw();
         } else {
 
             System.out.println("User aborted");
         }
+        displayMetadata();
     }
 
 
@@ -244,29 +248,37 @@ public class MainScreenController implements Initializable {
             String url = input.get();
             URL destination = new URL(url);
             URLConnection conn = destination.openConnection();
-            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
             calculateCellSizeOnPatternLoad();
             draw();
         }
     }
 
 
-    public static void displayMetadata(String title, String origin, List<String> comments) {
+    public void displayMetadata() {
+        titleText.setText(metaData[0]);
+        originText.setText(metaData[1]);
+        commentText.setText(metaData[2]);
 
+        /*
         if (title != null) {
-            //titleText.setText(title); //Gir nullpointerexception. Megawtf
+
+
+            titleText.setText(title); //Gir nullpointerexception. Megawtf
             System.out.println(title);
         }
         if (origin != null) {
-            //originText.setText(origin);
+            originText.setText(origin);
             System.out.println(origin);
         }
         if (comments != null) {
             for (String comment : comments) {
-                //commentText.setText(comment);
+                commentText.setText(comment);
                 System.out.println(comment);
             }
         }
+        */
+
     }
 
 

@@ -16,6 +16,12 @@ public abstract class Board {
     private byte[][] nextBoard;
 
 
+    public Board() {
+
+        newBoard();
+    }
+
+
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor){
 
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());

@@ -1,12 +1,86 @@
 package model;
 
+import controller.MainScreenController;
+
 import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by simenperschandersen on 07.03.2017.
  */
 public class FileManagement {
+
+
+    public static void readFile(Reader r, StaticBoard staticBoard, double canvasHeight, double canvasWidth) throws IOException {
+
+        StringBuilder fileString = new StringBuilder();
+        int data = r.read();
+        while (data != -1) {
+            char exitChar = (char) data;
+            fileString.append(exitChar);
+            data = r.read();
+        }
+        String fileStringResult = new String(fileString);
+        int i = 0;
+
+        //Sift out title and comments
+        String title = null;
+        String origin = null;
+        List<String> comments = new ArrayList<String>();
+        byte commentCntr = 0;
+        while (fileStringResult.indexOf(35, i) != -1) {
+            int hashTag = fileStringResult.indexOf(35, i);
+            char nextChar = fileStringResult.charAt(hashTag + 1);
+            int endOfLine = fileStringResult.indexOf(10, i);
+            i = endOfLine + 1;
+
+            switch (nextChar) {
+                case 78:
+                    title = new String(fileStringResult.substring(hashTag + 2, endOfLine));
+                    break;
+                case 79:
+                    origin = new String(fileStringResult.substring(hashTag + 2, endOfLine));
+                    break;
+                case 67:
+                    comments.add(commentCntr, fileStringResult.substring(hashTag + 2, endOfLine));
+                    commentCntr++;
+                    break;
+
+                default: break;
+            }
+        }
+        MainScreenController.displayMetadata(title, origin, comments);
+
+        //Find x-size
+        int x = fileStringResult.indexOf(120, i);
+        int comma = fileStringResult.indexOf(44, x);
+        String coordSubString = fileStringResult.substring(x,comma);
+        staticBoard.setWIDTH(readDimension(coordSubString));
+        //Find y-size
+        int y = fileStringResult.indexOf(121, i);
+        comma = fileStringResult.indexOf(44, y);
+        coordSubString = fileStringResult.substring(y,comma);
+        staticBoard.setHEIGHT(readDimension(coordSubString));
+        staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
+        staticBoard.newBoard();
+
+        //Find rules if there are any
+        if (fileStringResult.contains("rule")) {
+            int rulesIndex = fileStringResult.indexOf("rule");
+            int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
+            String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
+            readRules(rulesString);
+        }
+
+        // Extract Game of Life pattern
+        int endOfLine = fileStringResult.indexOf(10, i);
+        i = endOfLine + 1;
+        String patternString = fileStringResult.substring(i);
+        staticBoard.setBoard(readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
+    }
 
 
     public static void readTitle(String inputString) throws IOException {
@@ -108,7 +182,6 @@ public class FileManagement {
         }
 
         GoL.setSurviveAmount(surviveAmount);
-
     }
 
     public static byte[][] readPattern(String patternString, int height, int width) throws IOException {
@@ -172,7 +245,6 @@ public class FileManagement {
                 //
             }
         }
-        System.out.println(board);
         return board;
     }
 }

@@ -5,11 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
-
 public abstract class Board {
 
-    private int WIDTH = 11;
+    private int WIDTH = 10;
     private int HEIGHT = 8;
     private int [] visitedCellWithDrag = new int[2];
     private byte[][] currentBoard;
@@ -62,9 +60,9 @@ public abstract class Board {
     public void nextGeneration() {
 
         try {
-            for (int x = 0; x < currentBoard.length; x++) {
+            for (int y = 0; y < HEIGHT ; y++) {
                 try {
-                    for (int y = 0; y < currentBoard.length; y++) {
+                    for (int x = 0; x < WIDTH; x++) {
 
                         //Counts the neighbors of the particular cell
                         int neighbors = 0;
@@ -76,7 +74,7 @@ public abstract class Board {
                         //Nothing happens if exception is caught.
 
                         try  {
-                            if (currentBoard[x][y] == 1) {
+                            if (currentBoard[y][x] == 1) {
                                 aliveStatus = 1;
                             }
                         }
@@ -84,7 +82,7 @@ public abstract class Board {
                         }
 
                         try  {
-                            if (currentBoard[x][y] == 0) {
+                            if (currentBoard[y][x] == 0) {
                                 aliveStatus = 0;
                             }
                         }
@@ -92,57 +90,16 @@ public abstract class Board {
                         }
 
                         try  {
-                            if (currentBoard[x - 1][y] == 1) {
-                                neighbors = neighbors + 1;
+                            if (currentBoard[y - 1][x] == 1) {
+                                neighbors++;
                             }
                         }
                         catch(ArrayIndexOutOfBoundsException e) {
                         }
 
                         try  {
-                            if (currentBoard[x][y-1] == 1) {
-                                neighbors = neighbors + 1;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e) {
-                        }
-
-
-                        try  {
-                            if (currentBoard[x - 1][y-1] == 1) {
-                                neighbors = neighbors + 1;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try  {
-                            if (currentBoard[x + 1][y] == 1) {
-                                neighbors = neighbors + 1;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try  {
-                            if (currentBoard[x][y+1] == 1) {
-                                neighbors = neighbors + 1;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try  {
-                            if (currentBoard[x+1][y+1] == 1) {
-                                neighbors = neighbors + 1;
-                            }
-                        }
-                        catch(ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try  {
-                            if (currentBoard[x - 1][y+1] == 1) {
-                                neighbors = neighbors + 1;
+                            if (currentBoard[y][x-1] == 1) {
+                                neighbors++;
                             }
                         }
                         catch(ArrayIndexOutOfBoundsException e) {
@@ -150,8 +107,49 @@ public abstract class Board {
 
 
                         try  {
-                            if (currentBoard[x + 1][y-1] == 1) {
-                                neighbors = neighbors + 1;
+                            if (currentBoard[y - 1][x-1] == 1) {
+                                neighbors++;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[y + 1][x] == 1) {
+                                neighbors++;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[y][x+1] == 1) {
+                                neighbors++;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[y+1][x+1] == 1) {
+                                neighbors++;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+                        try  {
+                            if (currentBoard[y - 1][x+1] == 1) {
+                                neighbors++;
+                            }
+                        }
+                        catch(ArrayIndexOutOfBoundsException e) {
+                        }
+
+
+                        try  {
+                            if (currentBoard[y + 1][x-1] == 1) {
+                                neighbors++;
                             }
                         }
                         catch(ArrayIndexOutOfBoundsException e) {
@@ -159,7 +157,7 @@ public abstract class Board {
 
 
                         //Returns a value to a temporary nextboard based on the rules method in the GoL class.
-                        nextBoard[x][y] = GoL.rules(neighbors, aliveStatus);
+                        nextBoard[y][x] = GoL.rules(neighbors, aliveStatus);
 
                     }
 
@@ -174,9 +172,9 @@ public abstract class Board {
         }
 
         try {
-            for (int x = 0; x < currentBoard.length; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
                  try {
-                     for (int y = 0; y < currentBoard.length; y++) {
+                     for (int x = 0; y < WIDTH; y++) {
                          currentBoard[y][x] = nextBoard[y][x];
 
                      }
@@ -260,9 +258,11 @@ public abstract class Board {
     public void calculateBoardSize(double canvasHeight, double canvasWidth) {
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
         int newCellAmountWidth = (int) cellAmountDoubleWidth;
+        double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
         double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
         int newCellAmountHeight = (int) cellAmountDoubleHeight;
-        byte[][] newBoard = new byte[newCellAmountWidth][newCellAmountHeight];
+        byte[][] newBoard = new byte[newCellAmountHeight][newCellAmountWidth];
+
 
         if(newCellAmountHeight > HEIGHT) {
 
@@ -286,13 +286,18 @@ public abstract class Board {
                 //
             }
 
+
             try {
                 for (int i = 1; i < ((newCellAmountHeight - HEIGHT) + 1); i++) {
 
                     try {
-                        for (int x = 0; x < newCellAmountHeight; x++) {
-                            newBoard[newCellAmountHeight - i][x] = 0;
-                            newBoard[x][newCellAmountWidth- i] = 0;
+                        for (int y = 0; y < newCellAmountHeight; y++) {
+                            for(int x = 0; x < newCellAmountWidth; x++) {
+                                newBoard[y][newCellAmountWidth- i] = 0;
+                                newBoard[newCellAmountHeight - i][x] = 0;
+
+                            }
+
 
                         }
                     }
@@ -305,9 +310,11 @@ public abstract class Board {
                 //
             }
 
-
+            HEIGHT = newCellAmountHeight;
+            WIDTH = newCellAmountWidth;
             currentBoard = newBoard;
             nextBoard = newBoard;
+
         }
     }
 

@@ -74,7 +74,7 @@ public class MainScreenController implements Initializable {
         // Initialise game values
         GoL.setIsRunning(false);
         int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
+        int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
         GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHEIGHT());
@@ -137,16 +137,16 @@ public class MainScreenController implements Initializable {
 
 
     public void setCellSizeEvent() {
-        GoL.calculateCellSize(boardCanvas.getHeight(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getHeight(),  boardCanvas.getHeight());
+        GoL.calculateCellSize(boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider);
+        calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
         draw();
 
 
     }
 
-    private void calculateBoardSize(double canvasWidth, double canvasHeight) {
+    private void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
-        staticBoard.calculateBoardSize(canvasWidth, canvasHeight);
+        staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
 
     }
 
@@ -251,34 +251,74 @@ public class MainScreenController implements Initializable {
     }
 
 
-    public static void displayMetadata(String title, String origin, List<String> comments) {
+    public void displayMetadata(String title, String origin, List<String> comments) {
 
         if (title != null) {
-            //titleText.setText(title); //Gir nullpointerexception. Megawtf
+            titleText.setText(title); //Gir nullpointerexception. Megawtf
             System.out.println(title);
         }
         if (origin != null) {
-            //originText.setText(origin);
+            originText.setText(origin);
             System.out.println(origin);
         }
         if (comments != null) {
             for (String comment : comments) {
-                //commentText.setText(comment);
+                commentText.setText(comment);
                 System.out.println(comment);
             }
         }
     }
 
 
-    public void calculateCellSizeOnPatternLoad (){
+    public void calculateCellSizeOnPatternLoad() {
 
         double canvasHeightDouble = boardCanvas.getHeight();
         int boardHeightInt = staticBoard.getHEIGHT();
         double boardHeightDouble = (double) boardHeightInt;
-        GoL.setCellSize(canvasHeightDouble/boardHeightDouble);
+        GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
     }
 
+<<<<<<< HEAD
 
+<<<<<<< HEAD:src/controller/mainScreenController.java
+
+       }
+       //Find x-size
+       int x = fileStringResult.indexOf(120, i);
+       int comma = fileStringResult.indexOf(44, x);
+       String coordSubString = fileStringResult.substring(x,comma);
+       staticBoard.setWIDTH(FileManagement.readDimension(coordSubString));
+       //Find y-size
+       int y = fileStringResult.indexOf(121, i);
+       comma = fileStringResult.indexOf(44, y);
+       coordSubString = fileStringResult.substring(y,comma);
+       staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
+       staticBoard.calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight(), boardCanvas);
+       staticBoard.newBoard();
+
+       //Find rules if there are any
+       if (fileStringResult.contains("rule")) {
+           int rulesIndex = fileStringResult.indexOf("rule");
+           int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
+           String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
+           FileManagement.readRules(rulesString);
+       }
+
+       // Extract Game of Life pattern
+       int endOfLine = fileStringResult.indexOf(10, i);
+       i = endOfLine + 1;
+       String patternString = fileStringResult.substring(i);
+       staticBoard.setBoard(FileManagement.readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
+       System.out.println(staticBoard.toString());
+       // Redraw
+       calculateCellSizeOnPatternLoad();
+       draw();
+
+    }
+=======
+>>>>>>> master:src/controller/MainScreenController.java
+=======
+>>>>>>> 1bd029c2c50bc189cafc0a282a6513e3708b2910
 }
 

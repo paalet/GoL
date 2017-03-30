@@ -253,7 +253,7 @@ public class MainScreenController implements Initializable {
     public static void displayMetadata(String title, String origin, List<String> comments) {
 
         if (title != null) {
-            //titleText.setText(title); Gir nullpointerexception. Megawtf
+            //titleText.setText(title); //Gir nullpointerexception. Megawtf
             System.out.println(title);
         }
         if (origin != null) {

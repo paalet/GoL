@@ -197,9 +197,11 @@ public abstract class Board {
         // Calculate target cell from mouse position
         double posX = event.getX();
         double posY = event.getY();
+        double ycellsInFrame =  boardCanvas.getHeight() / GoL.getCellSize();
+        double xcellsInFrame =  boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX/(boardCanvas.getWidth()/ getWIDTH());
-        double cellPosY = posY/(boardCanvas.getHeight()/ getHEIGHT());
+        double cellPosX = posX/(boardCanvas.getWidth()/ xcellsInFrame);
+        double cellPosY = posY/(boardCanvas.getHeight()/ ycellsInFrame);
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
@@ -228,9 +230,11 @@ public abstract class Board {
     public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
         double posX = event.getX();
         double posY = event.getY();
+        double ycellsInFrame =  boardCanvas.getHeight() / GoL.getCellSize();
+        double xcellsInFrame =  boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX/(boardCanvas.getWidth()/ getWIDTH());
-        double cellPosY = posY/(boardCanvas.getHeight()/ getHEIGHT());
+        double cellPosX = posX/(boardCanvas.getWidth()/ xcellsInFrame);
+        double cellPosY = posY/(boardCanvas.getHeight()/ ycellsInFrame);
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;

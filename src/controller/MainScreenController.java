@@ -105,7 +105,6 @@ public class MainScreenController implements Initializable {
 
     public double calculateCanvasWidth(int boardWidth) {
         double boardWidthDouble = (double) boardWidth;
-        System.out.println("Ny boardwidth skal være: " + GoL.getCellSize() * boardWidthDouble);
         return GoL.getCellSize() * boardWidthDouble;
     }
 

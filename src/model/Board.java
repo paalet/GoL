@@ -5,8 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
-
 public abstract class Board {
 
     private int WIDTH = 10;

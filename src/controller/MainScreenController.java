@@ -253,30 +253,12 @@ public class MainScreenController implements Initializable {
         }
     }
 
-
     public void displayMetadata() {
         titleText.setText(metaData[0]);
         originText.setText(metaData[1]);
         commentText.setText(metaData[2]);
 
-        /*
-        if (title != null) {
 
-
-            titleText.setText(title); //Gir nullpointerexception. Megawtf
-            System.out.println(title);
-        }
-        if (origin != null) {
-            originText.setText(origin);
-            System.out.println(origin);
-        }
-        if (comments != null) {
-            for (String comment : comments) {
-                commentText.setText(comment);
-                System.out.println(comment);
-            }
-        }
-        */
 
     }
 
@@ -289,6 +271,7 @@ public class MainScreenController implements Initializable {
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
     }
+
 
 }
 

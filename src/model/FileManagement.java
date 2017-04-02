@@ -2,11 +2,17 @@ package model;
 
 import controller.MainScreenController;
 
+import java.awt.*;
+import java.awt.TextArea;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javafx.scene.control.*;
+import java.awt.TextArea;
+
+import static javafx.application.ConditionalFeature.FXML;
 
 /**
  * Created by simenperschandersen on 07.03.2017.
@@ -14,7 +20,7 @@ import java.util.Scanner;
 public class FileManagement {
 
 
-    public static void readFile(Reader r, StaticBoard staticBoard, double canvasHeight, double canvasWidth) throws IOException {
+    public static void readFile(Reader r, StaticBoard staticBoard, double canvasHeight, double canvasWidth, String[] metaData) throws IOException {
 
         StringBuilder fileString = new StringBuilder();
         int data = r.read();
@@ -52,7 +58,11 @@ public class FileManagement {
                 default: break;
             }
         }
-        MainScreenController.displayMetadata(title, origin, comments);
+        metaData[0] = title;
+        metaData[1] = origin;
+
+
+
 
         //Find x-size
         int x = fileStringResult.indexOf(120, i);
@@ -82,41 +92,6 @@ public class FileManagement {
         staticBoard.setBoard(readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
     }
 
-
-    public static void readTitle(String inputString) throws IOException {
-        System.out.println("Title: " + inputString);
-        /*
-        StringBuilder titleString = new StringBuilder();
-        int data = r.read();
-        while (data != 10) {
-            char exitChar = (char) data;
-            titleString.append(exitChar);
-            data = r.read();
-        }
-        String titleStringResult = new String(titleString);
-        System.out.println("Title: " + titleStringResult);
-        */
-    }
-
-    public static void readComment(String inputString) throws IOException {
-        System.out.println("Comment: " + inputString);
-        /*
-        StringBuilder commentString = new StringBuilder();
-        int data = r.read();
-        while (data != 10) {
-            char exitChar = (char) data;
-            commentString.append(exitChar);
-            data = r.read();
-        }
-        String commentStringResult = new String(commentString);
-        System.out.println("Comment: " + commentStringResult);
-        */
-
-    }
-
-    public static void readOrigin(String inputString) throws IOException {
-        System.out.println("Origin; " + inputString);
-    }
 
     public static int readDimension(String inputString) throws IOException {
 
@@ -247,4 +222,5 @@ public class FileManagement {
         }
         return board;
     }
+
 }

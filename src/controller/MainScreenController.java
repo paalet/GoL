@@ -22,8 +22,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,14 +50,15 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button openFileButton;
     @FXML
-    private static TextArea titleText;
+    private TextArea titleText;
     @FXML
-    private static TextArea originText;
+    private TextArea originText;
     @FXML
-    private static TextArea commentText;
+    private TextArea commentText;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
+    private String [] metaData = new String[3];
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -102,7 +105,6 @@ public class MainScreenController implements Initializable {
 
     public double calculateCanvasWidth(int boardWidth) {
         double boardWidthDouble = (double) boardWidth;
-        System.out.println("Ny boardwidth skal være: " + GoL.getCellSize() * boardWidthDouble);
         return GoL.getCellSize() * boardWidthDouble;
     }
 
@@ -224,13 +226,14 @@ public class MainScreenController implements Initializable {
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {
 
-            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
             calculateCellSizeOnPatternLoad();
             draw();
         } else {
 
             System.out.println("User aborted");
         }
+        displayMetadata();
     }
 
 
@@ -244,29 +247,19 @@ public class MainScreenController implements Initializable {
             String url = input.get();
             URL destination = new URL(url);
             URLConnection conn = destination.openConnection();
-            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth());
+            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
             calculateCellSizeOnPatternLoad();
             draw();
         }
     }
 
+    public void displayMetadata() {
+        titleText.setText(metaData[0]);
+        originText.setText(metaData[1]);
+        commentText.setText(metaData[2]);
 
-    public void displayMetadata(String title, String origin, List<String> comments) {
 
-        if (title != null) {
-            titleText.setText(title); //Gir nullpointerexception. Megawtf
-            System.out.println(title);
-        }
-        if (origin != null) {
-            originText.setText(origin);
-            System.out.println(origin);
-        }
-        if (comments != null) {
-            for (String comment : comments) {
-                commentText.setText(comment);
-                System.out.println(comment);
-            }
-        }
+
     }
 
 
@@ -279,46 +272,6 @@ public class MainScreenController implements Initializable {
         cellSizeSlider.setValue(GoL.getCellSize());
     }
 
-<<<<<<< HEAD
 
-<<<<<<< HEAD:src/controller/mainScreenController.java
-
-       }
-       //Find x-size
-       int x = fileStringResult.indexOf(120, i);
-       int comma = fileStringResult.indexOf(44, x);
-       String coordSubString = fileStringResult.substring(x,comma);
-       staticBoard.setWIDTH(FileManagement.readDimension(coordSubString));
-       //Find y-size
-       int y = fileStringResult.indexOf(121, i);
-       comma = fileStringResult.indexOf(44, y);
-       coordSubString = fileStringResult.substring(y,comma);
-       staticBoard.setHEIGHT(FileManagement.readDimension(coordSubString));
-       staticBoard.calculateBoardSize(boardCanvas.getWidth(), boardCanvas.getHeight(), boardCanvas);
-       staticBoard.newBoard();
-
-       //Find rules if there are any
-       if (fileStringResult.contains("rule")) {
-           int rulesIndex = fileStringResult.indexOf("rule");
-           int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
-           String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
-           FileManagement.readRules(rulesString);
-       }
-
-       // Extract Game of Life pattern
-       int endOfLine = fileStringResult.indexOf(10, i);
-       i = endOfLine + 1;
-       String patternString = fileStringResult.substring(i);
-       staticBoard.setBoard(FileManagement.readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
-       System.out.println(staticBoard.toString());
-       // Redraw
-       calculateCellSizeOnPatternLoad();
-       draw();
-
-    }
-=======
->>>>>>> master:src/controller/MainScreenController.java
-=======
->>>>>>> 1bd029c2c50bc189cafc0a282a6513e3708b2910
 }
 

@@ -5,6 +5,7 @@ import controller.MainScreenController;
 import java.awt.*;
 import java.awt.TextArea;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -58,8 +59,9 @@ public class FileManagement {
     }
 
 
-    public static void readFile(Reader r, StaticBoard staticBoard, double canvasHeight, double canvasWidth, String[] metaData) throws IOException {
+    public static String[] readFile(Reader r) throws IOException {
 
+        String[] fileData = new String[7];
         StringBuilder fileString = new StringBuilder();
         int data = r.read();
         while (data != -1) {
@@ -96,39 +98,39 @@ public class FileManagement {
                 default: break;
             }
         }
-        metaData[0] = title;
-        metaData[1] = origin;
-
-
+        fileData[0] = title;
+        fileData[1] = origin;
+        //fileData[2] = comments;
 
 
         // Find x-size
         int x = fileStringResult.indexOf(120, i);
         int comma = fileStringResult.indexOf(44, x);
-        String coordSubString = fileStringResult.substring(x,comma);
-        staticBoard.setWIDTH(readDimension(coordSubString));
+        String widthSubString = fileStringResult.substring(x,comma);
+        fileData[3] = widthSubString;
+
 
         // Find y-size
         int y = fileStringResult.indexOf(121, i);
         comma = fileStringResult.indexOf(44, y);
-        coordSubString = fileStringResult.substring(y,comma);
-        staticBoard.setHEIGHT(readDimension(coordSubString));
-        staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
-        staticBoard.newBoard();
+        String heightSubString = fileStringResult.substring(y,comma);
+        fileData[4] = heightSubString;
 
-        // Find rules if there are any
+        // Find rules
         if (fileStringResult.contains("rule")) {
             int rulesIndex = fileStringResult.indexOf("rule");
             int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
             String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
-            readRules(rulesString);
+            fileData[5] = rulesString;
         }
 
         // Extract Game of Life pattern
         int endOfLine = fileStringResult.indexOf(10, i);
         i = endOfLine + 1;
         String patternString = fileStringResult.substring(i);
-        staticBoard.setBoard(readPattern(patternString, staticBoard.getHEIGHT(), staticBoard.getWIDTH()));
+        fileData[6] = patternString;
+
+        return fileData;
     }
 
 
@@ -148,7 +150,6 @@ public class FileManagement {
             }
         }
         return dimension;
-
     }
 
     public static void readRules(String rulesString) {
@@ -198,7 +199,7 @@ public class FileManagement {
         GoL.setSurviveAmount(surviveAmount);
     }
 
-    public static byte[][] readPattern(String patternString, int height, int width) throws IOException {
+    public static byte[][] readPattern(String patternString, int width, int height) throws IOException {
 
         // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);

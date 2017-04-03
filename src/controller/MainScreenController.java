@@ -12,19 +12,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -55,7 +48,6 @@ public class MainScreenController implements Initializable {
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
-    private String [] metaData = new String[3];
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -221,10 +213,8 @@ public class MainScreenController implements Initializable {
         File rleFile = FileManagement.loadFileFromDisk();
         if ( rleFile != null) {
 
-            FileManagement.readFile(new FileReader(rleFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
-            displayMetadata();
-            calculateCellSizeOnPatternLoad();
-            draw();
+            String[] fileData = FileManagement.readFile(new FileReader(rleFile));
+            implementFileData(fileData);
         }
     }
 
@@ -234,20 +224,25 @@ public class MainScreenController implements Initializable {
         InputStream rleStream = FileManagement.loadFileFromURL();
         if (rleStream != null) {
 
-            FileManagement.readFile(new InputStreamReader(rleStream), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
-            displayMetadata();
-            calculateCellSizeOnPatternLoad();
-            draw();
+            String[] fileData = FileManagement.readFile(new InputStreamReader(rleStream));
+            implementFileData(fileData);
         }
     }
 
-    public void displayMetadata() {
-        titleText.setText(metaData[0]);
-        originText.setText(metaData[1]);
-        commentText.setText(metaData[2]);
-
-
-
+    public void implementFileData(String[] fileData) throws IOException {
+        titleText.setText(fileData[0]);
+        originText.setText(fileData[1]);
+        commentText.setText(fileData[2]);
+        int width = FileManagement.readDimension(fileData[3]);
+        int height = FileManagement.readDimension(fileData[4]);
+        staticBoard.setWIDTH(width);
+        staticBoard.setHEIGHT(height);
+        staticBoard.calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
+        staticBoard.newBoard();
+        FileManagement.readRules(fileData[5]);
+        staticBoard.setBoard(FileManagement.readPattern(fileData[6], width, height));
+        calculateCellSizeOnPatternLoad();
+        draw();
     }
 
 

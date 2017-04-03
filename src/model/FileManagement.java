@@ -8,14 +8,13 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.awt.TextArea;
+import java.util.List;
 
 import static javafx.application.ConditionalFeature.FXML;
 
@@ -59,76 +58,77 @@ public class FileManagement {
     }
 
 
-    public static String[] readFile(Reader r) throws IOException {
+    public static HashMap<String, String> readFile(Reader r) throws IOException {
 
-        String[] fileData = new String[7];
-        StringBuilder fileString = new StringBuilder();
+        HashMap<String, String> fileData = new HashMap<>();
+        StringBuilder fileStringBuilder = new StringBuilder();
         int data = r.read();
         while (data != -1) {
+
             char exitChar = (char) data;
-            fileString.append(exitChar);
+            fileStringBuilder.append(exitChar);
             data = r.read();
         }
-        String fileStringResult = new String(fileString);
+        String fileString = new String(fileStringBuilder);
         int i = 0;
 
         //Sift out title and comments
         String title = null;
         String origin = null;
-        List<String> comments = new ArrayList<String>();
-        byte commentCntr = 0;
-        while (fileStringResult.indexOf(35, i) != -1) {
-            int hashTag = fileStringResult.indexOf(35, i);
-            char nextChar = fileStringResult.charAt(hashTag + 1);
-            int endOfLine = fileStringResult.indexOf(10, i);
-            i = endOfLine + 1;
+        StringBuilder commentBuilder = new StringBuilder();
+        while (fileString.indexOf(35, i) != -1) {
 
+            int hashTag = fileString.indexOf(35, i);
+            char nextChar = fileString.charAt(hashTag + 1);
+            int endOfLine = fileString.indexOf(10, i);
+            i = endOfLine + 1;
             switch (nextChar) {
+
                 case 78:
-                    title = new String(fileStringResult.substring(hashTag + 2, endOfLine));
+                    title = new String(fileString.substring(hashTag + 2, endOfLine));
                     break;
                 case 79:
-                    origin = new String(fileStringResult.substring(hashTag + 2, endOfLine));
+                    origin = new String(fileString.substring(hashTag + 2, endOfLine));
                     break;
                 case 67:
-                    comments.add(commentCntr, fileStringResult.substring(hashTag + 2, endOfLine));
-                    commentCntr++;
+                    commentBuilder.append(fileString.substring(hashTag + 2, endOfLine));
                     break;
-
-                default: break;
+                default:
+                    break;
             }
         }
-        fileData[0] = title;
-        fileData[1] = origin;
-        //fileData[2] = comments;
-
+        String comments = new String(commentBuilder);
+        fileData.put("title", title);
+        fileData.put("origin", origin);
+        fileData.put("comments", comments);
 
         // Find x-size
-        int x = fileStringResult.indexOf(120, i);
-        int comma = fileStringResult.indexOf(44, x);
-        String widthSubString = fileStringResult.substring(x,comma);
-        fileData[3] = widthSubString;
+        int x = fileString.indexOf(120, i);
+        int comma = fileString.indexOf(44, x);
+        String widthSubString = fileString.substring(x,comma);
+        fileData.put("width", widthSubString);
 
 
         // Find y-size
-        int y = fileStringResult.indexOf(121, i);
-        comma = fileStringResult.indexOf(44, y);
-        String heightSubString = fileStringResult.substring(y,comma);
-        fileData[4] = heightSubString;
+        int y = fileString.indexOf(121, i);
+        comma = fileString.indexOf(44, y);
+        String heightSubString = fileString.substring(y,comma);
+        fileData.put("height", heightSubString);
 
         // Find rules
-        if (fileStringResult.contains("rule")) {
-            int rulesIndex = fileStringResult.indexOf("rule");
-            int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);
-            String rulesString = fileStringResult.substring(rulesIndex, rulesEndIndex);
-            fileData[5] = rulesString;
+        if (fileString.contains("rule")) {
+
+            int rulesIndex = fileString.indexOf("rule");
+            int rulesEndIndex = fileString.indexOf(10, rulesIndex);
+            String rulesString = fileString.substring(rulesIndex, rulesEndIndex);
+            fileData.put("rules", rulesString);
         }
 
         // Extract Game of Life pattern
-        int endOfLine = fileStringResult.indexOf(10, i);
+        int endOfLine = fileString.indexOf(10, i);
         i = endOfLine + 1;
-        String patternString = fileStringResult.substring(i);
-        fileData[6] = patternString;
+        String patternString = fileString.substring(i);
+        fileData.put("pattern", patternString);
 
         return fileData;
     }
@@ -152,7 +152,7 @@ public class FileManagement {
         return dimension;
     }
 
-    public static void readRules(String rulesString) {
+    public static int[][] readRules(String rulesString) {
 
         //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
         int stringLength = rulesString.length();
@@ -174,7 +174,6 @@ public class FileManagement {
             bornAmount[i] = numberAtIndex;
             index++;
         }
-        GoL.setBornAmount(bornAmount);
 
         //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
         index = rulesString.indexOf(83);
@@ -196,7 +195,8 @@ public class FileManagement {
             index++;
         }
 
-        GoL.setSurviveAmount(surviveAmount);
+        int[][] rules = {bornAmount, surviveAmount};
+        return rules;
     }
 
     public static byte[][] readPattern(String patternString, int width, int height) throws IOException {

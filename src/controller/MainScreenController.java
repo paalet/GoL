@@ -18,6 +18,7 @@ import model.GoL;
 import model.StaticBoard;
 
 import java.io.*;
+import java.util.HashMap;
 
 
 /**
@@ -65,7 +66,7 @@ public class MainScreenController implements Initializable {
         gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
         GoL.setIsRunning(false);
-        int[] initBornAmount = {3};
+        int[] initBornAmount = {1};
         int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
@@ -213,8 +214,8 @@ public class MainScreenController implements Initializable {
         File rleFile = FileManagement.loadFileFromDisk();
         if ( rleFile != null) {
 
-            String[] fileData = FileManagement.readFile(new FileReader(rleFile));
-            implementFileData(fileData);
+            HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
+            applyFileData(fileData);
         }
     }
 
@@ -224,22 +225,32 @@ public class MainScreenController implements Initializable {
         InputStream rleStream = FileManagement.loadFileFromURL();
         if (rleStream != null) {
 
-            String[] fileData = FileManagement.readFile(new InputStreamReader(rleStream));
-            implementFileData(fileData);
+            HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
+            applyFileData(fileData);
         }
     }
 
-    private void implementFileData(String[] fileData) throws IOException {
-        titleText.setText(fileData[0]);
-        originText.setText(fileData[1]);
-        commentText.setText(fileData[2]);
-        int width = FileManagement.readDimension(fileData[3]);
-        int height = FileManagement.readDimension(fileData[4]);
+    private void applyFileData(HashMap<String, String> fileData) throws IOException {
+
+        // Show metadata in GUI
+        titleText.setText(fileData.get("title"));
+        originText.setText(fileData.get("origin"));
+        commentText.setText(fileData.get("comments"));
+
+        // Apply board size
+        int width = FileManagement.readDimension(fileData.get("width"));
+        int height = FileManagement.readDimension(fileData.get("height"));
         staticBoard.setWIDTH(width);
         staticBoard.setHEIGHT(height);
         staticBoard.newBoard();
-        FileManagement.readRules(fileData[5]);
-        staticBoard.setBoard(FileManagement.readPattern(fileData[6], width, height));
+
+        // Apply rules
+        int rules[][] = FileManagement.readRules(fileData.get("rules"));
+        GoL.setBornAmount(rules[0]);
+        GoL.setSurviveAmount(rules[1]);
+
+        // Apply pattern
+        staticBoard.setBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
     }

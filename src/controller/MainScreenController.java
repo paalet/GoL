@@ -18,10 +18,7 @@ import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
@@ -221,33 +218,24 @@ public class MainScreenController implements Initializable {
 
     public void readFileFromDisk() throws IOException {
 
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Choose Game of Life pattern file");
-        File returnFile = chooser.showOpenDialog(null);
-        if (returnFile != null) {
+        File rleFile = FileManagement.loadFileFromDisk();
+        if ( rleFile != null) {
 
-            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
+            FileManagement.readFile(new FileReader(rleFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
+            displayMetadata();
             calculateCellSizeOnPatternLoad();
             draw();
-        } else {
-
-            System.out.println("User aborted");
         }
-        displayMetadata();
     }
 
 
     public void readFileFromURL() throws IOException {
 
-        TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
-        Optional<String> input = inputDialog.showAndWait();
-        if (input.isPresent()) {
+        InputStream rleStream = FileManagement.loadFileFromURL();
+        if (rleStream != null) {
 
-            String url = input.get();
-            URL destination = new URL(url);
-            URLConnection conn = destination.openConnection();
-            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
+            FileManagement.readFile(new InputStreamReader(rleStream), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
+            displayMetadata();
             calculateCellSizeOnPatternLoad();
             draw();
         }

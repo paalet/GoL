@@ -4,12 +4,16 @@ import controller.MainScreenController;
 
 import java.awt.*;
 import java.awt.TextArea;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+
 import java.awt.TextArea;
 
 import static javafx.application.ConditionalFeature.FXML;
@@ -18,6 +22,40 @@ import static javafx.application.ConditionalFeature.FXML;
  * Created by simenperschandersen on 07.03.2017.
  */
 public class FileManagement {
+
+
+    public static File loadFileFromDisk() {
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose Game of Life pattern file");
+        File returnFile = chooser.showOpenDialog(null);
+        if (returnFile != null) {
+
+            return returnFile;
+        } else {
+
+            System.out.println("User aborted");
+            return null;
+        }
+    }
+
+
+    public static InputStream loadFileFromURL() throws IOException{
+
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
+        Optional<String> input = inputDialog.showAndWait();
+        if (input.isPresent()) {
+
+            String url = input.get();
+            URL destination = new URL(url);
+            URLConnection conn = destination.openConnection();
+            InputStream returnStream = conn.getInputStream();
+            return returnStream;
+        } else {
+            return null;
+        }
+    }
 
 
     public static void readFile(Reader r, StaticBoard staticBoard, double canvasHeight, double canvasWidth, String[] metaData) throws IOException {
@@ -64,12 +102,13 @@ public class FileManagement {
 
 
 
-        //Find x-size
+        // Find x-size
         int x = fileStringResult.indexOf(120, i);
         int comma = fileStringResult.indexOf(44, x);
         String coordSubString = fileStringResult.substring(x,comma);
         staticBoard.setWIDTH(readDimension(coordSubString));
-        //Find y-size
+
+        // Find y-size
         int y = fileStringResult.indexOf(121, i);
         comma = fileStringResult.indexOf(44, y);
         coordSubString = fileStringResult.substring(y,comma);
@@ -77,7 +116,7 @@ public class FileManagement {
         staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
         staticBoard.newBoard();
 
-        //Find rules if there are any
+        // Find rules if there are any
         if (fileStringResult.contains("rule")) {
             int rulesIndex = fileStringResult.indexOf("rule");
             int rulesEndIndex = fileStringResult.indexOf(10, rulesIndex);

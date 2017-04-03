@@ -8,7 +8,12 @@ import org.junit.Test;
 public class BoardTest {
 
     @Test
-    public void testNextGeneration_board01_8x8(){
+    public void testNextGeneration_board01(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -51,7 +56,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board02_8x8(){
+    public void testNextGeneration_board02(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -94,7 +104,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board03_8x8(){
+    public void testNextGeneration_board03(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -137,7 +152,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board04_8x8(){
+    public void testNextGeneration_board04(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -180,7 +200,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board05_8x8(){
+    public void testNextGeneration_board05(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -223,7 +248,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board06_8x8(){
+    public void testNextGeneration_board06(){
+
+        /*
+         Boardsize: 8x8
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -266,7 +296,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board07_6x10(){
+    public void testNextGeneration_board07(){
+
+        /*
+         Boardsize: 6x10
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -305,7 +340,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board08_5x10(){
+    public void testNextGeneration_board08(){
+
+        /*
+         Boardsize: 10x5
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -352,7 +392,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board09_10x10(){
+    public void testNextGeneration_board09(){
+
+        /*
+         Boardsize: 10x10
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -399,7 +444,12 @@ public class BoardTest {
 
 
     @Test
-    public void testNextGeneration_board10_10x10(){
+    public void testNextGeneration_board10(){
+
+        /*
+         Boardsize: 10x10
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {
@@ -447,6 +497,11 @@ public class BoardTest {
 
     @Test
     public void testNextGeneration_multipleGenerations(){
+
+        /*
+         Boardsize: 10x10
+         Rules:     b3 / s2,3
+        */
 
         // Arrange
         byte[][] testBoard = {

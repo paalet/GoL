@@ -229,7 +229,7 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void implementFileData(String[] fileData) throws IOException {
+    private void implementFileData(String[] fileData) throws IOException {
         titleText.setText(fileData[0]);
         originText.setText(fileData[1]);
         commentText.setText(fileData[2]);
@@ -237,7 +237,6 @@ public class MainScreenController implements Initializable {
         int height = FileManagement.readDimension(fileData[4]);
         staticBoard.setWIDTH(width);
         staticBoard.setHEIGHT(height);
-        staticBoard.calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
         staticBoard.newBoard();
         FileManagement.readRules(fileData[5]);
         staticBoard.setBoard(FileManagement.readPattern(fileData[6], width, height));

@@ -12,6 +12,10 @@ import java.util.HashMap;
 
 public class FileManagementTest {
 
+
+    // TODO: 04.04.2017 Teste loadfile-metodene og få til testReadFile
+
+
     @Test
     public void testReadFile() throws IOException {
 
@@ -122,6 +126,108 @@ public class FileManagementTest {
 
         // Assert
         Assert.assertEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_01() {
+
+        // Arrange
+        String rulesString = new String("rule = b3/s23");
+        int[] bornAmount = {3};
+        int[] surviveAmount = {2,3};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_02() {
+
+        // Arrange
+        String rulesString = new String("rule = b123/s12345678");
+        int[] bornAmount = {1,2,3};
+        int[] surviveAmount = {1,2,3,4,5,6,7,8};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_03() {
+
+        // Arrange
+        String rulesString = new String("rules = b12/s234");
+        int[] bornAmount = {1,2};
+        int[] surviveAmount = {2,3,3};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_04() {
+
+        // Arrange
+        String rulesString = new String("rule = B3/S23");
+        int[] bornAmount = {3};
+        int[] surviveAmount = {2,3};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_05() {
+
+        // Arrange
+        String rulesString = new String("rule = 38/238");
+        int[] bornAmount = {3,8};
+        int[] surviveAmount = {2,3,8};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
+    public void testReadRules_06() {
+
+        // Arrange
+        String rulesString = new String("rule=b123/s678");
+        int[] bornAmount = {3};
+        int[] surviveAmount = {2,3};
+        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        // Act
+        int[][] actualResult = FileManagement.readRules(rulesString);
+
+        // Assert
+        Assert.assertArrayEquals(expectedResult, actualResult);
     }
 
 

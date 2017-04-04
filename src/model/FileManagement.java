@@ -1,5 +1,8 @@
 package model;
 
+import controller.MainScreenController;
+import model.CustomDialog;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -7,6 +10,13 @@ import java.util.*;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.TextArea;
+import java.util.List;
+
+import static javafx.application.ConditionalFeature.FXML;
 
 /**
  * Logic related to handling input from .rle files.
@@ -19,6 +29,7 @@ public class FileManagement {
      */
     public static File loadFileFromDisk() {
 
+        //FileFilter filter = new FileNameExtensionFilter("RLE File", ".rle");
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choose Game of Life pattern file");
         File returnFile = chooser.showOpenDialog(null);
@@ -28,13 +39,17 @@ public class FileManagement {
         } else {
 
             System.out.println("User aborted");
+            JFrame frame = new JFrame("Error");
+            CustomDialog dialog = new CustomDialog(frame, true, false, "No file chosen");
             return null;
         }
     }
 
     /**
-     * Finds a .rle file through URL from user input.
-     * @return File at specified URL.
+
+     * Returns an inputStream from a URL the user types in an inputDialog.
+     * @return
+
      * @throws IOException
      */
     public static InputStream loadFileFromURL() throws IOException{
@@ -55,16 +70,20 @@ public class FileManagement {
     }
 
     /**
-     * Breaks the data from a .rle file into Strings and returns them in a HashMap
-     * to use as input for further breakdown and implementation.
-     * @param r .rle file as Reader.
-     * @return HashMap containing Strings for title, origin, comments, width, height, rules and pattern.
+     * Returns a HashMap of the values located in .rle file.
+     * @param r
+     * @return
+
      * @throws IOException
      */
     public static HashMap<String, String> readFile(Reader r) throws IOException {
 
         HashMap<String, String> fileData = new HashMap<>();
         StringBuilder fileStringBuilder = new StringBuilder();
+
+        /**
+         * Reads the file and builds a String with its contents off which the rest of the method is based on.
+         */
         int data = r.read();
         while (data != -1) {
 
@@ -75,7 +94,9 @@ public class FileManagement {
         String fileString = new String(fileStringBuilder);
         int i = 0;
 
-        //Sift out title and comments
+        /**
+         * Sifts out titles, origins and comments located in a .rle-file.
+         */
         String title = null;
         String origin = null;
         StringBuilder commentBuilder = new StringBuilder();
@@ -105,20 +126,26 @@ public class FileManagement {
         fileData.put("origin", origin);
         fileData.put("comments", comments);
 
-        // Find x-size
+        /**
+         * Finds the size of the x-coordinates a .rle file.
+         */
         int x = fileString.indexOf(120, i);
         int comma = fileString.indexOf(44, x);
         String widthSubString = fileString.substring(x,comma);
         fileData.put("width", widthSubString);
 
 
-        // Find y-size
+        /**
+         * Finds the size of the y-coordinates in a .rle file.
+         */
         int y = fileString.indexOf(121, i);
         comma = fileString.indexOf(44, y);
         String heightSubString = fileString.substring(y,comma);
         fileData.put("height", heightSubString);
 
-        // Find rules
+        /**
+         * Finds the rules in a .rle file.
+         */
         if (fileString.contains("rule")) {
 
             int rulesIndex = fileString.indexOf("rule");
@@ -127,7 +154,9 @@ public class FileManagement {
             fileData.put("rules", rulesString);
         }
 
-        // Extract Game of Life pattern
+        /**
+         * Extracts a Game of Life board pattern.
+         */
         int endOfLine = fileString.indexOf(10, i);
         i = endOfLine + 1;
         String patternString = fileString.substring(i);

@@ -44,7 +44,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -92,7 +92,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -140,7 +140,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -188,7 +188,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -236,7 +236,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -284,7 +284,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -328,7 +328,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -380,7 +380,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -432,7 +432,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -484,7 +484,7 @@ public class BoardTest {
         int[] initSurviveAmount = {2,3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
         testStaticBoard.nextGeneration();
@@ -537,7 +537,7 @@ public class BoardTest {
         GoL.setSurviveAmount(initSurviveAmount);
 
         // Act
-        testStaticBoard.setBoard(testBoard);
+        testStaticBoard.setCurrentBoard(testBoard);
         for (int i = 0; i < 28; i++) {
             testStaticBoard.nextGeneration();
         }

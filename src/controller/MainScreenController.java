@@ -250,7 +250,7 @@ public class MainScreenController implements Initializable {
         GoL.setSurviveAmount(rules[1]);
 
         // Apply pattern
-        staticBoard.setBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+        staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
     }

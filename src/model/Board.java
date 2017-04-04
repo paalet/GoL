@@ -303,6 +303,13 @@ public abstract class Board {
         return currentBoard;
     }
 
+
+    public void setCurrentBoard(byte[][] newBoard) {
+
+        currentBoard = newBoard;
+    }
+
+
     public int getWIDTH() {
         return WIDTH;
     }
@@ -332,11 +339,5 @@ public abstract class Board {
         }
         String boardString = new String(sb);
         return boardString;
-    }
-
-
-    public void setBoard(byte[][] newBoard) {
-
-        currentBoard = newBoard;
     }
 }

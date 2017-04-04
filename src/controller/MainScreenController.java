@@ -21,9 +21,6 @@ import java.io.*;
 import java.util.HashMap;
 
 
-/**
- * Created by Pål on 09.02.2017.
- */
 public class MainScreenController implements Initializable {
 
     @FXML
@@ -38,8 +35,6 @@ public class MainScreenController implements Initializable {
     private ColorPicker deadCellColorPicker;
     @FXML
     private Label fpsLabel;
-    @FXML
-    private Button openFileButton;
     @FXML
     private TextArea titleText;
     @FXML
@@ -256,7 +251,7 @@ public class MainScreenController implements Initializable {
     }
 
 
-    public void calculateCellSizeOnPatternLoad() {
+    private void calculateCellSizeOnPatternLoad() {
 
         double canvasHeightDouble = boardCanvas.getHeight();
         int boardHeightInt = staticBoard.getHEIGHT();

@@ -1,29 +1,22 @@
 package model;
 
-import controller.MainScreenController;
-
-import java.awt.*;
-import java.awt.TextArea;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
-
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
-import java.awt.TextArea;
-import java.util.List;
-
-import static javafx.application.ConditionalFeature.FXML;
 
 /**
- * Created by simenperschandersen on 07.03.2017.
+ * Logic related to handling input from .rle files.
  */
 public class FileManagement {
 
-
+    /**
+     * Finds a local .rle file through user interaction with FileChooser.
+     * @return File at the specified filepath.
+     */
     public static File loadFileFromDisk() {
 
         FileChooser chooser = new FileChooser();
@@ -39,7 +32,11 @@ public class FileManagement {
         }
     }
 
-
+    /**
+     * Finds a .rle file through URL from user input.
+     * @return File at specified URL.
+     * @throws IOException
+     */
     public static InputStream loadFileFromURL() throws IOException{
 
         TextInputDialog inputDialog = new TextInputDialog();
@@ -57,7 +54,13 @@ public class FileManagement {
         }
     }
 
-
+    /**
+     * Breaks the data from a .rle file into Strings and returns them in a HashMap
+     * to use as input for further breakdown and implementation.
+     * @param r .rle file as Reader.
+     * @return HashMap containing Strings for title, origin, comments, width, height, rules and pattern.
+     * @throws IOException
+     */
     public static HashMap<String, String> readFile(Reader r) throws IOException {
 
         HashMap<String, String> fileData = new HashMap<>();
@@ -134,6 +137,12 @@ public class FileManagement {
     }
 
 
+    /**
+     * Takes a String containing board dimension data from the loaded .rle file, isolates it and returns it as int.
+     * @param inputString a String describing the width or height data.
+     * @return dimension as int.
+     * @throws IOException
+     */
     public static int readDimension(String inputString) throws IOException {
 
         Scanner dimensionScanner = new Scanner(inputString);
@@ -152,7 +161,12 @@ public class FileManagement {
         return dimension;
     }
 
-
+    /**
+     * Takes a String containing rule data from the loaded .rle file, identifies birth and survival cases of
+     * the loaded .rle file and place them in arrays as int values.
+     * @param rulesString a String describing rule data .
+     * @return array of int arrays with birth and survival rule cases.
+     */
     public static int[][] readRules(String rulesString) {
 
         //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
@@ -200,6 +214,16 @@ public class FileManagement {
         return rules;
     }
 
+
+    /**
+     * Converts a string containing cell pattern from the loaded .rle file into a two dimensional byte array
+     * that represents the cell pattern.
+     * @param patternString a String of cell pattern data.
+     * @param width width of the pattern. Determines size of first dimension of array.
+     * @param height height of the pattern. Determines size of second dimension of array.
+     * @return two dimensional byte array where value 0 represents a dead cell and value 1 represents a live cell.
+     * @throws IOException
+     */
     public static byte[][] readPattern(String patternString, int width, int height) throws IOException {
 
         // Create scanner to break pattern into rows

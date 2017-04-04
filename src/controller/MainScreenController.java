@@ -12,22 +12,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.io.*;
+import java.util.HashMap;
 
 
 /**
@@ -58,7 +49,6 @@ public class MainScreenController implements Initializable {
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
-    private String [] metaData = new String[3];
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -221,45 +211,48 @@ public class MainScreenController implements Initializable {
 
     public void readFileFromDisk() throws IOException {
 
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Choose Game of Life pattern file");
-        File returnFile = chooser.showOpenDialog(null);
-        if (returnFile != null) {
+        File rleFile = FileManagement.loadFileFromDisk();
+        if ( rleFile != null) {
 
-            FileManagement.readFile(new FileReader(returnFile), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
-            calculateCellSizeOnPatternLoad();
-            draw();
-        } else {
-
-            System.out.println("User aborted");
+            HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
+            applyFileData(fileData);
         }
-        displayMetadata();
     }
 
 
     public void readFileFromURL() throws IOException {
 
-        TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
-        Optional<String> input = inputDialog.showAndWait();
-        if (input.isPresent()) {
+        InputStream rleStream = FileManagement.loadFileFromURL();
+        if (rleStream != null) {
 
-            String url = input.get();
-            URL destination = new URL(url);
-            URLConnection conn = destination.openConnection();
-            FileManagement.readFile(new InputStreamReader(conn.getInputStream()), staticBoard, boardCanvas.getHeight(), boardCanvas.getWidth(), metaData);
-            calculateCellSizeOnPatternLoad();
-            draw();
+            HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
+            applyFileData(fileData);
         }
     }
 
-    public void displayMetadata() {
-        titleText.setText(metaData[0]);
-        originText.setText(metaData[1]);
-        commentText.setText(metaData[2]);
+    private void applyFileData(HashMap<String, String> fileData) throws IOException {
 
+        // Show metadata in GUI
+        titleText.setText(fileData.get("title"));
+        originText.setText(fileData.get("origin"));
+        commentText.setText(fileData.get("comments"));
 
+        // Apply board size
+        int width = FileManagement.readDimension(fileData.get("width"));
+        int height = FileManagement.readDimension(fileData.get("height"));
+        staticBoard.setWIDTH(width);
+        staticBoard.setHEIGHT(height);
+        staticBoard.newBoard();
 
+        // Apply rules
+        int rules[][] = FileManagement.readRules(fileData.get("rules"));
+        GoL.setBornAmount(rules[0]);
+        GoL.setSurviveAmount(rules[1]);
+
+        // Apply pattern
+        staticBoard.setBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+        calculateCellSizeOnPatternLoad();
+        draw();
     }
 
 

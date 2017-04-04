@@ -140,7 +140,7 @@ public class FileManagement {
         dimensionScanner.useDelimiter(" ");
         boolean isDone = false;
         int dimension = 0;
-        while (!isDone) {
+        while (!isDone && dimensionScanner.hasNext()) {
             if (dimensionScanner.hasNextInt()) {
                 dimension = dimensionScanner.nextInt();
                 isDone = true;
@@ -151,6 +151,7 @@ public class FileManagement {
         }
         return dimension;
     }
+
 
     public static int[][] readRules(String rulesString) {
 
@@ -204,15 +205,15 @@ public class FileManagement {
         // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);
         patternScanner.useDelimiter("\\$");
-        byte[][] board = new byte[width][height];
-        int rowNo = 0;
+        byte[][] board = new byte[height][width];
+        int y = 0;
 
         // Create charArray with pattern info for each row
         while (patternScanner.hasNext()) {
             String row = new String(patternScanner.next());
             char[] charArray = row.toCharArray();
             String cellCountString = new String("");
-            int columnNo = 0;
+            int x = 0;
 
             // Go through each row char by char
             try {
@@ -227,13 +228,13 @@ public class FileManagement {
                     else if (charArray[i] == 98) {
 
                         if (cellCountString.equals("")) {
-                            board[rowNo][columnNo] = 0;
-                            columnNo++;
+                            board[y][x] = 0;
+                            x++;
                         } else {
                             int cellCountInt = Integer.parseInt(cellCountString);
                             for (int j = 0; j < cellCountInt; j++) {
-                                board[rowNo][columnNo] = 0;
-                                columnNo++;
+                                board[y][x] = 0;
+                                x++;
                             }
                         }
                         cellCountString = "";
@@ -242,23 +243,23 @@ public class FileManagement {
                     // Alive cell
                     else if (charArray[i] == 111) {
                         if (cellCountString.equals("")) {
-                            board[rowNo][columnNo] = 1;
-                            columnNo++;
+                            board[y][x] = 1;
+                            x++;
                         } else {
                             int cellCountInt = Integer.parseInt(cellCountString);
                             for (int j = 0; j < cellCountInt; j++) {
-                                board[rowNo][columnNo] = 1;
-                                columnNo++;
+                                board[y][x] = 1;
+                                x++;
                             }
                         }
                         cellCountString = "";
                     }
                 }
-                rowNo++;
             }
             catch(ArrayIndexOutOfBoundsException e) {
                 //
             }
+            y++;
         }
         return board;
     }

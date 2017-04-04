@@ -66,7 +66,7 @@ public class MainScreenController implements Initializable {
         gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
         GoL.setIsRunning(false);
-        int[] initBornAmount = {1};
+        int[] initBornAmount = {3};
         int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);

@@ -23,9 +23,6 @@ import java.io.*;
 import java.util.HashMap;
 
 
-/**
- * Created by Pål on 09.02.2017.
- */
 public class MainScreenController implements Initializable {
 
     @FXML
@@ -40,8 +37,6 @@ public class MainScreenController implements Initializable {
     private ColorPicker deadCellColorPicker;
     @FXML
     private Label fpsLabel;
-    @FXML
-    private Button openFileButton;
     @FXML
     private TextArea titleText;
     @FXML
@@ -280,7 +275,7 @@ public class MainScreenController implements Initializable {
         GoL.setSurviveAmount(rules[1]);
 
         // Apply pattern
-        staticBoard.setBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+        staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
     }
@@ -289,6 +284,7 @@ public class MainScreenController implements Initializable {
      * Re-evaluates an appropriate cellsize if a new board pattern is loaded.
      */
     public void calculateCellSizeOnPatternLoad() {
+
 
         double canvasHeightDouble = boardCanvas.getHeight();
         int boardHeightInt = staticBoard.getHEIGHT();

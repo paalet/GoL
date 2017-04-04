@@ -241,11 +241,11 @@ public abstract class Board {
     public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
         double posX = event.getX();
         double posY = event.getY();
-        double ycellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-        double xcellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+        double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+        double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX / (boardCanvas.getWidth() / xcellsInFrame);
-        double cellPosY = posY / (boardCanvas.getHeight() / ycellsInFrame);
+        double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
+        double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
 
         int cellX = (int) cellPosX;
         int cellY = (int) cellPosY;
@@ -268,7 +268,6 @@ public abstract class Board {
             visitedCellWithDrag[0] = cellX;
             visitedCellWithDrag[1] = cellY;
         }
-
     }
 
     /**
@@ -340,6 +339,13 @@ public abstract class Board {
         return currentBoard;
     }
 
+
+    public void setCurrentBoard(byte[][] newBoard) {
+
+        currentBoard = newBoard;
+    }
+
+
     public int getWIDTH() {
         return WIDTH;
     }
@@ -360,20 +366,14 @@ public abstract class Board {
     @Override
     public String toString() {
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder boardStringBuilder = new StringBuilder();
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 byte b = currentBoard[y][x];
-                sb.append(b);
+                boardStringBuilder.append(b);
             }
         }
-        String boardString = new String(sb);
+        String boardString = new String(boardStringBuilder);
         return boardString;
-    }
-
-
-    public void setBoard(byte[][] newBoard) {
-
-        currentBoard = newBoard;
     }
 }

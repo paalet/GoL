@@ -5,9 +5,7 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.canvas.Canvas;
 
-/**
- * Created by Pål on 09.02.2017.
- */
+
 public class GoL {
 
 

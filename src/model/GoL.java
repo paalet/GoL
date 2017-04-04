@@ -96,6 +96,9 @@ public class GoL {
         return surviveAmount;
     }
 
+    /**
+    * Calculates a cellsize and snaps it to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
+    */
     public static void calculateCellSize (double canvasHeight, double canvasWidth, Slider cellSizeSlider) {
         double sizeFromSlider = cellSizeSlider.getValue();
 

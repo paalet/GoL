@@ -13,10 +13,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import jdk.nashorn.internal.scripts.JO;
 import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.HashMap;
 
@@ -87,18 +89,28 @@ public class MainScreenController implements Initializable {
         draw();
     }
 
-
+    /**
+     * A simple function that calles the draw function in the Board class.
+     */
     private void draw() {
 
         staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 
+    /**
+     * A function used to calculate the appropriate canvas size in case the dimensions of the board changes.
+     * Used to avoid empty spaces on the canvas, which looks ugly, and can result in some nasty exceptions.
+     * @param boardWidth
+     * @return
+     */
     public double calculateCanvasWidth(int boardWidth) {
         double boardWidthDouble = (double) boardWidth;
         return GoL.getCellSize() * boardWidthDouble;
     }
 
-
+    /**
+     * An event listener that gets called upon pressing start. Sets the animation into play if the animation isnt running, pauses otherwise.
+     */
     public void playEvent() {
 
         if (!GoL.getIsRunning()) {
@@ -110,7 +122,9 @@ public class MainScreenController implements Initializable {
         }
     }
 
-
+    /**
+     * Resumes timeline.
+     */
     private void play() {
 
         timeline.setRate(GoL.getCurrRate());
@@ -127,7 +141,9 @@ public class MainScreenController implements Initializable {
         playButton.setText("Resume");
     }
 
-
+    /**
+     * Calculates a cellsize and snaps it, and the slider to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
+     */
     public void setCellSizeEvent() {
         GoL.calculateCellSize(boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider);
         calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
@@ -177,7 +193,9 @@ public class MainScreenController implements Initializable {
         }
     }
 
-
+    /**
+     * Increases speed incrementally with 0.5 fps, and sets the label to display the new value.
+     */
     public void increaseSpeedEvent() {
 
         if (GoL.getIsRunning()) {
@@ -198,12 +216,19 @@ public class MainScreenController implements Initializable {
         }
     }
 
-
+    /**
+     * Kills or gives birth to a cell on a simple click.
+     * @param event
+     */
     public void cellClickEvent(MouseEvent event) {
 
         staticBoard.cellClickDraw(event, gc, boardCanvas);
     }
 
+    /**
+     * Functionally the same as cellClickEvent, only with the possibility of dragging across mutiple cells to kill/give birth to cells quickly.
+     * @param event
+     */
     public void boardDragEvent(MouseEvent event) {
         staticBoard.cellDragDraw(event, gc, boardCanvas);
 
@@ -230,6 +255,11 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Applies data obtained from the readFile method in FileManagement into the running program, such as title, origin, comments, board dimensions, rules, and the board.
+     * @param fileData
+     * @throws IOException
+     */
     private void applyFileData(HashMap<String, String> fileData) throws IOException {
 
         // Show metadata in GUI
@@ -255,7 +285,9 @@ public class MainScreenController implements Initializable {
         draw();
     }
 
-
+    /**
+     * Re-evaluates an appropriate cellsize if a new board pattern is loaded.
+     */
     public void calculateCellSizeOnPatternLoad() {
 
         double canvasHeightDouble = boardCanvas.getHeight();

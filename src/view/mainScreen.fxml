@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.geometry.*?>
@@ -94,6 +95,21 @@
                         <Label fx:id="fpsLabel" text="FPS" />
                      </children>
                   </StackPane>
+                  <StackPane prefHeight="9.0" prefWidth="100.0">
+                     <children>
+                        <Line endX="80.0" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="21.0" prefWidth="122.0">
+                     <children>
+                        <Label text="Rules:" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="21.0" prefWidth="122.0">
+                     <children>
+                        <Label fx:id="rulesLabel" />
+                     </children>
+                  </StackPane>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -115,26 +131,26 @@
                       </StackPane>
                </children>
             </VBox>
-            <VBox prefHeight="123.0" prefWidth="276.0">
+            <VBox prefHeight="123.0" prefWidth="334.0">
                <children>
                   <HBox prefHeight="36.0" prefWidth="276.0">
                      <children>
                         <VBox prefHeight="36.0" prefWidth="131.0">
                            <children>
                               <Label text="Title" />
-                              <TextArea fx:id="titleText" prefHeight="48.0" prefWidth="176.0" />
+                              <TextArea fx:id="titleText" prefHeight="48.0" prefWidth="176.0" style="-fx-font-size: 10;" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="36.0" prefWidth="144.0">
+                        <VBox prefHeight="36.0" prefWidth="202.0">
                            <children>
                               <Label text="Origin" />
-                              <TextArea fx:id="originText" prefHeight="48.0" prefWidth="176.0" />
+                              <TextArea fx:id="originText" prefHeight="48.0" prefWidth="176.0" style="-fx-font-size: 10;" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                   <Label text="Comment" />
-                  <TextArea fx:id="commentText" prefHeight="56.0" prefWidth="285.0" />
+                  <TextArea fx:id="commentText" prefHeight="56.0" prefWidth="285.0" style="-fx-font-size: 10;" />
                </children>
             </VBox>
          </children>

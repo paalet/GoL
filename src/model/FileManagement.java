@@ -39,8 +39,7 @@ public class FileManagement {
         } else {
 
             System.out.println("User aborted");
-            JFrame frame = new JFrame("Error");
-            CustomDialog dialog = new CustomDialog(frame, true, false, "No file chosen");
+            CustomDialog dialog = new CustomDialog("Melding", true,  "Ingen fil valgt", 300, 100);
             return null;
         }
     }
@@ -109,13 +108,14 @@ public class FileManagement {
             switch (nextChar) {
 
                 case 78:
-                    title = new String(fileString.substring(hashTag + 2, endOfLine));
+                    title = fileString.substring(hashTag + 2, endOfLine);
                     break;
                 case 79:
-                    origin = new String(fileString.substring(hashTag + 2, endOfLine));
+                    origin = fileString.substring(hashTag + 2, endOfLine);
                     break;
                 case 67:
                     commentBuilder.append(fileString.substring(hashTag + 2, endOfLine));
+                    commentBuilder.append("\n");
                     break;
                 default:
                     break;

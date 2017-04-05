@@ -197,37 +197,36 @@ public abstract class Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
+    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
+            // Calculate target cell from mouse position
+            double posX = event.getX();
+            double posY = event.getY();
+            double ycellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xcellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        // Calculate target cell from mouse position
-        double posX = event.getX();
-        double posY = event.getY();
-        double ycellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-        double xcellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+            double cellPosX = posX / (boardCanvas.getWidth() / xcellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / ycellsInFrame);
 
-        double cellPosX = posX / (boardCanvas.getWidth() / xcellsInFrame);
-        double cellPosY = posY / (boardCanvas.getHeight() / ycellsInFrame);
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
 
-        int cellX = (int) cellPosX;
-        int cellY = (int) cellPosY;
-
-        if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
-            visitedCellWithDrag[0] = 999999999;
-            visitedCellWithDrag[1] = 999999999;
-        } else {
-            // Change cell status
-            if (currentBoard[cellY][cellX] == 1) {
-
-                currentBoard[cellY][cellX] = 0;
+            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+                visitedCellWithDrag[0] = 999999999;
+                visitedCellWithDrag[1] = 999999999;
             } else {
+                // Change cell status
+                if (currentBoard[cellY][cellX] == 1) {
 
-                currentBoard[cellY][cellX] = 1;
+                    currentBoard[cellY][cellX] = 0;
+                } else {
+
+                    currentBoard[cellY][cellX] = 1;
+                }
+
+                // Draw new currentBoard
+                //TODO maybe only redraw clicked cell
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
             }
-
-            // Draw new currentBoard
-            //TODO maybe only redraw clicked cell
-            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
-        }
 
     }
 
@@ -238,6 +237,7 @@ public abstract class Board {
      * @param gc
      * @param boardCanvas
      */
+<<<<<<< Updated upstream
     public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
         double posX = event.getX();
         double posY = event.getY();
@@ -246,27 +246,42 @@ public abstract class Board {
 
         double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
         double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
+=======
+    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
+        try {
+            double posX = event.getX();
+            double posY = event.getY();
+            double ycellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xcellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        int cellX = (int) cellPosX;
-        int cellY = (int) cellPosY;
+            double cellPosX = posX / (boardCanvas.getWidth() / xcellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / ycellsInFrame);
+>>>>>>> Stashed changes
 
-        if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
-            //Do nothing
-        } else {
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
 
-            if (currentBoard[cellY][cellX] == 1) {
-
-                currentBoard[cellY][cellX] = 0;
+            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+                //Do nothing
             } else {
 
-                currentBoard[cellY][cellX] = 1;
+                if (currentBoard[cellY][cellX] == 1) {
+
+                    currentBoard[cellY][cellX] = 0;
+                } else {
+
+                    currentBoard[cellY][cellX] = 1;
+                }
+
+
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+
+                visitedCellWithDrag[0] = cellX;
+                visitedCellWithDrag[1] = cellY;
             }
-
-
-            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
-
-            visitedCellWithDrag[0] = cellX;
-            visitedCellWithDrag[1] = cellY;
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+            //Do nothing
         }
     }
 

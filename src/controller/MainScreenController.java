@@ -38,6 +38,13 @@ public class MainScreenController implements Initializable {
     @FXML
     private Label fpsLabel;
     @FXML
+<<<<<<< Updated upstream
+=======
+    private Label rulesLabel;
+    @FXML
+    private Button openFileButton;
+    @FXML
+>>>>>>> Stashed changes
     private TextArea titleText;
     @FXML
     private TextArea originText;
@@ -80,6 +87,22 @@ public class MainScreenController implements Initializable {
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
+        /**
+         * Builds a String to be set as label to display the rules in use.
+         */
+        int[] bornArray = GoL.getBornAmount();
+        int[] surviveArray = GoL.getSurviveAmount();
+        StringBuilder rulesBuilder = new StringBuilder();
+        rulesBuilder.append("B");
+        for (int aBornArray : bornArray) {
+            rulesBuilder.append(aBornArray);
+        }
+        rulesBuilder.append("/S");
+        for(int aSurviveArray : surviveArray) {
+            rulesBuilder.append(aSurviveArray);
+        }
+        String rulesString = new String(rulesBuilder);
+        rulesLabel.setText(rulesString);
 
         draw();
     }
@@ -273,6 +296,19 @@ public class MainScreenController implements Initializable {
         int rules[][] = FileManagement.readRules(fileData.get("rules"));
         GoL.setBornAmount(rules[0]);
         GoL.setSurviveAmount(rules[1]);
+        int[] bornArray = GoL.getBornAmount();
+        int[] surviveArray = GoL.getSurviveAmount();
+        StringBuilder rulesBuilder = new StringBuilder();
+        rulesBuilder.append("B");
+        for (int aBornArray : bornArray) {
+            rulesBuilder.append(aBornArray);
+        }
+        rulesBuilder.append("/S");
+        for(int aSurviveArray : surviveArray) {
+            rulesBuilder.append(aSurviveArray);
+        }
+        String rulesString = new String(rulesBuilder);
+        rulesLabel.setText(rulesString);
 
         // Apply pattern
         staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));

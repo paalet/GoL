@@ -78,6 +78,7 @@ public class GoL {
     }
 
     public static void setBornAmount(int[] newBornAmount) {
+
         bornAmount = newBornAmount;
     }
 
@@ -87,10 +88,12 @@ public class GoL {
     }
 
     public static void setSurviveAmount(int[] newSurviveAmount) {
+
         surviveAmount = newSurviveAmount;
     }
 
     public static int[] getSurviveAmount() {
+
         return surviveAmount;
     }
 

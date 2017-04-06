@@ -256,6 +256,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
             applyFileData(fileData);
+            confirmFiledata(fileData);
         }
     }
 
@@ -267,6 +268,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
             applyFileData(fileData);
+            confirmFiledata(fileData);
         }
     }
 
@@ -289,28 +291,105 @@ public class MainScreenController implements Initializable {
         staticBoard.setHEIGHT(height);
         staticBoard.newBoard();
 
-        // Apply rules
-        int rules[][] = FileManagement.readRules(fileData.get("rules"));
-        GoL.setBornAmount(rules[0]);
-        GoL.setSurviveAmount(rules[1]);
-        int[] bornArray = GoL.getBornAmount();
-        int[] surviveArray = GoL.getSurviveAmount();
-        StringBuilder rulesBuilder = new StringBuilder();
-        rulesBuilder.append("B");
-        for (int aBornArray : bornArray) {
-            rulesBuilder.append(aBornArray);
+        // Apply rules if theres readable rules
+        if(FileManagement.readRules(fileData.get("rules")) != null) {
+            int rules[][] = FileManagement.readRules(fileData.get("rules"));
+            GoL.setBornAmount(rules[0]);
+            GoL.setSurviveAmount(rules[1]);
+            int[] bornArray = GoL.getBornAmount();
+            int[] surviveArray = GoL.getSurviveAmount();
+            StringBuilder rulesBuilder = new StringBuilder();
+            rulesBuilder.append("B");
+            for (int aBornArray : bornArray) {
+                rulesBuilder.append(aBornArray);
+            }
+            rulesBuilder.append("/S");
+            for (int aSurviveArray : surviveArray) {
+                rulesBuilder.append(aSurviveArray);
+            }
+            String rulesString = new String(rulesBuilder);
+            rulesLabel.setText(rulesString);
         }
-        rulesBuilder.append("/S");
-        for(int aSurviveArray : surviveArray) {
-            rulesBuilder.append(aSurviveArray);
-        }
-        String rulesString = new String(rulesBuilder);
-        rulesLabel.setText(rulesString);
 
         // Apply pattern
         staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
+    }
+
+    public void confirmFiledata(HashMap<String, String> fileData) {
+        boolean titleOk = false;
+        boolean originOk = false;
+        boolean commentsOk = false;
+        boolean dimensionsOk = false;
+        boolean rulesOk = false;
+        boolean patternOk = false;
+        if(fileData.get("title") != null) {
+            titleOk = true;
+        }
+        if(fileData.get("origin") != null) {
+            originOk = true;
+        }
+        if(fileData.get("comments") != null) {
+            commentsOk = true;
+        }
+        if(fileData.get("width") != null && fileData.get("height") != null) {
+            dimensionsOk = true;
+        }
+        if(fileData.get("rules") != null) {
+            if(FileManagement.readRules(fileData.get("rules")) != null) {
+                rulesOk = true;
+            }
+        }
+        if(fileData.get("pattern") != null) {
+            patternOk = true;
+        }
+
+        StringBuilder report = new StringBuilder();
+
+        if(titleOk) {
+            report.append("Name found.\n\n");
+        }
+        else {
+            report.append("Name not found.\nNTo display a name, please begin the line where you want the title with '#N'.\n\n");
+        }
+        if(originOk) {
+            report.append("Origin found.\n\n");
+        }
+        else {
+            report.append("Origin not found.\nTo display an origin, please begin the line where you want the origin with '#O'.\n\n");
+        }
+        if(commentsOk) {
+            report.append("Comments found.\n\n");
+        }
+        else {
+            report.append("Comments not found.\nNTo display comments, please begin each line of comment with '#C'.\n\n");
+        }
+        if(rulesOk) {
+            report.append("Rules found and set.\n\n");
+        }
+        else {
+            report.append("Rules not found, or of an invalid format.\nTo implement rules, please use the following syntax:\n\nrules = B{value}/S{value}\n\n'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.\n\n");
+        }
+        if(dimensionsOk) {
+            report.append("Dimensions found and set.\n\n");
+        }
+        else {
+            report.append("Dimensions not found.\nNTo implement a set of board-dimensions, please use the following syntax:\n\nx = {value}, y = {value}\n");
+        }
+        if(patternOk) {
+            report.append("Pattern found and set.\n\n");
+        }
+        else {
+            report.append("Pattern not found, or of invalid format.\nNTo learn how to implement a pattern readable in an RLE-file, please visit http://www.conwaylife.com/wiki/RLE.\n\n");
+        }
+
+        System.out.println(report);
+
+
+
+
+
     }
 
     /**

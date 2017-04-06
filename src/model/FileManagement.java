@@ -194,49 +194,101 @@ public class FileManagement {
      */
     public static int[][] readRules(String rulesString) {
 
-        //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
+        //Trims out "rules" in order to avoid conflict when searching for the index of "s" later in the method.
+        rulesString = rulesString.replace("rules", "");
+
+        //boolean variable that will remain true if everything goes as planned.
+        boolean allOk = true;
+
+        //Counts the a  mount of byte values and makes a new array with a fitting size to fit that amount of values
+        //index represents the index of the char-value b/B
         int stringLength = rulesString.length();
-        int index = rulesString.indexOf(66);
+        int index = rulesString.indexOf(98);
+        if(index == -1) {
+            index = rulesString.indexOf(66);
+            if(index == -1) {
+                allOk = false;
+            }
+        }
         index++;
         int bornNumbers = 0;
-        while (rulesString.charAt(index) != 47) {
-            bornNumbers++;
-            index++;
+        if (allOk) {
+            while (rulesString.charAt(index) != 47) {
+                bornNumbers++;
+                index++;
+            }
         }
-        int [] bornAmount = new int[bornNumbers];;
+        int [] bornAmount = new int[bornNumbers];
+
 
         //Sets the byte values in the array with a for-loop
-        index = rulesString.indexOf(66);
+        //index represents the index of the char-value b/B
+        index = rulesString.indexOf(98);
+        if(index == -1) {
+            index = rulesString.indexOf(66);
+            if(index == -1) {
+                allOk = false;
+            }
+        }
         index++;
-        for (int i = 0; i < bornNumbers; i++) {
-            char charAtIndex = rulesString.charAt(index);
-            int numberAtIndex = Character.getNumericValue(charAtIndex);
-            bornAmount[i] = numberAtIndex;
-            index++;
+        if(allOk) {
+            for (int i = 0; i < bornNumbers; i++) {
+                char charAtIndex = rulesString.charAt(index);
+                int numberAtIndex = Character.getNumericValue(charAtIndex);
+                bornAmount[i] = numberAtIndex;
+                index++;
+            }
         }
 
         //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
-        index = rulesString.indexOf(83);
+        //index represents the index of the char-value s/S
+        index = rulesString.indexOf(115);
+        if(index == -1) {
+            index = rulesString.indexOf(83);
+            if (index == -1) {
+                allOk = false;
+            }
+        }
         index++;
         int surviveNumbers = 0;
-        while (index < stringLength) {
-            surviveNumbers++;
-            index++;
+        if(allOk) {
+            while (index < stringLength) {
+                surviveNumbers++;
+                index++;
+            }
         }
         int [] surviveAmount = new int[surviveNumbers];
 
         //Sets the byte values in the array with a for-loop
-        index = rulesString.indexOf(83);
+        index = rulesString.indexOf(115);
+        if(index == -1) {
+            index = rulesString.indexOf(83);
+            if (index == -1) {
+                allOk = false;
+            }
+        }
         index++;
-        for (int i = 0; i < surviveNumbers; i++) {
-            char charAtIndex = rulesString.charAt(index);
-            int numberAtIndex = Character.getNumericValue(charAtIndex);
-            surviveAmount[i] = numberAtIndex;
-            index++;
+        if(allOk) {
+            for (int i = 0; i < surviveNumbers; i++) {
+                char charAtIndex = rulesString.charAt(index);
+                int numberAtIndex = Character.getNumericValue(charAtIndex);
+                surviveAmount[i] = numberAtIndex;
+                index++;
+            }
         }
 
         int[][] rules = {bornAmount, surviveAmount};
-        return rules;
+
+        //Returns the rules-values if everything went by alright, and we could read the rules fine. Returns null if not.
+        if(allOk)
+        {
+            return rules;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 
 

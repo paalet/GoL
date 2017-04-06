@@ -38,13 +38,10 @@ public class MainScreenController implements Initializable {
     @FXML
     private Label fpsLabel;
     @FXML
-<<<<<<< Updated upstream
-=======
     private Label rulesLabel;
     @FXML
     private Button openFileButton;
     @FXML
->>>>>>> Stashed changes
     private TextArea titleText;
     @FXML
     private TextArea originText;

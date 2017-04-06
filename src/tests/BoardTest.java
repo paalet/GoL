@@ -5,6 +5,9 @@ import model.StaticBoard;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Class for testing the logic in abstract class model.Board
+ */
 public class BoardTest {
 
     @Test

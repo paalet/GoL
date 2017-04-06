@@ -3,9 +3,9 @@ package model;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
-import javafx.scene.canvas.Canvas;
-
-
+/**
+ * Class with data related to game state and execution
+ */
 public class GoL {
 
 
@@ -120,8 +120,13 @@ public class GoL {
     }
 
 
-
-
+    /**
+     * Method that determines if a cell is to live or not in the next generation of the game based on
+     * the conditions set for for birth and survival in the class' fields bornAmount and surviveAmount.
+     * @param neighbors the amount of live cells neighboring the specified cell.
+     * @param aliveStatus the current status of the specified cell.
+     * @return the cell's status for the next generation.
+     */
     public static byte rules(int neighbors, int aliveStatus) {
 
         byte nextStatus = 0;

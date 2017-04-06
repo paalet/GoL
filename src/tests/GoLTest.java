@@ -4,7 +4,9 @@ import model.GoL;
 import org.junit.Assert;
 import org.junit.Test;
 
-
+/**
+ * Class for testing the logic in model.GoL.
+ */
 public class GoLTest {
 
 

@@ -1,22 +1,17 @@
 package model;
 
-import controller.MainScreenController;
-import model.CustomDialog;
-
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.*;
-import javafx.scene.control.*;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.TextArea;
-import java.util.List;
-
-import static javafx.application.ConditionalFeature.FXML;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * Logic related to handling input from .rle files.
@@ -69,7 +64,8 @@ public class FileManagement {
     }
 
     /**
-     * Returns a HashMap of the values located in .rle file.
+     * Returns a HashMap of the data located in .rle file broken up into seperate strings ready for application
+     * or further manipulation.
      * @param r
      * @return
 

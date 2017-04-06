@@ -13,16 +13,16 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import jdk.nashorn.internal.scripts.JO;
 import model.FileManagement;
 import model.GoL;
 import model.StaticBoard;
-
-import javax.swing.*;
 import java.io.*;
 import java.util.HashMap;
 
 
+/**
+ * Controller class that interacts with the view and calls logic from classes in the model package.
+ */
 public class MainScreenController implements Initializable {
 
     @FXML

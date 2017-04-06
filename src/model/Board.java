@@ -5,6 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * Abstract lass containing data and logic related to the size, contents and drawing of the game board.
+ */
 public abstract class Board {
 
     private int WIDTH = 10;
@@ -237,16 +240,7 @@ public abstract class Board {
      * @param gc
      * @param boardCanvas
      */
-<<<<<<< Updated upstream
-    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
-        double posX = event.getX();
-        double posY = event.getY();
-        double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-        double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
-        double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
-=======
     public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
         try {
             double posX = event.getX();
@@ -256,7 +250,6 @@ public abstract class Board {
 
             double cellPosX = posX / (boardCanvas.getWidth() / xcellsInFrame);
             double cellPosY = posY / (boardCanvas.getHeight() / ycellsInFrame);
->>>>>>> Stashed changes
 
             int cellX = (int) cellPosX;
             int cellY = (int) cellPosY;
@@ -377,7 +370,10 @@ public abstract class Board {
         this.HEIGHT = newHeight;
     }
 
-
+    /**
+     * Converts the byte array currentBoard into a string of consecutive "1"s and "0"s.
+     * @return the string made from currentBoard
+     */
     @Override
     public String toString() {
 

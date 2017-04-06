@@ -227,7 +227,6 @@ public abstract class Board {
                 }
 
                 // Draw new currentBoard
-                //TODO maybe only redraw clicked cell
                 draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
             }
 

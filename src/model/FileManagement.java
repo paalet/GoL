@@ -203,7 +203,8 @@ public class FileManagement {
             bornNumbers++;
             index++;
         }
-        int [] bornAmount = new int[bornNumbers];;
+        int [] bornAmount = new int[bornNumbers];
+        System.out.println("Bornnumbers er " + bornNumbers);
 
         //Sets the byte values in the array with a for-loop
         index = rulesString.indexOf(66);
@@ -224,6 +225,7 @@ public class FileManagement {
             index++;
         }
         int [] surviveAmount = new int[surviveNumbers];
+        System.out.println("Survivenumbers er:" + surviveNumbers);
 
         //Sets the byte values in the array with a for-loop
         index = rulesString.indexOf(83);

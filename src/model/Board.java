@@ -74,120 +74,81 @@ public abstract class Board {
      */
     public void nextGeneration() {
 
-        try {
-            for (int y = 0; y < HEIGHT; y++) {
-                try {
-                    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
 
-                        //Counts the neighbors of the particular cell
-                        int neighbors = 0;
-                        int aliveStatus = 0;
+            for (int x = 0; x < WIDTH; x++) {
 
-                        //Checks the status of the cell, whether it is alive or dead.
-                        //Tries and catches ArrayOutOfBoundsExceptions which may occur, like fex. if you
-                        //base your position from currentBoard[0[0] and you try to find x-1 which will result in currentBoard[-1][0] which is out of bounds.
-                        //Nothing happens if exception is caught.
+                int neighbors = 0;
+                int aliveStatus = 0;
 
-                        try {
-                            if (currentBoard[y][x] == 1) {
-                                aliveStatus = 1;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y][x] == 0) {
-                                aliveStatus = 0;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y - 1][x] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y][x - 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-
-                        try {
-                            if (currentBoard[y - 1][x - 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y + 1][x] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y][x + 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y + 1][x + 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-                        try {
-                            if (currentBoard[y - 1][x + 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-
-                        try {
-                            if (currentBoard[y + 1][x - 1] == 1) {
-                                neighbors++;
-                            }
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-
-
-                        //Returns a value to a temporary nextboard based on the rules method in the GoL class.
-                        nextBoard[y][x] = GoL.rules(neighbors, aliveStatus);
-
-                    }
-
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    //
+                //Check the status of the cell, whether it is alive or dead.
+                if (currentBoard[y][x] == 1) {
+                    aliveStatus = 1;
                 }
+                if (currentBoard[y][x] == 0) {
+                    aliveStatus = 0;
+                }
+
+                //Count the number of living neighbors of the particular cell
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
+                    if (currentBoard[y - 1][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y - 1 >= 0 && y - 1 < currentBoard.length) {
+                    if (currentBoard[y - 1][x] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
+                    if (currentBoard[y - 1][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x - 1 >= 0 && x - 1 < currentBoard[y].length) {
+                    if (currentBoard[y][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x + 1 >= 0 && x + 1 < currentBoard[y].length) {
+                    if (currentBoard[y][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
+                    if (currentBoard[y + 1][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y + 1 >= 0 && y + 1 < currentBoard.length) {
+                    if (currentBoard[y + 1][x] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
+                    if (currentBoard[y + 1][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                //Returns a value to a temporary array based on the rules method in the GoL class.
+                nextBoard[y][x] = GoL.rules(neighbors, aliveStatus);
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            //
+
         }
 
-        try {
-            for (int y = 0; y < HEIGHT; y++) {
-                try {
-                    for (int x = 0; x < WIDTH; x++) {
-                        currentBoard[y][x] = nextBoard[y][x];
+        for (int y = 0; y < HEIGHT; y++) {
 
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    //
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            //
+            System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, WIDTH);
         }
+
 
     }
 

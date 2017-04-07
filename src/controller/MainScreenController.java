@@ -256,7 +256,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
             applyFileData(fileData);
-            confirmFiledata(fileData);
+            confirmFileData(fileData);
         }
     }
 
@@ -268,7 +268,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
             applyFileData(fileData);
-            confirmFiledata(fileData);
+            confirmFileData(fileData);
         }
     }
 
@@ -291,7 +291,7 @@ public class MainScreenController implements Initializable {
         staticBoard.setHEIGHT(height);
         staticBoard.newBoard();
 
-        // Apply rules if theres readable rules
+        // Apply rules if there are readable rules
         if(FileManagement.readRules(fileData.get("rules")) != null) {
             int rules[][] = FileManagement.readRules(fileData.get("rules"));
             GoL.setBornAmount(rules[0]);
@@ -317,7 +317,7 @@ public class MainScreenController implements Initializable {
         draw();
     }
 
-    public void confirmFiledata(HashMap<String, String> fileData) {
+    public void confirmFileData(HashMap<String, String> fileData) {
         boolean titleOk = false;
         boolean originOk = false;
         boolean commentsOk = false;

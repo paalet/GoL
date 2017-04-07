@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by simenperschandersen on 04.04.2017.
- * CustomDialog class to easily make commonly used optionpanels.
+ * CustomDialog class to easily make commonly used option panels.
  */
 public class CustomDialog extends JDialog implements ActionListener {
     private JButton okButton;

@@ -148,8 +148,6 @@ public abstract class Board {
 
             System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, WIDTH);
         }
-
-
     }
 
     /**
@@ -310,7 +308,10 @@ public abstract class Board {
 
     public void setCurrentBoard(byte[][] newBoard) {
 
-        currentBoard = newBoard;
+        for (int y = 0; y < HEIGHT; y++) {
+
+            System.arraycopy(newBoard[y], 0, currentBoard[y], 0, WIDTH);
+        }
     }
 
 

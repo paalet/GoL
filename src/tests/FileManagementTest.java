@@ -171,7 +171,7 @@ public class FileManagementTest {
         // Arrange
         String rulesString = new String("rules = b12/s234");
         int[] bornAmount = {1,2};
-        int[] surviveAmount = {2,3,3};
+        int[] surviveAmount = {2,3,4};
         int[][] expectedResult = {bornAmount, surviveAmount};
 
         // Act
@@ -203,9 +203,9 @@ public class FileManagementTest {
     public void testReadRules_05() {
 
         // Arrange
-        String rulesString = new String("rule = 38/238");
-        int[] bornAmount = {3,8};
-        int[] surviveAmount = {2,3,8};
+        String rulesString = new String("rule = b0123456789/s0123456789");
+        int[] bornAmount = {0,1,2,3,4,5,6,7,8,9};
+        int[] surviveAmount = {0,1,2,3,4,5,6,7,8,9};
         int[][] expectedResult = {bornAmount, surviveAmount};
 
         // Act
@@ -220,16 +220,13 @@ public class FileManagementTest {
     public void testReadRules_06() {
 
         // Arrange
-        String rulesString = new String("rule=b123/s678");
-        int[] bornAmount = {3};
-        int[] surviveAmount = {2,3};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+        String rulesString = new String("rule = b38/s23¤8");
 
         // Act
         int[][] actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertNull(actualResult);
     }
 
 

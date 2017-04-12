@@ -110,6 +110,11 @@
                         <Label fx:id="rulesLabel" />
                      </children>
                   </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#openRulesEditor" text="Rules Editor" />
+                     </children>
+                  </StackPane>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">

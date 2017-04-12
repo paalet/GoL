@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.FileManagement;
 import model.GoL;
+import model.RulesEditor;
 import model.StaticBoard;
 import java.io.*;
 import java.util.HashMap;
@@ -245,9 +246,16 @@ public class MainScreenController implements Initializable {
      * @param event
      */
     public void boardDragEvent(MouseEvent event) {
-        staticBoard.cellDragDraw(event, gc, boardCanvas);
 
+        staticBoard.cellDragDraw(event, gc, boardCanvas);
     }
+
+
+    public void openRulesEditor() {
+
+        RulesEditor rulesEditor = new RulesEditor();
+    }
+
 
     public void readFileFromDisk() throws IOException {
 

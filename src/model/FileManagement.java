@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -205,7 +206,7 @@ public class FileManagement {
         //boolean variable that will remain true if everything goes as planned.
         boolean allOk = true;
 
-        //Counts the a  mount of byte values and makes a new array with a fitting size to fit that amount of values
+        //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
         //index represents the index of the char-value b/B
         int stringLength = rulesString.length();
         int index = rulesString.indexOf(98);

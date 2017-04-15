@@ -17,6 +17,7 @@ import model.FileManagement;
 import model.GoL;
 import model.RulesEditor;
 import model.StaticBoard;
+
 import java.io.*;
 import java.util.HashMap;
 
@@ -64,7 +65,6 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
-        //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
         GoL.setIsRunning(false);
@@ -85,22 +85,7 @@ public class MainScreenController implements Initializable {
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
-        /**
-         * Builds a String to be set as label to display the rules in use.
-         */
-        int[] bornArray = GoL.getBornAmount();
-        int[] surviveArray = GoL.getSurviveAmount();
-        StringBuilder rulesBuilder = new StringBuilder();
-        rulesBuilder.append("B");
-        for (int aBornArray : bornArray) {
-            rulesBuilder.append(aBornArray);
-        }
-        rulesBuilder.append("/S");
-        for(int aSurviveArray : surviveArray) {
-            rulesBuilder.append(aSurviveArray);
-        }
-        String rulesString = new String(rulesBuilder);
-        rulesLabel.setText(rulesString);
+        displayRules();
 
         draw();
     }
@@ -250,10 +235,14 @@ public class MainScreenController implements Initializable {
         staticBoard.cellDragDraw(event, gc, boardCanvas);
     }
 
-
+    /**
+     * Opens
+     */
     public void openRulesEditor() {
 
         RulesEditor rulesEditor = new RulesEditor();
+        //TODO make listener that notices rulesEditor closing and calls displayRules
+        displayRules();
     }
 
 
@@ -304,19 +293,7 @@ public class MainScreenController implements Initializable {
             int rules[][] = FileManagement.readRules(fileData.get("rules"));
             GoL.setBornAmount(rules[0]);
             GoL.setSurviveAmount(rules[1]);
-            int[] bornArray = GoL.getBornAmount();
-            int[] surviveArray = GoL.getSurviveAmount();
-            StringBuilder rulesBuilder = new StringBuilder();
-            rulesBuilder.append("B");
-            for (int aBornArray : bornArray) {
-                rulesBuilder.append(aBornArray);
-            }
-            rulesBuilder.append("/S");
-            for (int aSurviveArray : surviveArray) {
-                rulesBuilder.append(aSurviveArray);
-            }
-            String rulesString = new String(rulesBuilder);
-            rulesLabel.setText(rulesString);
+            displayRules();
         }
 
         // Apply pattern
@@ -393,11 +370,26 @@ public class MainScreenController implements Initializable {
         }
 
         System.out.println(report);
+    }
 
+    /**
+     * Builds a String to be set as label to display the rules in use.
+     */
+    public void displayRules() {
 
-
-
-
+        int[] bornArray = GoL.getBornAmount();
+        int[] surviveArray = GoL.getSurviveAmount();
+        StringBuilder rulesBuilder = new StringBuilder();
+        rulesBuilder.append("B");
+        for (int aBornArray : bornArray) {
+            rulesBuilder.append(aBornArray);
+        }
+        rulesBuilder.append("/S");
+        for(int aSurviveArray : surviveArray) {
+            rulesBuilder.append(aSurviveArray);
+        }
+        String rulesString = new String(rulesBuilder);
+        rulesLabel.setText(rulesString);
     }
 
     /**

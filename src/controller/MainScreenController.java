@@ -240,7 +240,9 @@ public class MainScreenController implements Initializable {
      */
     public void openRulesEditor() {
 
-        RulesEditor rulesEditor = new RulesEditor();
+
+        RulesEditor rulesEditor = RulesEditor.getInstance();
+        rulesEditor.setVisible();
         //TODO make listener that notices rulesEditor closing and calls displayRules
         displayRules();
     }

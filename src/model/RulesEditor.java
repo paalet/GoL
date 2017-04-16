@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * Creates and displays an options pane with functionality for the user to set the rules of the game.
  */
 public class RulesEditor extends JDialog {
+
+    private static RulesEditor rulesEditor = new RulesEditor();
     private JButton okButton;
     private JButton cancelButton;
     private JPanel panel;
@@ -18,11 +20,16 @@ public class RulesEditor extends JDialog {
     private ArrayList<Integer> birthRules = new ArrayList<>();
     private ArrayList<Integer> survivalRules = new ArrayList<>();
 
+
+    public static RulesEditor getInstance() {
+        return rulesEditor;
+    }
+
     /**
      * Constructor that creates a JFrame with description of rules and options to add/remove rules
      * from the game through checking and un-checking buttons for each viable birth/survival rule.
      */
-    public RulesEditor() {
+    private RulesEditor() {
 
         int width = 500;
         int height = 500;
@@ -492,7 +499,7 @@ public class RulesEditor extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                frame.dispose();
+                frame.setVisible(false);
             }
         });
 
@@ -518,18 +525,24 @@ public class RulesEditor extends JDialog {
                 }
                 GoL.setSurviveAmount(survivalRulesArray);
 
-                // Close the rules editor
-                frame.dispose();
+                // Hide the rules editor
+                frame.setVisible(false);
+                //frame.dispose();
 
             }
         });
 
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(width, height);
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.setAlwaysOnTop(true);
-        frame.setVisible(true);
+        frame.setVisible(false);
         pack();
+    }
+
+    public void setVisible() {
+
+        frame.setVisible(true);
     }
 }

@@ -541,8 +541,8 @@ public class RulesEditor extends JDialog {
         pack();
     }
 
-    public void setVisible() {
+    public void setVisible(boolean b) {
 
-        frame.setVisible(true);
+        frame.setVisible(b);
     }
 }

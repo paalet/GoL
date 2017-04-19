@@ -86,14 +86,15 @@ public class MainScreenController implements Initializable {
         timeline.setRate(GoL.getCurrRate());
 
         // Create GIF Stage
-        Parent gifRoot = null;
+        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
         try {
-            gifRoot = FXMLLoader.load(getClass().getResource("../view/gifCreator.fxml"));
+            Parent gifRoot = gifLoader.load();
+            Scene gifScene = new Scene(gifRoot);
+            gifStage.setScene(gifScene);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("gifLoader.load() did not produce Parent");
         }
-        Scene gifScene = new Scene(gifRoot);
-        gifStage.setScene(gifScene);
+        GifCreatorController gifController = gifLoader.getController();
         gifStage.setTitle("Create GIF");
         gifStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -169,6 +170,7 @@ public class MainScreenController implements Initializable {
         if (GoL.getIsRunning()) {
             pause();
         }
+        // gifController.setStatic/DynamicBoard som gjør deep copy via constructor med brett som input
         gifStage.showAndWait();
     }
 

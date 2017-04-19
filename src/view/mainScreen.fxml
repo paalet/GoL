@@ -131,7 +131,7 @@
                       </StackPane>
                       <StackPane prefHeight="42.0" prefWidth="104.0">
                           <children>
-                              <Button mnemonicParsing="false" text="Save" textAlignment="CENTER" />
+                              <Button fx:id="saveFileButton" onAction="#openFileEditorWindow" mnemonicParsing="false" text="Save" textAlignment="CENTER" />
                           </children>
                       </StackPane>
                       <StackPane prefHeight="42.0" prefWidth="104.0">

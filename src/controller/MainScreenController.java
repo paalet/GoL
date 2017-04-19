@@ -18,10 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.FileManagement;
-import model.GoL;
-import model.RulesEditor;
-import model.StaticBoard;
+import model.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -47,6 +44,8 @@ public class MainScreenController implements Initializable {
     @FXML
     private Label rulesLabel;
     @FXML
+    private Button saveFileButton;
+    @FXML
     private Button openFileButton;
     @FXML
     private TextArea titleText;
@@ -54,6 +53,16 @@ public class MainScreenController implements Initializable {
     private TextArea originText;
     @FXML
     private TextArea commentText;
+    @FXML
+    private TextArea saveWindowTitleArea;
+    @FXML
+    private TextArea saveWindowOriginArea;
+    @FXML
+    private TextArea saveWindowCommentsArea;
+    @FXML
+    private TextArea saveWindowBornAmountArea;
+    @FXML
+    private TextArea saveWindowSurviveAmountArea;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
@@ -303,7 +312,57 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void saveFileData() throws IOException {
+    public void openFileEditorWindow() throws Exception{
+
+
+        Stage fileEditor = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("../view/saveFile.fxml"));
+
+        Scene scene = new Scene(root, 267, 504);
+
+        fileEditor.setScene(scene);
+        fileEditor.setTitle("Edit and save file");
+        fileEditor.show();
+
+        String title = "";
+        String origin = "";
+        String comments = "";
+
+        if(!titleText.getText().equals("")) {
+            title = titleText.getText();
+        }
+        if(!originText.getText().equals("")) {
+            origin = originText.getText();
+        }
+        if(!commentText.getText().equals("")) {
+            comments = commentText.getText();
+        }
+
+        StringBuilder bornStringBuilder = new StringBuilder();
+        for(int i : GoL.getBornAmount()) {
+            char data = (char) i;
+            bornStringBuilder.append(data);
+        }
+        String bornString = new String(bornStringBuilder);
+
+        StringBuilder surviveStringBuilder = new StringBuilder();
+        for(int i : GoL.getSurviveAmount()) {
+            char data = (char) i;
+            surviveStringBuilder.append(data);
+        }
+
+        String surviveString = new String(surviveStringBuilder);
+
+        saveWindowTitleArea.setText(title);
+        saveWindowOriginArea.setText(origin);
+        saveWindowCommentsArea.setText(comments);
+        saveWindowBornAmountArea.setText(bornString);
+        saveWindowSurviveAmountArea.setText(surviveString);
+
+
+    }
+
+    public void openFileEditor() throws IOException {
 
         Stage editor = new Stage();
         /*HashMap<String, String> fileData = new HashMap<>();
@@ -450,7 +509,7 @@ public class MainScreenController implements Initializable {
         System.out.print(reportString);
 
 
-        //CustomDialog importInfo = new CustomDialog("File load", true, reportString, 400, linesInReport * 50, linesInReport);
+        CustomDialog importInfo = new CustomDialog("File load", true, reportString, 400, linesInReport * 50);
         System.out.println(report);
     }
 

@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.FileManagement;
 import model.GoL;
@@ -271,6 +272,33 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    public void saveFileData() throws IOException {
+
+        Stage editor = new Stage();
+        /*HashMap<String, String> fileData = new HashMap<>();
+
+        //Inserts title if there is a title
+        fileData.put("title", titleText.getText());
+
+        //Inserts origin
+        fileData.put("origin", originText.getText());
+
+        //Inserts comments
+        fileData.put("comment", commentText.getText());
+
+        //Inserts height of board
+        fileData.put("boardHeight", staticBoard.getHEIGHT());
+
+        //Inserts width of board
+        fileData.put("boardWidth", staticBoard.getWIDTH());
+        */
+
+
+
+
+
+    }
+
     /**
      * Applies data obtained from the readFile method in FileManagement into the running program, such as title, origin, comments, board dimensions, rules, and the board.
      * @param fileData
@@ -302,6 +330,9 @@ public class MainScreenController implements Initializable {
         staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
+
+        //Set data as loaded data
+        GoL.setLoadedData(fileData);
     }
 
     public void confirmFileData(HashMap<String, String> fileData) {
@@ -333,44 +364,62 @@ public class MainScreenController implements Initializable {
         }
 
         StringBuilder report = new StringBuilder();
+        int linesInReport = 0;
 
         if(titleOk) {
             report.append("Name found.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
-            report.append("Name not found.\nNTo display a name, please begin the line where you want the title with '#N'.\n\n");
+            report.append("Name not found.\nTo display a name, please begin the line where you want the title with '#N'.\n\n");
+            linesInReport = linesInReport + 3;
         }
         if(originOk) {
             report.append("Origin found.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
             report.append("Origin not found.\nTo display an origin, please begin the line where you want the origin with '#O'.\n\n");
+            linesInReport = linesInReport + 3;
         }
         if(commentsOk) {
             report.append("Comments found.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
             report.append("Comments not found.\nNTo display comments, please begin each line of comment with '#C'.\n\n");
+            linesInReport = linesInReport + 3;
         }
         if(rulesOk) {
             report.append("Rules found and set.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
-            report.append("Rules not found, or of an invalid format.\nTo implement rules, please use the following syntax:\n\nrules = B{value}/S{value}\n\n'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.\n\n");
+            report.append("Rules not found, or of an invalid format.\nTo implement rules, please use the following syntax:\n\nrules = B{value}/S{value}\b\b'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.\b\b");
+            linesInReport = linesInReport + 4;
         }
         if(dimensionsOk) {
             report.append("Dimensions found and set.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
             report.append("Dimensions not found.\nNTo implement a set of board-dimensions, please use the following syntax:\n\nx = {value}, y = {value}\n");
+            linesInReport = linesInReport + 3;
         }
         if(patternOk) {
             report.append("Pattern found and set.\n\n");
+            linesInReport = linesInReport + 2;
         }
         else {
-            report.append("Pattern not found, or of invalid format.\nNTo learn how to implement a pattern readable in an RLE-file, please visit http://www.conwaylife.com/wiki/RLE.\n\n");
+            report.append("Pattern not found, or of invalid format.\nTo learn how to implement a pattern readable in an RLE-file, please visit http://www.conwaylife.com/wiki/RLE.\n\n");
+            linesInReport = linesInReport + 2;
         }
 
+        String reportString = new String(report);
+        System.out.print(reportString);
+
+
+        //CustomDialog importInfo = new CustomDialog("File load", true, reportString, 400, linesInReport * 50, linesInReport);
         System.out.println(report);
     }
 

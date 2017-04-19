@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.FileManagement;
 import model.GoL;
+import model.RulesEditor;
 import model.StaticBoard;
 
 import java.io.*;
@@ -65,7 +66,6 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
-        //TODO Skjønner ikke hvorfor denne ikke kan initialiseres over (sammen med staticBoard)
         gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
         GoL.setIsRunning(false);
@@ -86,22 +86,7 @@ public class MainScreenController implements Initializable {
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
-        /**
-         * Builds a String to be set as label to display the rules in use.
-         */
-        int[] bornArray = GoL.getBornAmount();
-        int[] surviveArray = GoL.getSurviveAmount();
-        StringBuilder rulesBuilder = new StringBuilder();
-        rulesBuilder.append("B");
-        for (int aBornArray : bornArray) {
-            rulesBuilder.append(aBornArray);
-        }
-        rulesBuilder.append("/S");
-        for(int aSurviveArray : surviveArray) {
-            rulesBuilder.append(aSurviveArray);
-        }
-        String rulesString = new String(rulesBuilder);
-        rulesLabel.setText(rulesString);
+        displayRules();
 
         draw();
     }
@@ -247,9 +232,22 @@ public class MainScreenController implements Initializable {
      * @param event
      */
     public void boardDragEvent(MouseEvent event) {
-        staticBoard.cellDragDraw(event, gc, boardCanvas);
 
+        staticBoard.cellDragDraw(event, gc, boardCanvas);
     }
+
+    /**
+     * Opens
+     */
+    public void openRulesEditor() {
+
+
+        RulesEditor rulesEditor = RulesEditor.getInstance();
+        rulesEditor.setVisible(true);
+        //TODO make listener that notices rulesEditor closing and calls displayRules
+        displayRules();
+    }
+
 
     public void readFileFromDisk() throws IOException {
 
@@ -258,7 +256,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
             applyFileData(fileData);
-            confirmFiledata(fileData);
+            confirmFileData(fileData);
         }
     }
 
@@ -270,7 +268,7 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
             applyFileData(fileData);
-            confirmFiledata(fileData);
+            confirmFileData(fileData);
         }
     }
 
@@ -320,24 +318,12 @@ public class MainScreenController implements Initializable {
         staticBoard.setHEIGHT(height);
         staticBoard.newBoard();
 
-        // Apply rules if theres readable rules
+        // Apply rules if there are readable rules
         if(FileManagement.readRules(fileData.get("rules")) != null) {
             int rules[][] = FileManagement.readRules(fileData.get("rules"));
             GoL.setBornAmount(rules[0]);
             GoL.setSurviveAmount(rules[1]);
-            int[] bornArray = GoL.getBornAmount();
-            int[] surviveArray = GoL.getSurviveAmount();
-            StringBuilder rulesBuilder = new StringBuilder();
-            rulesBuilder.append("B");
-            for (int aBornArray : bornArray) {
-                rulesBuilder.append(aBornArray);
-            }
-            rulesBuilder.append("/S");
-            for (int aSurviveArray : surviveArray) {
-                rulesBuilder.append(aSurviveArray);
-            }
-            String rulesString = new String(rulesBuilder);
-            rulesLabel.setText(rulesString);
+            displayRules();
         }
 
         // Apply pattern
@@ -349,7 +335,7 @@ public class MainScreenController implements Initializable {
         GoL.setLoadedData(fileData);
     }
 
-    public void confirmFiledata(HashMap<String, String> fileData) {
+    public void confirmFileData(HashMap<String, String> fileData) {
         boolean titleOk = false;
         boolean originOk = false;
         boolean commentsOk = false;
@@ -434,10 +420,27 @@ public class MainScreenController implements Initializable {
 
 
         //CustomDialog importInfo = new CustomDialog("File load", true, reportString, 400, linesInReport * 50, linesInReport);
+        System.out.println(report);
+    }
 
+    /**
+     * Builds a String to be set as label to display the rules in use.
+     */
+    public void displayRules() {
 
-
-
+        int[] bornArray = GoL.getBornAmount();
+        int[] surviveArray = GoL.getSurviveAmount();
+        StringBuilder rulesBuilder = new StringBuilder();
+        rulesBuilder.append("B");
+        for (int aBornArray : bornArray) {
+            rulesBuilder.append(aBornArray);
+        }
+        rulesBuilder.append("/S");
+        for(int aSurviveArray : surviveArray) {
+            rulesBuilder.append(aSurviveArray);
+        }
+        String rulesString = new String(rulesBuilder);
+        rulesLabel.setText(rulesString);
     }
 
     /**

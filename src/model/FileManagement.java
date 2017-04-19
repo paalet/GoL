@@ -7,11 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
+
 
 /**
  * Logic related to handling input from .rle files.
@@ -32,38 +34,43 @@ public class FileManagement {
 
             return returnFile;
         } else {
-
             System.out.println("User aborted");
             return null;
         }
     }
 
     /**
-
      * Returns an inputStream from a URL the user types in an inputDialog.
      * @return
-
      * @throws IOException
      */
     public static InputStream loadFileFromURL() throws IOException{
 
-        TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
-        Optional<String> input = inputDialog.showAndWait();
-        if (input.isPresent()) {
+        try {
+            TextInputDialog inputDialog = new TextInputDialog();
+            inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
+            Optional<String> input = inputDialog.showAndWait();
+            if (input.isPresent()) {
 
-            String url = input.get();
-            URL destination = new URL(url);
-            URLConnection conn = destination.openConnection();
-            InputStream returnStream = conn.getInputStream();
-            return returnStream;
-        } else {
-            return null;
+                String url = input.get();
+                URL destination = new URL(url);
+                URLConnection conn = destination.openConnection();
+                InputStream returnStream = conn.getInputStream();
+                return returnStream;
+            } else {
+                return null;
+            }
+        } catch (MalformedURLException e) {
+            CustomDialog kek = new CustomDialog("Error opening file from URL", true,
+                    "There was a problem opening the specified URL.\r\n" +
+                            "Please make sure you have the correct location address.", 400, 200);
+            throw new IOException(e);
         }
+
     }
 
     /**
-     * Returns a HashMap of the data located in .rle file broken up into seperate strings ready for application
+     * Returns a HashMap of the data located in .rle file broken up into separate strings ready for application
      * or further manipulation.
      * @param r
      * @return
@@ -199,7 +206,7 @@ public class FileManagement {
         //boolean variable that will remain true if everything goes as planned.
         boolean allOk = true;
 
-        //Counts the a  mount of byte values and makes a new array with a fitting size to fit that amount of values
+        //Counts the amount of byte values and makes a new array with a fitting size to fit that amount of values
         //index represents the index of the char-value b/B
         int stringLength = rulesString.length();
         int index = rulesString.indexOf(98);
@@ -292,7 +299,7 @@ public class FileManagement {
 
 
     /**
-     * Converts a string containing cell pattern from the loaded .rle file into a two dimensional byte array
+     * Converts a string containing cell pattern from the loaded .rle file into a two-dimensional byte array
      * that represents the cell pattern.
      * @param patternString a String of cell pattern data.
      * @param width width of the pattern. Determines size of first dimension of array.

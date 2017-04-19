@@ -17,7 +17,7 @@ public class CustomDialog extends JDialog implements ActionListener {
     private JFrame frame;
 
 
-    public CustomDialog(String title, boolean ok, String message, int width, int height, int linesInMessage) {
+    public CustomDialog(String title, boolean ok, String message, int width, int height) {
         frame = new JFrame(title);
         isModal();
         JPanel panel = new JPanel();
@@ -27,14 +27,15 @@ public class CustomDialog extends JDialog implements ActionListener {
         gbc.insets = new Insets(2,2, 2, 2);
 
         JLabel messageLabel = new JLabel(message);
-        gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.weightx = 0.0;
-        gbc.gridheight = linesInMessage;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.0;;
         panel.add(messageLabel, gbc);
 
         if(ok) {
             okButton = new JButton("OK");
-            gbc.gridy = linesInMessage + 2;
+            gbc.gridx = 1;
+            gbc.gridy = 2;
             panel.add(okButton, gbc);
             okButton.addActionListener(this);
         }

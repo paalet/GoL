@@ -33,6 +33,11 @@
                         <Button mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
                      </children>
                   </StackPane>
+                  <StackPane layoutX="10.0" layoutY="60.0" prefHeight="42.0" prefWidth="104.0">
+                     <children>
+                        <Button fx:id="gifCreator" mnemonicParsing="false" onAction="#gifCreatorEvent" text="Create GIF" textAlignment="CENTER" />
+                     </children>
+                  </StackPane>
                </children>
             </VBox>
             <VBox prefHeight="123.0" prefWidth="175.0">

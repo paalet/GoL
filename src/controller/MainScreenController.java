@@ -6,12 +6,16 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.FileManagement;
@@ -61,12 +65,12 @@ public class MainScreenController implements Initializable {
             draw();
         }
     }));
+    private Stage gifStage = new Stage();
 
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
-        gc = boardCanvas.getGraphicsContext2D();
         // Initialise game values
         GoL.setIsRunning(false);
         int[] initBornAmount = {3};
@@ -81,13 +85,28 @@ public class MainScreenController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
 
-        // Display values
+        // Create GIF Stage
+        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
+        try {
+            Parent gifRoot = gifLoader.load();
+            Scene gifScene = new Scene(gifRoot);
+            gifStage.setScene(gifScene);
+        } catch (IOException e) {
+            System.out.println("gifLoader.load() did not produce Parent");
+        }
+        GifCreatorController gifController = gifLoader.getController();
+        gifStage.setTitle("Create GIF");
+        gifStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
         displayRules();
 
+        //Draw board
+        gc = boardCanvas.getGraphicsContext2D();
         draw();
     }
 
@@ -141,6 +160,18 @@ public class MainScreenController implements Initializable {
         timeline.pause();
         GoL.setIsRunning(false);
         playButton.setText("Resume");
+    }
+
+    /**
+     * Shows the GIF creator interface and pauses the game if it is running.
+     */
+    public void gifCreatorEvent() {
+
+        if (GoL.getIsRunning()) {
+            pause();
+        }
+        // gifController.setStatic/DynamicBoard som gjør deep copy via constructor med brett som input
+        gifStage.showAndWait();
     }
 
     /**

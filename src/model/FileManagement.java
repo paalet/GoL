@@ -34,7 +34,6 @@ public class FileManagement {
         } else {
 
             System.out.println("User aborted");
-            CustomDialog dialog = new CustomDialog("Melding", true,  "Ingen fil valgt", 300, 100);
             return null;
         }
     }
@@ -313,7 +312,7 @@ public class FileManagement {
         while (patternScanner.hasNext()) {
             String row = new String(patternScanner.next());
             char[] charArray = row.toCharArray();
-            String cellCountString = new String("");
+            String cellCountString = new String();
             int x = 0;
 
             // Go through each row char by char

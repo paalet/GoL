@@ -3,6 +3,8 @@ package model;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
+
 /**
  * Class with data related to game state and execution
  */
@@ -16,6 +18,7 @@ public class GoL {
     private static double currRate;
     private static int[] bornAmount;
     private static int[] surviveAmount;
+    private static HashMap<String, String> loadedData;
 
 
     public static void setIsRunning(boolean running) {
@@ -95,6 +98,14 @@ public class GoL {
     public static int[] getSurviveAmount() {
 
         return surviveAmount;
+    }
+
+    public static void setLoadedData(HashMap<String, String> newFileData) {
+        loadedData = newFileData;
+    }
+
+    public static HashMap<String, String> getLoadedData() {
+        return loadedData;
     }
 
     /**

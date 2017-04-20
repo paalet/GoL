@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="267.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="267.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FileEditor">
    <children>
       <VBox layoutX="10.0" layoutY="6.0" prefHeight="499.0" prefWidth="248.0">
          <children>
@@ -18,19 +18,19 @@
             <Label text="Title:" />
             <StackPane prefHeight="30.0" prefWidth="248.0">
                <children>
-                  <TextArea fx:id="saveWindowTitleArea" />
+                  <TextField fx:id="saveWindowTitleField" />
                </children>
             </StackPane>
             <Label text="Origin:" />
             <StackPane prefHeight="30.0" prefWidth="248.0">
                <children>
-                  <TextArea fx:id="saveWindowOriginArea" />
+                  <TextField fx:id="saveWindowOriginField" />
                </children>
             </StackPane>
             <Label text="Comments:" />
             <StackPane prefHeight="90.0" prefWidth="248.0">
                <children>
-                  <TextArea  fx:id="saveWindowCommentsArea" prefHeight="81.0" prefWidth="248.0" />
+                  <TextField  fx:id="saveWindowCommentsField" prefHeight="81.0" prefWidth="248.0" />
                </children>
             </StackPane>
             <Label prefHeight="34.0" prefWidth="38.0" text="Rules:" />
@@ -70,12 +70,12 @@
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="saveFromSaveWindow" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="#saveFromSaveWindow" mnemonicParsing="false" text="Save" />
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="exitFromSaveWindow" mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="#exitFromSaveWindow" mnemonicParsing="false" text="Cancel" />
                      </children>
                   </StackPane>
                </children>

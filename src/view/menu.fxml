@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+   <children>
+      <VBox layoutX="142.0" layoutY="96.0" prefHeight="446.0" prefWidth="554.0">
+         <children>
+            <StackPane prefHeight="31.0" prefWidth="554.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="114.0" style="-fx-font-size: 25;" text="Conway's" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="62.0" prefWidth="554.0">
+               <children>
+                  <Label style="-fx-font-size: 60;" text="Game of Life" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="31.0" prefWidth="554.0">
+               <children>
+                  <Label style="-fx-font-size: 15;" text="- by Pål Andreassen and Simen Persch Andersen" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="79.0" prefWidth="554.0" />
+            <StackPane prefHeight="31.0" prefWidth="554.0">
+               <children>
+                  <Label style="-fx-font-size: 15;" text="Please choose your board state to begin." />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="110.0" prefWidth="554.0">
+               <children>
+                  <Button fx:id="staticBoardLoadButton" onAction="#loadStaticBoardEvent" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="90.0" prefWidth="554.0">
+               <children>
+                  <Button fx:id="autoExpandBoardLoadButton" onAction="#loadAutoExpandingEvent" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="Auto-expanding Board" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </children>
+</Pane>

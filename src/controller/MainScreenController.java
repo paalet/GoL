@@ -14,6 +14,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +32,12 @@ import java.util.HashMap;
  */
 public class MainScreenController implements Initializable {
 
+    @FXML
+    private Pane pane;
+    @FXML
+    private Button staticBoardLoadButton;
+    @FXML
+    private Button autoExpandBoardLoadButton;
     @FXML
     private Canvas boardCanvas;
     @FXML
@@ -117,6 +126,24 @@ public class MainScreenController implements Initializable {
         //Draw board
         gc = boardCanvas.getGraphicsContext2D();
         draw();
+    }
+
+    public void loadStaticBoardEvent() throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        Scene scene = new Scene(root, 825, 723);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+    public void loadAutoExpandingEvent() throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        Scene scene = new Scene(root, 825, 723);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
     }
 
     /**
@@ -301,7 +328,7 @@ public class MainScreenController implements Initializable {
     }
 
 
-    public void readFileFromURL() throws IOException {
+    public void readFileFromURL() throws Exception {
 
         InputStream rleStream = FileManagement.loadFileFromURL();
         if (rleStream != null) {
@@ -316,12 +343,15 @@ public class MainScreenController implements Initializable {
 
 
         Stage fileEditor = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("../view/saveFile.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/saveFile.fxml"));
+        Parent root = loader.load();
 
         Scene scene = new Scene(root, 267, 504);
 
         fileEditor.setScene(scene);
         fileEditor.setTitle("Edit and save file");
+        fileEditor.setResizable(false);
+        fileEditor.initModality(Modality.APPLICATION_MODAL);
         fileEditor.show();
 
         String title = "";
@@ -353,11 +383,12 @@ public class MainScreenController implements Initializable {
 
         String surviveString = new String(surviveStringBuilder);
 
-        saveWindowTitleArea.setText(title);
-        saveWindowOriginArea.setText(origin);
-        saveWindowCommentsArea.setText(comments);
-        saveWindowBornAmountArea.setText(bornString);
-        saveWindowSurviveAmountArea.setText(surviveString);
+        /*FileEditor edController = loader.getController();
+        edController.setTitle(title);
+        edController.setOrigin(origin);
+        edController.setComments(comments);
+        */
+
 
 
     }

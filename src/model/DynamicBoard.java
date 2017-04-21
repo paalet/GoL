@@ -12,8 +12,9 @@ public class DynamicBoard extends Board{
 
     private int width = 10;
     private int height = 8;
-    private ArrayList<ArrayList<Byte>> currentBoard;
-    private ArrayList<ArrayList<Byte>> nextBoard;
+
+    private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
+    private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
     private int[] visitedCellWithDrag = new int[2];
 
 

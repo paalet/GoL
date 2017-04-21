@@ -318,7 +318,10 @@ public class MainScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/previewPattern.fxml"));
         Pane root = loader.load();
 
-        Scene scene = new Scene(root, 700, 700);
+        Scene scene = new Scene(root, 900, 700);
+
+        String css = this.getClass().getResource("../view/previewPatternStyles.css");
+        scene.getStylesheets().add(css);
 
         fileEditor.setScene(scene);
         fileEditor.setTitle("Preview pattern");

@@ -64,13 +64,13 @@ public class MainScreenController implements Initializable {
     @FXML
     private TextArea saveWindowSurviveAmountArea;
 
-    private DynamicBoard staticBoard = new DynamicBoard();
+    private Board board = new DynamicBoard();
     private GraphicsContext gc;
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
 
-            staticBoard.nextGeneration();
+            board.nextGeneration();
             draw();
         }
     }));
@@ -86,8 +86,8 @@ public class MainScreenController implements Initializable {
         int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHeight());
-        boardCanvas.setWidth(calculateCanvasWidth(staticBoard.getWidth()));
+        GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
+        boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
@@ -124,7 +124,7 @@ public class MainScreenController implements Initializable {
      */
     private void draw() {
 
-        staticBoard.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+        board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
 
     /**
@@ -196,7 +196,7 @@ public class MainScreenController implements Initializable {
 
     private void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
-        staticBoard.calculateBoardSize(canvasHeight, canvasWidth);
+        board.calculateBoardSize(canvasHeight, canvasWidth);
 
     }
 
@@ -264,7 +264,7 @@ public class MainScreenController implements Initializable {
      */
     public void cellClickEvent(MouseEvent event) {
 
-        staticBoard.cellClickDraw(event, gc, boardCanvas);
+        board.cellClickDraw(event, gc, boardCanvas);
     }
 
     /**
@@ -273,7 +273,7 @@ public class MainScreenController implements Initializable {
      */
     public void boardDragEvent(MouseEvent event) {
 
-        staticBoard.cellDragDraw(event, gc, boardCanvas);
+        board.cellDragDraw(event, gc, boardCanvas);
     }
 
     /**
@@ -377,10 +377,10 @@ public class MainScreenController implements Initializable {
         fileData.put("comment", commentText.getText());
 
         //Inserts height of board
-        fileData.put("boardHeight", staticBoard.getHeight());
+        fileData.put("boardHeight", board.getHeight());
 
         //Inserts width of board
-        fileData.put("boardWidth", staticBoard.getWidth());
+        fileData.put("boardWidth", board.getWidth());
         */
 
 
@@ -404,9 +404,9 @@ public class MainScreenController implements Initializable {
         // Apply board size
         int width = FileManagement.readDimension(fileData.get("width"));
         int height = FileManagement.readDimension(fileData.get("height"));
-        staticBoard.setWidth(width);
-        staticBoard.setHeight(height);
-        staticBoard.newBoard();
+        board.setWidth(width);
+        board.setHeight(height);
+        board.newBoard();
 
         // Apply rules if there are readable rules
         if(FileManagement.readRules(fileData.get("rules")) != null) {
@@ -417,7 +417,7 @@ public class MainScreenController implements Initializable {
         }
 
         // Apply pattern
-       // staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+       // board.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
 
@@ -540,7 +540,7 @@ public class MainScreenController implements Initializable {
 
 
         double canvasHeightDouble = boardCanvas.getHeight();
-        int boardHeightInt = staticBoard.getHeight();
+        int boardHeightInt = board.getHeight();
         double boardHeightDouble = (double) boardHeightInt;
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());

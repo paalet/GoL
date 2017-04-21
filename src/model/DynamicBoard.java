@@ -99,7 +99,7 @@ public class DynamicBoard extends Board{
                 }
 
                 //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y).size())) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y - 1).size())) {
                     if (currentBoard.get(y - 1).get(x - 1) == 1) {
                         neighbors++;
                     }
@@ -111,7 +111,7 @@ public class DynamicBoard extends Board{
                     }
                 }
 
-                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y).size())) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y - 1).size())) {
                     if (currentBoard.get(y - 1).get(x + 1) == 1) {
                         neighbors++;
                     }
@@ -129,19 +129,19 @@ public class DynamicBoard extends Board{
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y).size())) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y + 1).size())) {
                     if (currentBoard.get(y + 1).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < currentBoard.size()) {
+                if (y + 1 >= 0 && y + 1 < currentBoard.size() && (x >= 0 && x < currentBoard.get(y).size())) {
                     if (currentBoard.get(y + 1).get(x) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y).size())) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y +1).size())) {
                     if (currentBoard.get(y + 1).get(x + 1) == 1) {
                         neighbors++;
                     }
@@ -288,6 +288,31 @@ public class DynamicBoard extends Board{
 
     public ArrayList<ArrayList<Byte>> getCurrentBoard() {
         return currentBoard;
+    }
+
+    /**
+     * Sets a new currentBoard from arraylistinput. Expands currentBoard if it is of smaller size than input.
+     * @param newBoard
+     */
+    public void setCurrentBoard(ArrayList<ArrayList<Byte>> newBoard){
+
+        for (int y = 0; y < newBoard.size(); y++) {
+
+            if (currentBoard.size() == y) {
+
+                currentBoard.add(new ArrayList<>());
+            }
+            for (int x = 0; x < newBoard.get(y).size(); x++) {
+
+                if (currentBoard.get(y).size() == x) {
+
+                    currentBoard.get(y).add(x, newBoard.get(y).get(x));
+                } else {
+
+                    currentBoard.get(y).set(x, newBoard.get(y).get(x));
+                }
+            }
+        }
     }
 
     public int getWidth() {return width;}

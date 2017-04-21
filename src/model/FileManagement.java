@@ -307,7 +307,7 @@ public class FileManagement {
      * @return two dimensional byte array where value 0 represents a dead cell and value 1 represents a live cell.
      * @throws IOException
      */
-    public static byte[][] readPattern(String patternString, int width, int height) throws IOException {
+    public static byte[][] readPatternStaticBoard(String patternString, int width, int height) throws IOException {
 
         // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);
@@ -369,29 +369,80 @@ public class FileManagement {
             y++;
         }
         return board;
-        /* Return pattern as array or arraylist corresponding with board type
-        String type = new String("dynamic");
-        if (type == "static") {
+    }
 
 
-        } else if (type == "dynamic") {
+    /**
+     * Converts a string containing cell pattern from the loaded .rle file into a two-dimensional byte array
+     * that represents the cell pattern.
+     * @param patternString a String of cell pattern data.
+     * @param width width of the pattern. Determines size of first dimension of array.
+     * @param height height of the pattern. Determines size of second dimension of array.
+     * @return two dimensional byte array where value 0 represents a dead cell and value 1 represents a live cell.
+     * @throws IOException
+     */
+    public static ArrayList<ArrayList<Byte>> readPatternDynamicBoard(String patternString, int width, int height) throws IOException {
 
-            // Convert to arraylist and return
-            ArrayList<ArrayList<Byte>> dynamicBoard = new ArrayList<>();
-            for (y = 0; y < height; y++) {
+        // Create scanner to break pattern into rows
+        Scanner patternScanner = new Scanner(patternString);
+        patternScanner.useDelimiter("\\$");
+        ArrayList<ArrayList<Byte>> board = new ArrayList<>();
+        int y = 0;
 
-                dynamicBoard.add(new ArrayList<>());
-                for (int x = 0; x < width; x++) {
+        // Create charArray with pattern info for each row
+        while (patternScanner.hasNext()) {
+            String row = new String(patternScanner.next());
+            board.add(new ArrayList<>());
+            char[] charArray = row.toCharArray();
+            String cellCountString = new String();
+            int x = 0;
 
-                    if (board[y][x] == 1) {
-                        dynamicBoard.get(y).add(x, (byte) 1);
-                    } else {
-                        dynamicBoard.get(y).add(x, (byte) 0);
+            // Go through each row char by char
+            try {
+                for (int i = 0; i < charArray.length; i++) {
+
+                    // Numbers
+                    if (charArray[i] >= 48 && charArray[i] <= 57) {
+                        cellCountString = cellCountString + charArray[i];
+                    }
+
+                    // Dead cells
+                    else if (charArray[i] == 98) {
+
+                        if (cellCountString.equals("")) {
+                            board.get(y).add(x, (byte) 0);
+                            x++;
+                        } else {
+                            int cellCountInt = Integer.parseInt(cellCountString);
+                            for (int j = 0; j < cellCountInt; j++) {
+                                board.get(y).add(x, (byte) 0);
+                                x++;
+                            }
+                        }
+                        cellCountString = "";
+                    }
+
+                    // Alive cell
+                    else if (charArray[i] == 111) {
+                        if (cellCountString.equals("")) {
+                            board.get(y).add(x, (byte) 1);
+                            x++;
+                        } else {
+                            int cellCountInt = Integer.parseInt(cellCountString);
+                            for (int j = 0; j < cellCountInt; j++) {
+                                board.get(y).add(x, (byte) 1);
+                                x++;
+                            }
+                        }
+                        cellCountString = "";
                     }
                 }
             }
-            return dynamicBoard;
-        }*/
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
+            }
+            y++;
+        }
+        return board;
     }
-
 }

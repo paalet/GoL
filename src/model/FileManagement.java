@@ -3,10 +3,8 @@ package model;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,8 +25,9 @@ public class FileManagement {
      */
     public static File loadFileFromDisk() {
 
-        //FileFilter filter = new FileNameExtensionFilter("RLE File", ".rle");
         FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("RLE Files", "*.rle"));
         chooser.setTitle("Choose Game of Life pattern file");
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {

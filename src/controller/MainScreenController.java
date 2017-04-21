@@ -64,6 +64,7 @@ public class MainScreenController implements Initializable {
     private TextArea commentText;
 
     private Board board = new StaticBoard();
+    private String boardType;
     private GraphicsContext gc;
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
@@ -119,11 +120,14 @@ public class MainScreenController implements Initializable {
     }
 
     public void initializeStaticBoard() {
+
         board = new StaticBoard();
+        boardType = "Static";
     }
 
     public void initializeDynamicBoard() {
         board = new DynamicBoard();
+        boardType = "Dynamic";
 
     }
 
@@ -371,7 +375,16 @@ public class MainScreenController implements Initializable {
         edController.setCommentsArea(comments);
         edController.setBornAmountField(bornString);
         edController.setSurviveAmountField(surviveString);
-        edController.drawAllCanvases(board.getCurrentBoard(), board.getHeight(), board.getWidth());
+        switch(boardType) {
+            case "Static": edController.drawAllCanvasesStatic(board.getCurrentBoard(), board.getHeight(), board.getWidth());
+                break;
+            case "Dynamic": edController.drawAllCanvasesDynamic(board.getCurrentBoard(), board.getHeight(), board.getWidth());
+                break;
+            default: System.out.println("ERROR: Could not find board-type.");
+                break;
+
+        }
+
 
 
         fileEditor.show();

@@ -118,24 +118,6 @@ public class MainScreenController implements Initializable {
         draw();
     }
 
-    public void loadStaticBoardEvent() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
-        Stage primaryStage = (Stage) pane.getScene().getWindow();
-        Scene scene = new Scene(root, 825, 723);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }
-
-    public void loadAutoExpandingEvent() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
-        Stage primaryStage = (Stage) pane.getScene().getWindow();
-        Scene scene = new Scene(root, 825, 723);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }
-
     /**
      * A simple function that calles the draw function in the Board class.
      */
@@ -383,35 +365,6 @@ public class MainScreenController implements Initializable {
 
         fileEditor.show();
 
-
-
-    }
-
-    public void openFileEditor() throws IOException {
-
-        Stage editor = new Stage();
-        /*HashMap<String, String> fileData = new HashMap<>();
-
-        //Inserts title if there is a title
-        fileData.put("title", titleText.getText());
-
-        //Inserts origin
-        fileData.put("origin", originText.getText());
-
-        //Inserts comments
-        fileData.put("comment", commentText.getText());
-
-        //Inserts height of board
-        fileData.put("boardHeight", staticBoard.getHEIGHT());
-
-        //Inserts width of board
-        fileData.put("boardWidth", staticBoard.getWIDTH());
-        */
-
-
-
-
-
     }
 
     /**
@@ -433,12 +386,18 @@ public class MainScreenController implements Initializable {
         staticBoard.setHEIGHT(height);
         staticBoard.newBoard();
 
-        // Apply rules if there are readable rules
+        // Apply rules if there are readable rules, if not, re-apply standard rules.
         if(FileManagement.readRules(fileData.get("rules")) != null) {
             int rules[][] = FileManagement.readRules(fileData.get("rules"));
             GoL.setBornAmount(rules[0]);
             GoL.setSurviveAmount(rules[1]);
             displayRules();
+        }
+        else {
+            int[] initBornAmount = {3};
+            int[] initSurviveAmount = {2, 3};
+            GoL.setBornAmount(initBornAmount);
+            GoL.setSurviveAmount(initSurviveAmount);
         }
 
         // Apply pattern
@@ -502,7 +461,7 @@ public class MainScreenController implements Initializable {
             report.append("Rules found and set.<br><br>");
         }
         else {
-            report.append("Rules not found, or of an invalid format.<br>To implement rules, please use the following syntax:<br><br>rules = B{value}/S{value}<br><br>'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.<br><br>");
+            report.append("Rules not found, or of an invalid format. Standard rule-set applied.<br>To implement rules, please use the following syntax:<br><br>rules = B{value}/S{value}<br><br>'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.<br><br>");
         }
         if(dimensionsOk) {
             report.append("Dimensions found and set.<br><br>");

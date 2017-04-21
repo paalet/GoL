@@ -250,7 +250,7 @@ public class FileManagementTest {
         };
 
         // Act
-        byte[][] actualResult = FileManagement.readPattern(patternString, width, height);
+        byte[][] actualResult = FileManagement.readPatternStaticBoard(patternString, width, height);
 
         // Assert
         Assert.assertArrayEquals(expectedResult, actualResult);
@@ -279,7 +279,7 @@ public class FileManagementTest {
         };
 
         // Act
-        byte[][] actualResult = FileManagement.readPattern(patternString, width, height);
+        byte[][] actualResult = FileManagement.readPatternStaticBoard(patternString, width, height);
 
         // Assert
         Assert.assertArrayEquals(expectedResult, actualResult);
@@ -304,7 +304,7 @@ public class FileManagementTest {
         };
 
         // Act
-        byte[][] actualResult = FileManagement.readPattern(patternString, width, height);
+        byte[][] actualResult = FileManagement.readPatternStaticBoard(patternString, width, height);
 
         // Assert
         Assert.assertArrayEquals(expectedResult, actualResult);
@@ -330,7 +330,7 @@ public class FileManagementTest {
         };
 
         // Act
-        byte[][] actualResult = FileManagement.readPattern(patternString, width, height);
+        byte[][] actualResult = FileManagement.readPatternStaticBoard(patternString, width, height);
 
         // Assert
         Assert.assertArrayEquals(expectedResult, actualResult);

@@ -4,10 +4,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <children>
-      <VBox layoutX="142.0" layoutY="96.0" prefHeight="446.0" prefWidth="554.0">
+      <VBox layoutX="170.0" layoutY="100.0" prefHeight="446.0" prefWidth="554.0">
          <children>
             <StackPane prefHeight="31.0" prefWidth="554.0">
                <children>
@@ -27,17 +26,17 @@
             <StackPane prefHeight="79.0" prefWidth="554.0" />
             <StackPane prefHeight="31.0" prefWidth="554.0">
                <children>
-                  <Label style="-fx-font-size: 15;" text="Please choose your board state to begin." />
+                  <Label style="-fx-font-size: 15;" text="Please choose your board state to begin" />
                </children>
             </StackPane>
             <StackPane prefHeight="110.0" prefWidth="554.0">
                <children>
-                  <Button fx:id="staticBoardLoadButton" onAction="#loadStaticBoardEvent" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
+                  <Button fx:id="staticBoardLoadButton" mnemonicParsing="false" onAction="#loadStaticBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
                </children>
             </StackPane>
             <StackPane prefHeight="90.0" prefWidth="554.0">
                <children>
-                  <Button fx:id="autoExpandBoardLoadButton" onAction="#loadAutoExpandingEvent" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="Auto-expanding Board" />
+                  <Button fx:id="autoExpandBoardLoadButton" mnemonicParsing="false" onAction="#loadAutoExpandingEvent" prefHeight="60.0" prefWidth="190.0" text="Auto-expanding Board" />
                </children>
             </StackPane>
          </children>

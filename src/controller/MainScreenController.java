@@ -35,6 +35,8 @@ public class MainScreenController implements Initializable {
     @FXML
     private Pane pane;
     @FXML
+    private Button mainMenuButton;
+    @FXML
     private Button staticBoardLoadButton;
     @FXML
     private Button autoExpandBoardLoadButton;
@@ -128,6 +130,17 @@ public class MainScreenController implements Initializable {
     public void initializeDynamicBoard() {
         board = new DynamicBoard();
         boardType = "Dynamic";
+
+    }
+
+    public void returnToMenuEvent() throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        Pane root = loader.load();
+        Scene scene = new Scene(root, 893, 741);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DynamicBoard extends Board{
 
-    private int width = 10;
+    private int width = 12;
     private int height = 8;
     private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
     private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();

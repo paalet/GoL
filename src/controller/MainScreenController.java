@@ -62,16 +62,6 @@ public class MainScreenController implements Initializable {
     private TextArea originText;
     @FXML
     private TextArea commentText;
-    @FXML
-    private TextArea saveWindowTitleArea;
-    @FXML
-    private TextArea saveWindowOriginArea;
-    @FXML
-    private TextArea saveWindowCommentsArea;
-    @FXML
-    private TextArea saveWindowBornAmountArea;
-    @FXML
-    private TextArea saveWindowSurviveAmountArea;
 
     private StaticBoard staticBoard = new StaticBoard();
     private GraphicsContext gc;
@@ -343,16 +333,15 @@ public class MainScreenController implements Initializable {
 
 
         Stage fileEditor = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/saveFile.fxml"));
-        Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/previewPattern.fxml"));
+        Pane root = loader.load();
 
-        Scene scene = new Scene(root, 267, 504);
+        Scene scene = new Scene(root, 700, 700);
 
         fileEditor.setScene(scene);
-        fileEditor.setTitle("Edit and save file");
+        fileEditor.setTitle("Preview pattern");
         fileEditor.setResizable(false);
         fileEditor.initModality(Modality.APPLICATION_MODAL);
-        fileEditor.show();
 
         String title = "";
         String origin = "";
@@ -370,24 +359,29 @@ public class MainScreenController implements Initializable {
 
         StringBuilder bornStringBuilder = new StringBuilder();
         for(int i : GoL.getBornAmount()) {
-            char data = (char) i;
-            bornStringBuilder.append(data);
+            bornStringBuilder.append(i);
         }
         String bornString = new String(bornStringBuilder);
 
         StringBuilder surviveStringBuilder = new StringBuilder();
         for(int i : GoL.getSurviveAmount()) {
-            char data = (char) i;
-            surviveStringBuilder.append(data);
+            surviveStringBuilder.append(i);
         }
 
         String surviveString = new String(surviveStringBuilder);
+        System.out.println(bornString);
+        System.out.println(surviveString);
 
-        /*FileEditor edController = loader.getController();
-        edController.setTitle(title);
-        edController.setOrigin(origin);
-        edController.setComments(comments);
-        */
+        FileEditor edController = loader.getController();
+        edController.setTitleArea(title);
+        edController.setOriginArea(origin);
+        edController.setCommentsArea(comments);
+        edController.setBornAmountField(bornString);
+        edController.setSurviveAmountField(surviveString);
+        edController.drawAllCanvases(staticBoard.getCurrentBoard(), staticBoard.getHEIGHT(), staticBoard.getWIDTH());
+
+
+        fileEditor.show();
 
 
 
@@ -485,62 +479,48 @@ public class MainScreenController implements Initializable {
         }
 
         StringBuilder report = new StringBuilder();
-        int linesInReport = 0;
 
         if(titleOk) {
-            report.append("Name found.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("<html><body><p style='text-align:center'>Name found.<br><br>");
         }
         else {
-            report.append("Name not found.\nTo display a name, please begin the line where you want the title with '#N'.\n\n");
-            linesInReport = linesInReport + 3;
+            report.append("<html><body><p style='text-align:center'>Name not found.<br>To display a name, please begin the line where you want the title with '#N'.<br><br>");
         }
         if(originOk) {
-            report.append("Origin found.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Origin found.<br><br>");
         }
         else {
-            report.append("Origin not found.\nTo display an origin, please begin the line where you want the origin with '#O'.\n\n");
-            linesInReport = linesInReport + 3;
+            report.append("Origin not found.<br>To display an origin, please begin the line where you want the origin with '#O'.<br><br>");
         }
         if(commentsOk) {
-            report.append("Comments found.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Comments found.<br><br>");
         }
         else {
-            report.append("Comments not found.\nNTo display comments, please begin each line of comment with '#C'.\n\n");
-            linesInReport = linesInReport + 3;
+            report.append("Comments not found.<br>NTo display comments, please begin each line of comment with '#C'.<br><br>");
         }
         if(rulesOk) {
-            report.append("Rules found and set.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Rules found and set.<br><br>");
         }
         else {
-            report.append("Rules not found, or of an invalid format.\nTo implement rules, please use the following syntax:\n\nrules = B{value}/S{value}\b\b'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.\b\b");
-            linesInReport = linesInReport + 4;
+            report.append("Rules not found, or of an invalid format.<br>To implement rules, please use the following syntax:<br><br>rules = B{value}/S{value}<br><br>'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.<br><br>");
         }
         if(dimensionsOk) {
-            report.append("Dimensions found and set.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Dimensions found and set.<br><br>");
         }
         else {
-            report.append("Dimensions not found.\nNTo implement a set of board-dimensions, please use the following syntax:\n\nx = {value}, y = {value}\n");
-            linesInReport = linesInReport + 3;
+            report.append("Dimensions not found.<br>To implement a set of board-dimensions, please use the following syntax:<br><br>x = {value}, y = {value}<br>");
         }
         if(patternOk) {
-            report.append("Pattern found and set.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Pattern found and set.<br><br></p></body></html>");
         }
         else {
-            report.append("Pattern not found, or of invalid format.\nTo learn how to implement a pattern readable in an RLE-file, please visit http://www.conwaylife.com/wiki/RLE.\n\n");
-            linesInReport = linesInReport + 2;
+            report.append("Pattern not found, or of invalid format.<br>To learn how to implement a pattern readable in an RLE-file, please visit http://www.conwaylife.com/wiki/RLE.<br><br></p></body></html>");
         }
 
         String reportString = new String(report);
-        System.out.print(reportString);
 
 
-        CustomDialog importInfo = new CustomDialog("File load", true, reportString, 400, linesInReport * 50);
+        CustomDialog importInfo = new CustomDialog("File load", true, reportString);
         System.out.println(report);
     }
 

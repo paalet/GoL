@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
@@ -369,6 +370,29 @@ public class FileManagement {
             y++;
         }
         return board;
+        /* Return pattern as array or arraylist corresponding with board type
+        String type = new String("dynamic");
+        if (type == "static") {
+
+
+        } else if (type == "dynamic") {
+
+            // Convert to arraylist and return
+            ArrayList<ArrayList<Byte>> dynamicBoard = new ArrayList<>();
+            for (y = 0; y < height; y++) {
+
+                dynamicBoard.add(new ArrayList<>());
+                for (int x = 0; x < width; x++) {
+
+                    if (board[y][x] == 1) {
+                        dynamicBoard.get(y).add(x, (byte) 1);
+                    } else {
+                        dynamicBoard.get(y).add(x, (byte) 0);
+                    }
+                }
+            }
+            return dynamicBoard;
+        }*/
     }
 
 }

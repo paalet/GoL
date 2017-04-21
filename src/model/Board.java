@@ -10,17 +10,8 @@ import javafx.scene.paint.Color;
  */
 public abstract class Board {
 
-    private int width = 10;
-    private int height = 8;
-    private int[] visitedCellWithDrag = new int[2];
-    private byte[][] currentBoard;
-    private byte[][] nextBoard;
+    private int width, height;
 
-
-    public Board() {
-
-        newBoard();
-    }
 
     /**
      * A draw function that loops through every cell and sets the appropriate color based on its alive status.
@@ -31,25 +22,21 @@ public abstract class Board {
      * @param aliveCellColor
      * @param deadCellColor
      */
-    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
+    public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
 
-    }
 
     /**
      * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.
      */
-    public void newBoard() {
-
-    }
+    public abstract void newBoard();
 
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
      * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
      * At the end of the loops, the nextBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
      */
-    public void nextGeneration() {
+    public abstract void nextGeneration();
 
-    }
 
     /**
      *A functions to change the alive status of each cell, and give this cell ist new color based on this status.
@@ -60,9 +47,7 @@ public abstract class Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
-
-    }
+    public abstract void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
 
     /**
      * Functionally the same as cellClickDraw.
@@ -72,23 +57,16 @@ public abstract class Board {
      * @param boardCanvas
      */
 
-    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
-
-    }
+    public abstract void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
 
     /**
      * Adds new rows to the board array if the new cellsizes set makes the board not fully cover the canvas, in order to fulfill this need.
      * @param canvasHeight
      * @param canvasWidth
      */
-    public void calculateBoardSize(double canvasHeight, double canvasWidth) {}
+    public abstract void calculateBoardSize(double canvasHeight, double canvasWidth);
 
-    public byte[][] getCurrentBoard() {
-
-        return currentBoard;
-    }
-
-    public void setCurrentBoard(byte[][] newBoard) {}
+    public abstract <T> T getCurrentBoard();
 
     public int getWidth() {
         return width;

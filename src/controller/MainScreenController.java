@@ -442,7 +442,7 @@ public class MainScreenController implements Initializable {
         }
 
         // Apply pattern
-       // board.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+        //board.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
 

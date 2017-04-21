@@ -40,8 +40,8 @@ public class BoardTest {
                 "11111111"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -88,8 +88,8 @@ public class BoardTest {
                 "00000000"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -136,8 +136,8 @@ public class BoardTest {
                 "00000010"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -184,8 +184,8 @@ public class BoardTest {
                 "10111110"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -232,8 +232,8 @@ public class BoardTest {
                 "00101011"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -280,8 +280,8 @@ public class BoardTest {
                 "11000011"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(8);
-        testStaticBoard.setWIDTH(8);
+        testStaticBoard.setHeight(8);
+        testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -324,8 +324,8 @@ public class BoardTest {
                 "1111111111"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(6);
-        testStaticBoard.setWIDTH(10);
+        testStaticBoard.setHeight(6);
+        testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -376,8 +376,8 @@ public class BoardTest {
                 "00000"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(10);
-        testStaticBoard.setWIDTH(5);
+        testStaticBoard.setHeight(10);
+        testStaticBoard.setWidth(5);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -428,8 +428,8 @@ public class BoardTest {
                 "0011111100"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(10);
-        testStaticBoard.setWIDTH(10);
+        testStaticBoard.setHeight(10);
+        testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -480,8 +480,8 @@ public class BoardTest {
                 "0001000010"
         );
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(10);
-        testStaticBoard.setWIDTH(10);
+        testStaticBoard.setHeight(10);
+        testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};
@@ -531,8 +531,8 @@ public class BoardTest {
                 "0000000011" +
                 "0000000010");
         StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHEIGHT(10);
-        testStaticBoard.setWIDTH(10);
+        testStaticBoard.setHeight(10);
+        testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
         int[] initBornAmount = {3};
         int[] initSurviveAmount = {2,3};

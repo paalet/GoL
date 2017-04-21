@@ -1,24 +1,25 @@
 package model;
 
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-/**
- * Concrete class extending Board for implementation of the Game with a static board size.
- */
-public class StaticBoard extends Board {
+import java.util.ArrayList;
+
+public class DynamicBoard extends Board{
 
     private int width = 10;
     private int height = 8;
+    private ArrayList<ArrayList<Byte>> currentBoard;
+    private ArrayList<ArrayList<Byte>> nextBoard;
     private int[] visitedCellWithDrag = new int[2];
-    private byte[][] currentBoard;
-    private byte[][] nextBoard;
 
-    public StaticBoard() {
 
-        newBoard();
+    public DynamicBoard() {
+
+    newBoard();
     }
 
 
@@ -27,11 +28,27 @@ public class StaticBoard extends Board {
      */
     public void newBoard() {
 
-        currentBoard = new byte[height][width];
-        nextBoard = new byte[height][width];
+        for (int y = 0; y < height; y++) {
+
+            currentBoard.add(new ArrayList<>());
+            nextBoard.add(new ArrayList<>());
+            for (int x = 0; x < width; x++) {
+                currentBoard.get(y).add(x, (byte) 0);
+                nextBoard.get(y).add(x, (byte) 0);
+            }
+        }
     }
 
 
+    /**
+     * A draw function that loops through every cell and sets the appropriate color based on its alive status.
+     * ArrayOutOfBoundsExceptions to catch the cases when it exceeds values in the array.
+     * @param boardCanvas
+     * @param gc
+     * @param size
+     * @param aliveCellColor
+     * @param deadCellColor
+     */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
 
         gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
@@ -40,7 +57,7 @@ public class StaticBoard extends Board {
             for (int y = 0; y < height; y++) {
                 try {
                     for (int x = 0; x < width; x++) {
-                        if (currentBoard[y][x] == 1) {
+                        if (currentBoard.get(y).get(x) == 1) {
                             gc.setFill(aliveCellColor);
                             gc.fillRect((x * size), (y * size), size, size);
                             gc.strokeRect((x * size), (y * size), size, size);
@@ -75,70 +92,75 @@ public class StaticBoard extends Board {
                 int aliveStatus = 0;
 
                 //Check the status of the cell, whether it is alive or dead.
-                if (currentBoard[y][x] == 1) {
+                if (currentBoard.get(y).get(x) == 1) {
                     aliveStatus = 1;
-                } else if (currentBoard[y][x] == 0) {
+                } else if (currentBoard.get(y).get(x) == 0) {
                     aliveStatus = 0;
                 }
 
                 //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
-                    if (currentBoard[y - 1][x - 1] == 1) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y).size())) {
+                    if (currentBoard.get(y - 1).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y - 1 >= 0 && y - 1 < currentBoard.length) {
-                    if (currentBoard[y - 1][x] == 1) {
+                if (y - 1 >= 0 && y - 1 < currentBoard.size()) {
+                    if (currentBoard.get(y - 1).get(x) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
-                    if (currentBoard[y - 1][x + 1] == 1) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y).size())) {
+                    if (currentBoard.get(y - 1).get(x + 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (x - 1 >= 0 && x - 1 < currentBoard[y].length) {
-                    if (currentBoard[y][x - 1] == 1) {
+                if (x - 1 >= 0 && x - 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (x + 1 >= 0 && x + 1 < currentBoard[y].length) {
-                    if (currentBoard[y][x + 1] == 1) {
+                if (x + 1 >= 0 && x + 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x + 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
-                    if (currentBoard[y + 1][x - 1] == 1) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y).size())) {
+                    if (currentBoard.get(y + 1).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < currentBoard.length) {
-                    if (currentBoard[y + 1][x] == 1) {
+                if (y + 1 >= 0 && y + 1 < currentBoard.size()) {
+                    if (currentBoard.get(y + 1).get(x) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
-                    if (currentBoard[y + 1][x + 1] == 1) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y).size())) {
+                    if (currentBoard.get(y + 1).get(x + 1) == 1) {
                         neighbors++;
                     }
                 }
 
                 //Returns a value to a temporary array based on the rules method in the GoL class.
-                nextBoard[y][x] = GoL.rules(neighbors, aliveStatus);
+                byte nextStatus = GoL.rules(neighbors, aliveStatus);
+                nextBoard.get(y).set(x, nextStatus);
             }
 
         }
 
-        for (int y = 0; y < height; y++) {
+        // Update currentBoard with values from nextBoard
+        for (int y = 0; y < currentBoard.size(); y++) {
 
-            System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, width);
+            for (int x = 0; x < currentBoard.get(y).size(); x++) {
+
+                currentBoard.get(y).set(x, nextBoard.get(y).get(x));
+            }
         }
     }
 
@@ -170,12 +192,12 @@ public class StaticBoard extends Board {
             visitedCellWithDrag[1] = 999999999;
         } else {
             // Change cell status
-            if (currentBoard[cellY][cellX] == 1) {
+            if (currentBoard.get(cellY).get(cellX) == 1) {
 
-                currentBoard[cellY][cellX] = 0;
+                currentBoard.get(cellY).set(cellX, (byte) 0);
             } else {
 
-                currentBoard[cellY][cellX] = 1;
+                currentBoard.get(cellY).set(cellX, (byte) 1);
             }
 
             // Draw new currentBoard
@@ -193,6 +215,7 @@ public class StaticBoard extends Board {
 
     public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
 
+        // Calculate target cell from mouse position
         try {
             double posX = event.getX();
             double posY = event.getY();
@@ -207,12 +230,12 @@ public class StaticBoard extends Board {
 
             if (!(visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY)) {
 
-                if (currentBoard[cellY][cellX] == 1) {
+                if (currentBoard.get(cellY).get(cellX) == 1) {
 
-                    currentBoard[cellY][cellX] = 0;
+                    currentBoard.get(cellY).set(cellX, (byte) 0);
                 } else {
 
-                    currentBoard[cellY][cellX] = 1;
+                    currentBoard.get(cellY).set(cellX, (byte) 1);
                 }
 
 
@@ -239,77 +262,31 @@ public class StaticBoard extends Board {
         double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
         double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
         int newCellAmountHeight = (int) cellAmountDoubleHeight;
-        byte[][] newBoard = new byte[newCellAmountHeight][newCellAmountWidth];
 
+        // Expand board to fit new size
+        if (newCellAmountWidth > width || newCellAmountHeight > height) {
 
-        if (newCellAmountHeight > height) {
+            for (int y = 0; y < newCellAmountHeight; y++) {
 
+                if (currentBoard.size() == y) {
 
-            try {
-                for (int y = 0; y < height; y++) {
-                    try {
-                        for (int x = 0; x < width; x++) {
+                    currentBoard.add(new ArrayList<>());
+                    nextBoard.add(new ArrayList<>());
+                }
+                for (int x = currentBoard.get(y).size(); x < newCellAmountWidth; x++) {
 
-                            newBoard[y][x] = currentBoard[y][x];
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        //
-                    }
+                    currentBoard.get(y).add(x, (byte) 0);
+                    nextBoard.get(y).add(x, (byte) 0);
                 }
 
-            } catch (ArrayIndexOutOfBoundsException e) {
-                //
-            }
-
-
-            try {
-                for (int i = 1; i < ((newCellAmountHeight - height) + 1); i++) {
-
-                    try {
-                        for (int y = 0; y < newCellAmountHeight; y++) {
-                            for (int x = 0; x < newCellAmountWidth; x++) {
-                                newBoard[y][newCellAmountWidth - i] = 0;
-                                newBoard[newCellAmountHeight - i][x] = 0;
-
-                            }
-
-
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-
-                    }
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                //
             }
 
             height = newCellAmountHeight;
             width = newCellAmountWidth;
-            currentBoard = newBoard;
-            nextBoard = newBoard;
-
         }
     }
 
-
-    public byte[][] getCurrentBoard() {
-
-        return currentBoard;
-    }
-
-
-    public void setCurrentBoard(byte[][] newBoard) {
-
-        for (int y = 0; y < height; y++) {
-
-            System.arraycopy(newBoard[y], 0, currentBoard[y], 0, width);
-        }
-    }
-
-
-    public int getWidth() {
-        return width;
-    }
+    public int getWidth() {return width;}
 
     public void setWidth(int newWidth) {
         this.width = newWidth;
@@ -321,23 +298,5 @@ public class StaticBoard extends Board {
 
     public void setHeight(int newHeight) {
         this.height = newHeight;
-    }
-
-    /**
-     * Converts the byte array currentBoard into a string of consecutive "1"s and "0"s.
-     * @return the string made from currentBoard
-     */
-    @Override
-    public String toString() {
-
-        StringBuilder boardStringBuilder = new StringBuilder();
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                byte b = currentBoard[y][x];
-                boardStringBuilder.append(b);
-            }
-        }
-        String boardString = new String(boardStringBuilder);
-        return boardString;
     }
 }

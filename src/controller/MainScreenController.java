@@ -64,7 +64,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TextArea saveWindowSurviveAmountArea;
 
-    private StaticBoard staticBoard = new StaticBoard();
+    private DynamicBoard staticBoard = new DynamicBoard();
     private GraphicsContext gc;
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
@@ -86,8 +86,8 @@ public class MainScreenController implements Initializable {
         int[] initSurviveAmount = {2, 3};
         GoL.setBornAmount(initBornAmount);
         GoL.setSurviveAmount(initSurviveAmount);
-        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHEIGHT());
-        boardCanvas.setWidth(calculateCanvasWidth(staticBoard.getWIDTH()));
+        GoL.setCellSize(boardCanvas.getHeight() / staticBoard.getHeight());
+        boardCanvas.setWidth(calculateCanvasWidth(staticBoard.getWidth()));
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setCurrRate(5.0);
@@ -377,10 +377,10 @@ public class MainScreenController implements Initializable {
         fileData.put("comment", commentText.getText());
 
         //Inserts height of board
-        fileData.put("boardHeight", staticBoard.getHEIGHT());
+        fileData.put("boardHeight", staticBoard.getHeight());
 
         //Inserts width of board
-        fileData.put("boardWidth", staticBoard.getWIDTH());
+        fileData.put("boardWidth", staticBoard.getWidth());
         */
 
 
@@ -404,8 +404,8 @@ public class MainScreenController implements Initializable {
         // Apply board size
         int width = FileManagement.readDimension(fileData.get("width"));
         int height = FileManagement.readDimension(fileData.get("height"));
-        staticBoard.setWIDTH(width);
-        staticBoard.setHEIGHT(height);
+        staticBoard.setWidth(width);
+        staticBoard.setHeight(height);
         staticBoard.newBoard();
 
         // Apply rules if there are readable rules
@@ -417,7 +417,7 @@ public class MainScreenController implements Initializable {
         }
 
         // Apply pattern
-        staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
+       // staticBoard.setCurrentBoard(FileManagement.readPattern(fileData.get("pattern"), width, height));
         calculateCellSizeOnPatternLoad();
         draw();
 
@@ -540,7 +540,7 @@ public class MainScreenController implements Initializable {
 
 
         double canvasHeightDouble = boardCanvas.getHeight();
-        int boardHeightInt = staticBoard.getHEIGHT();
+        int boardHeightInt = staticBoard.getHeight();
         double boardHeightDouble = (double) boardHeightInt;
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());

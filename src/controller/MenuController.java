@@ -24,20 +24,38 @@ public class MenuController {
     private Button autoExpandBoardLoadButton;
 
     public void loadStaticBoardEvent() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
+        Pane root = loader.load();
         Scene scene = new Scene(root, 825, 723);
         primaryStage.setScene(scene);
+
+        MainScreenController mainScreenController = loader.getController();
+        mainScreenController.initializeStaticBoard();
         primaryStage.show();
 
     }
 
     public void loadAutoExpandingEvent() throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        Stage primaryStage = (Stage) menuPane.getScene().getWindow();
+        Pane root = loader.load();
+        Scene scene = new Scene(root, 825, 723);
+        primaryStage.setScene(scene);
+
+        MainScreenController mainScreenController = loader.getController();
+        mainScreenController.initializeDynamicBoard();
+        primaryStage.show();
+
+        /*
         Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Scene scene = new Scene(root, 825, 723);
         primaryStage.setScene(scene);
         primaryStage.show();
+        */
 
     }
 }

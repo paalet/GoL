@@ -63,7 +63,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TextArea commentText;
 
-    private Board board = new DynamicBoard();
+    private Board board = new StaticBoard();
     private GraphicsContext gc;
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
@@ -116,6 +116,15 @@ public class MainScreenController implements Initializable {
         //Draw board
         gc = boardCanvas.getGraphicsContext2D();
         draw();
+    }
+
+    public void initializeStaticBoard() {
+        board = new StaticBoard();
+    }
+
+    public void initializeDynamicBoard() {
+        board = new DynamicBoard();
+
     }
 
     /**
@@ -320,8 +329,7 @@ public class MainScreenController implements Initializable {
 
         Scene scene = new Scene(root, 900, 700);
 
-        String css = this.getClass().getResource("../view/previewPatternStyles.css");
-        scene.getStylesheets().add(css);
+        scene.getStylesheets().add("../view/previewPatternStyles.css");
 
         fileEditor.setScene(scene);
         fileEditor.setTitle("Preview pattern");
@@ -368,38 +376,6 @@ public class MainScreenController implements Initializable {
 
         fileEditor.show();
 
-<<<<<<< HEAD
-=======
-
-
-    }
-
-    public void openFileEditor() throws IOException {
-
-        Stage editor = new Stage();
-        /*HashMap<String, String> fileData = new HashMap<>();
-
-        //Inserts title if there is a title
-        fileData.put("title", titleText.getText());
-
-        //Inserts origin
-        fileData.put("origin", originText.getText());
-
-        //Inserts comments
-        fileData.put("comment", commentText.getText());
-
-        //Inserts height of board
-        fileData.put("boardHeight", board.getHeight());
-
-        //Inserts width of board
-        fileData.put("boardWidth", board.getWidth());
-        */
-
-
-
-
-
->>>>>>> master
     }
 
     /**

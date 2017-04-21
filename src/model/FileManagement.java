@@ -63,7 +63,7 @@ public class FileManagement {
         } catch (MalformedURLException e) {
             CustomDialog errMsg = new CustomDialog("Error opening file from URL", true,
                     "There was a problem opening the specified URL.\r\n" +
-                            "Please make sure you have the correct location address.", 400, 200, 2);
+                            "Please make sure you have the correct location address.");
             throw new IOException(e);
         }
 

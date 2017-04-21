@@ -124,11 +124,12 @@ public class FileEditor implements Initializable {
 
     public void drawAllCanvases(byte[][]board, int HEIGHT, int WIDTH) {
         Color aliveCellColor = Color.BLACK;
-        Color deadCellColor = Color.WHITE;
+        Color mainCanvasBackgroundColor = Color.WHITE;
+        Color deadCellColor = Color.valueOf("#F4F4F4");
         double cellSizeMainCanvas = calculateCellSize(mainCanvas, HEIGHT);
         double cellSizePreviewCanvas = calculateCellSize(previewOne, HEIGHT);
 
-        draw(mainGc, cellSizeMainCanvas, aliveCellColor, deadCellColor, board, HEIGHT, WIDTH);
+        draw(mainGc, cellSizeMainCanvas, aliveCellColor, mainCanvasBackgroundColor, board, HEIGHT, WIDTH);
 
         byte[][]nextBoard  = nextGeneration(board, HEIGHT, WIDTH);
         draw(gcOne, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
@@ -189,6 +190,7 @@ public class FileEditor implements Initializable {
 
 
     public void draw(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, byte[][] board, int HEIGHT, int WIDTH) {
+
 
         try {
             for (int y = 0; y < HEIGHT; y++) {

@@ -1,0 +1,10 @@
+#scrollPane {
+}
+
+#vboxLeft {
+	fx-border: 1px solid black;
+}
+
+textarea {
+	fx-border-radius: 5;
+}

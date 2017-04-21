@@ -378,7 +378,7 @@ public class MainScreenController implements Initializable {
         edController.setCommentsArea(comments);
         edController.setBornAmountField(bornString);
         edController.setSurviveAmountField(surviveString);
-        edController.drawAllCanvases(staticBoard.getCurrentBoard(), staticBoard.getHEIGHT(), staticBoard.getWIDTH());
+        edController.drawAllCanvases(board.getCurrentBoard(), board.getHeight(), board.getWidth());
 
 
         fileEditor.show();

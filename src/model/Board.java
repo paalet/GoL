@@ -83,6 +83,13 @@ public abstract class Board {
      */
     public void calculateBoardSize(double canvasHeight, double canvasWidth) {}
 
+    public byte[][] getCurrentBoard() {
+
+        return currentBoard;
+    }
+
+    public void setCurrentBoard(byte[][] newBoard) {}
+
     public int getWidth() {
         return width;
     }

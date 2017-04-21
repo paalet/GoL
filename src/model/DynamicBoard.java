@@ -287,6 +287,7 @@ public class DynamicBoard extends Board{
         }
     }
 
+
     public int getWidth() {return width;}
 
     public void setWidth(int newWidth) {

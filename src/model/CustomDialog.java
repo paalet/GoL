@@ -14,14 +14,13 @@ import java.awt.event.ActionListener;
  */
 public class CustomDialog extends JDialog implements ActionListener {
     private JButton okButton;
-    private JButton cancelButton;
-    private JPanel panel;
     private JFrame frame;
 
 
     public CustomDialog(String title, boolean ok, String message) {
 
         frame = new JFrame(title);
+        frame.setResizable(false);
         JPanel panel = new JPanel();
         frame.add(panel);
         panel.setLayout(    new GridBagLayout());

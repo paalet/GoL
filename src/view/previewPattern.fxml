@@ -13,9 +13,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FileEditor">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FileEditor">
    <children>
-      <VBox prefHeight="499.0" prefWidth="218.0" style="-fx-padding: 10; -fx-border-width: 0 0 0 1;">
+      <VBox id="vboxLeft" prefHeight="499.0" prefWidth="218.0" style="-fx-padding: 10">
          <children>
             <StackPane prefHeight="91.0" prefWidth="218.0">
                <children>
@@ -88,7 +88,7 @@
             </HBox>
          </children>
       </VBox>
-      <ScrollPane layoutX="4.0" layoutY="500.0" prefHeight="200.0" prefWidth="693.0" style="fx-border-width: 0px 0.5px 0px 0px black;">
+      <ScrollPane fx:id="scrollPane" layoutX="4.0" layoutY="500.0" prefHeight="200.0" prefWidth="894.0" >
          <content>
             <HBox prefHeight="197.0" prefWidth="3000.0">
                <children>
@@ -111,6 +111,6 @@
             </HBox>
          </content>
       </ScrollPane>
-      <Canvas fx:id="mainCanvas" height="499.0" layoutX="218.0" width="483.0" />
+      <Canvas fx:id="mainCanvas" height="499.0" layoutX="218.0" width="675.0" />
    </children>
 </Pane>

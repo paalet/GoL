@@ -123,27 +123,37 @@ public class FileManagement {
                     break;
             }
         }
+
         String comments = new String(commentBuilder);
         fileData.put("title", title);
         fileData.put("origin", origin);
         fileData.put("comments", comments);
 
-        /**
-         * Finds the size of the x-coordinates a .rle file.
-         */
-        int x = fileString.indexOf(120, i);
-        int comma = fileString.indexOf(44, x);
-        String widthSubString = fileString.substring(x,comma);
-        fileData.put("width", widthSubString);
+
+        try {
+
+            /**
+             * Finds the size of the x-coordinates a .rle file.
+             */
+            int x = fileString.indexOf(120, i);
+            int comma = fileString.indexOf(44, x);
+            String widthSubString = fileString.substring(x, comma);
+            fileData.put("width", widthSubString);
 
 
-        /**
-         * Finds the size of the y-coordinates in a .rle file.
-         */
-        int y = fileString.indexOf(121, i);
-        comma = fileString.indexOf(44, y);
-        String heightSubString = fileString.substring(y,comma);
-        fileData.put("height", heightSubString);
+            /**
+             * Finds the size of the y-coordinates in a .rle file.
+             */
+            int y = fileString.indexOf(121, i);
+            comma = fileString.indexOf(44, y);
+            String heightSubString = fileString.substring(y, comma);
+            fileData.put("height", heightSubString);
+        }
+        catch(IndexOutOfBoundsException e) {
+            //Wont set any values to height or width if the format isnt supported.´
+            //A message of the error is sent to the user in a CustomDialig window with info on how to correct it.
+            //This is done in the confirmFileData method in MainScreenController.java
+        }
 
         /**
          * Finds the rules in a .rle file.

@@ -13,6 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -23,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
+import javax.xml.soap.Text;
 import java.io.*;
 import java.util.HashMap;
 
@@ -34,6 +39,10 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private Pane pane;
+    @FXML
+    private Button mainMenuButton;
+    @FXML
+    private TextArea gameMessagesText;
     @FXML
     private Button staticBoardLoadButton;
     @FXML
@@ -131,6 +140,17 @@ public class MainScreenController implements Initializable {
 
     }
 
+    public void returnToMenuEvent() throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        Pane root = loader.load();
+        Scene scene = new Scene(root, 1045, 868);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
     /**
      * A simple function that calles the draw function in the Board class.
      */
@@ -199,8 +219,23 @@ public class MainScreenController implements Initializable {
      * Calculates a cellsize and snaps it, and the slider to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
      */
     public void setCellSizeEvent() {
-        GoL.calculateCellSize(boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider);
-        calculateBoardSize(boardCanvas.getHeight(), boardCanvas.getWidth());
+        gameMessagesText.setText("");
+        GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
+        calculateBoardSize(656.0, 985.0);
+
+        try {
+            boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
+        }
+        catch(RuntimeException er) {
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of memory\nor exceeding canvas size limit.\nPlease alert the developers.");
+        }
+        try {
+            boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
+        }
+        catch(RuntimeException er) {
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of memory\nor exceeding canvas size limit.\nPlease alert the developers.");
+        }
+
         draw();
 
 
@@ -404,6 +439,7 @@ public class MainScreenController implements Initializable {
         commentText.setText(fileData.get("comments"));
 
         // Apply board size
+
         int width = FileManagement.readDimension(fileData.get("width"));
         int height = FileManagement.readDimension(fileData.get("height"));
         board.setWidth(width);
@@ -433,6 +469,7 @@ public class MainScreenController implements Initializable {
             ((DynamicBoard) board).setCurrentBoard(FileManagement.readPatternDynamicBoard(fileData.get("pattern"), height, width));
         }
         calculateCellSizeOnPatternLoad();
+        boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
         draw();
 
         //Set data as loaded data
@@ -491,7 +528,7 @@ public class MainScreenController implements Initializable {
             report.append("Rules found and set.<br><br>");
         }
         else {
-            report.append("Rules not found, or of an invalid format. Standard rule-set applied.<br>To implement rules, please use the following syntax:<br><br>rules = B{value}/S{value}<br><br>'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.<br><br>");
+            report.append("Rules not found, or of an invalid format. Standard rule-set applied.<br>To implement rules, please use the following syntax:<br>rules = B{value}/S{value}<br><br>'rule' instead of 'rules' and the use of lower-case letters representing the born/survive amount is also supported.<br><br>");
         }
         if(dimensionsOk) {
             report.append("Dimensions found and set.<br><br>");
@@ -510,7 +547,6 @@ public class MainScreenController implements Initializable {
 
 
         CustomDialog importInfo = new CustomDialog("File load", true, reportString);
-        System.out.println(report);
     }
 
     /**

@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 public class StaticBoard extends Board {
 
-    private int width = 10;
+    private int width = 12;
     private int height = 8;
     private int[] visitedCellWithDrag = new int[2];
     private byte[][] currentBoard;
@@ -297,11 +297,6 @@ public class StaticBoard extends Board {
 
     public void setCurrentBoard(byte[][] newBoard) {
 
-    /*    for (int y = 0; y < height; y++) {
-
-            System.arraycopy(newBoard[y], 0, currentBoard[y], 0, width);
-        }
-    */
     currentBoard = newBoard;
     }
 

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -15,7 +16,7 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../view/menu.fxml"));
             primaryStage.setTitle("Game of Life");
-            primaryStage.setScene(new Scene(root, 825, 723));
+            primaryStage.setScene(new Scene(root, 1045, 868));
             primaryStage.setResizable(false);
             primaryStage.show();
         }

@@ -379,6 +379,7 @@ public class FileEditor implements Initializable {
 
         for (int y = 0; y < height; y++) {
 
+            evolvedBoard.add(new ArrayList<>());
             for (int x = 0; x < width; x++) {
 
                 int neighbors = 0;
@@ -442,7 +443,8 @@ public class FileEditor implements Initializable {
 
                 //Returns a value to a temporary array based on the rules method in the GoL class.
                 byte nextStatus = GoL.rules(neighbors, aliveStatus);
-                evolvedBoard.get(y).set(x, nextStatus);
+
+                evolvedBoard.get(y).add(x, nextStatus);
             }
 
         }

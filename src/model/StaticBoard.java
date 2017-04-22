@@ -236,16 +236,114 @@ public class StaticBoard extends Board {
 
         double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
         int newCellAmountWidth = (int) cellAmountDoubleWidth;
-        double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
+
         double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
         int newCellAmountHeight = (int) cellAmountDoubleHeight;
+
+        int heightRowsToArray = (newCellAmountHeight - height) * 2;
+        int heightRowsAroundArray = newCellAmountHeight - height;
+
+        int widthRowsToArray = (newCellAmountHeight - height) * 2;
+        int widthRowsAroundArray = newCellAmountHeight - height;
+
+        if (heightRowsToArray < 1) {
+            heightRowsToArray = 0;
+        }
+        //newCellAmountHeight = newCellAmountHeight + heightRowsToArray;
+        //newCellAmountWidth = newCellAmountWidth + widthRowsToArray;
+
         byte[][] newBoard = new byte[newCellAmountHeight][newCellAmountWidth];
 
 
         if (newCellAmountHeight > height) {
 
+            /*try {
+                for (int y = 0; y < heightRowsToArray; y++) {
+                     try {
+                         for (int x = 0; x < newCellAmountWidth; y++) {
+                             newBoard[x][y] = 0;
+                         }
+                     }
+                     catch(ArrayIndexOutOfBoundsException e) {
+                         //
+                    }
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                //
+            }
 
             try {
+                for (int x = 0; x < heightRowsToArray; x++) {
+                    try {
+                        for (int y = 0; y < newCellAmountHeight; y++) {
+                            newBoard[x][y] = 0;
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        //
+                    }
+                }
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
+            }
+
+
+            try {
+                for (int y = newCellAmountHeight; y > height; y--) {
+                    try {
+                        for (int x = 0; x > width; y--) {
+                            newBoard[x][y] = 0;
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        //
+                    }
+                }
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
+            }
+
+            try {
+                for (int x = newCellAmountWidth; x > width; x--) {
+                    try {
+                        for (int y = 0; y > height; y--) {
+                            newBoard[x][y] = 0;
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        //
+                    }
+                }
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                //
+            }
+
+        }
+
+        try {
+            for (int y = (heightRowsAroundArray- 1); y < (newCellAmountHeight - heightRowsAroundArray); y++) {
+                try {
+                    for (int x = (widthRowsAroundArray - 1); x < (newCellAmountWidth - widthRowsAroundArray); x++) {
+                        newBoard[y][x] = currentBoard[y - (heightRowsAroundArray - 1)][x - (widthRowsAroundArray - 1)];
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException e) {
+                    //
+                }
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+            //
+        }
+
+
+            */
+            try {
+
                 for (int y = 0; y < height; y++) {
                     try {
                         for (int x = 0; x < width; x++) {
@@ -282,6 +380,7 @@ public class StaticBoard extends Board {
             } catch (ArrayIndexOutOfBoundsException e) {
                 //
             }
+
 
             height = newCellAmountHeight;
             width = newCellAmountWidth;

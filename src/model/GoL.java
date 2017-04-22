@@ -133,6 +133,7 @@ public class GoL {
         double ceilHeight = Math.ceil(cellAmountHeight);
 
 
+
         //Values containing the new proposed width and height of the canvas.
         double newHeight = cellAmountHeight * canvasHeight;
         double newWidth = cellAmountWidth * canvasWidth;

@@ -396,7 +396,14 @@ public class StaticBoard extends Board {
 
     public void setCurrentBoard(byte[][] newBoard) {
 
-    currentBoard = newBoard;
+        currentBoard = new byte[height][width];
+        for (int y = 0; y < height; y++) {
+
+            for (int x = 0; x < width; x++) {
+
+                currentBoard[y][x] = newBoard[y][x];
+            }
+        }
     }
 
 

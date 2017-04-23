@@ -135,7 +135,7 @@ public class DynamicBoard extends Board{
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < currentBoard.size() && (x >= 0 && x < currentBoard.get(y).size())) {
+                if (y + 1 >= 0 && y + 1 < currentBoard.size() && (x >= 0 && x < currentBoard.get(y + 1).size())) {
                     if (currentBoard.get(y + 1).get(x) == 1) {
                         neighbors++;
                     }

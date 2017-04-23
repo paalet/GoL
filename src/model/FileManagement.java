@@ -317,7 +317,7 @@ public class FileManagement {
      * @return two dimensional byte array where value 0 represents a dead cell and value 1 represents a live cell.
      * @throws IOException
      */
-    public static byte[][] readPatternStaticBoard(String patternString, int width, int height) throws IOException {
+    public static byte[][] readPatternStaticBoard(String patternString, int height, int width) throws IOException {
 
         // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);
@@ -391,67 +391,80 @@ public class FileManagement {
      * @return two dimensional byte array where value 0 represents a dead cell and value 1 represents a live cell.
      * @throws IOException
      */
-    public static ArrayList<ArrayList<Byte>> readPatternDynamicBoard(String patternString, int width, int height) throws IOException {
+    public static ArrayList<ArrayList<Byte>> readPatternDynamicBoard(String patternString, int height, int width) throws IOException {
 
         // Create scanner to break pattern into rows
         Scanner patternScanner = new Scanner(patternString);
         patternScanner.useDelimiter("\\$");
         ArrayList<ArrayList<Byte>> board = new ArrayList<>();
-        int y = 0;
 
         // Create charArray with pattern info for each row
-        while (patternScanner.hasNext()) {
-            String row = new String(patternScanner.next());
-            board.add(new ArrayList<>());
-            char[] charArray = row.toCharArray();
-            String cellCountString = new String();
-            int x = 0;
+        for (int y = 0; y < height; y++) {
+            if (patternScanner.hasNext()) {
+                String row = new String(patternScanner.next());
+                board.add(y, new ArrayList<>());
+                char[] charArray = row.toCharArray();
+                String repeatingCellCntrString = new String();
+                int x = 0;
 
-            // Go through each row char by char
-            try {
-                for (int i = 0; i < charArray.length; i++) {
+                // Go through each row char by char
+                try {
+                    for (int i = 0; i < charArray.length; i++) {
 
-                    // Numbers
-                    if (charArray[i] >= 48 && charArray[i] <= 57) {
-                        cellCountString = cellCountString + charArray[i];
-                    }
+                        // Char processed is a number (ascii code 48-57)
+                        if (charArray[i] >= 48 && charArray[i] <= 57) {
+                            repeatingCellCntrString = repeatingCellCntrString + charArray[i];
+                        }
 
-                    // Dead cells
-                    else if (charArray[i] == 98) {
+                        // Char processed is a "b" (ascii code 98), representing a dead cell
+                        else if (charArray[i] == 98) {
 
-                        if (cellCountString.equals("")) {
-                            board.get(y).add(x, (byte) 0);
-                            x++;
-                        } else {
-                            int cellCountInt = Integer.parseInt(cellCountString);
-                            for (int j = 0; j < cellCountInt; j++) {
+                            if (repeatingCellCntrString.equals("")) {
                                 board.get(y).add(x, (byte) 0);
                                 x++;
+                            } else {
+                                int cellCountInt = Integer.parseInt(repeatingCellCntrString);
+                                for (int j = 0; j < cellCountInt; j++) {
+                                    board.get(y).add(x, (byte) 0);
+                                    x++;
+                                }
                             }
+                            repeatingCellCntrString = "";
                         }
-                        cellCountString = "";
-                    }
 
-                    // Alive cell
-                    else if (charArray[i] == 111) {
-                        if (cellCountString.equals("")) {
-                            board.get(y).add(x, (byte) 1);
-                            x++;
-                        } else {
-                            int cellCountInt = Integer.parseInt(cellCountString);
-                            for (int j = 0; j < cellCountInt; j++) {
+                        // Cell processed is an "o" (ascii code 111), representing a live cell
+                        else if (charArray[i] == 111) {
+                            if (repeatingCellCntrString.equals("")) {
                                 board.get(y).add(x, (byte) 1);
                                 x++;
+                            } else {
+                                int cellCountInt = Integer.parseInt(repeatingCellCntrString);
+                                for (int j = 0; j < cellCountInt; j++) {
+                                    board.get(y).add(x, (byte) 1);
+                                    x++;
+                                }
                             }
+                            repeatingCellCntrString = "";
                         }
-                        cellCountString = "";
+
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    //
+                }
+                // Add dead cell to arraylist if width dimension calls for it
+                while (x < width) {
+                    board.get(y).add(x, (byte) 0);
+                    x++;
+                }
+
+            } else {
+                //append empty row if height dimension calls for it
+                board.add(y, new ArrayList<>());
+                for (int x = 0; x < width; x++) {
+
+                    board.get(y).add(x, (byte) 0);
                 }
             }
-            catch(ArrayIndexOutOfBoundsException e) {
-                //
-            }
-            y++;
         }
         return board;
     }

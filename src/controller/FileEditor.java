@@ -316,19 +316,19 @@ public class FileEditor implements Initializable {
                 }
 
                 //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y].length)) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y - 1].length)) {
                     if (evolvingBoard[y - 1][x - 1] == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y - 1 >= 0 && y - 1 < evolvingBoard.length) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x >= 0 && x < evolvingBoard[y - 1].length)) {
                     if (evolvingBoard[y - 1][x] == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y].length)) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y - 1].length)) {
                     if (evolvingBoard[y - 1][x + 1] == 1) {
                         neighbors++;
                     }
@@ -346,19 +346,19 @@ public class FileEditor implements Initializable {
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y].length)) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y + 1].length)) {
                     if (evolvingBoard[y + 1][x - 1] == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < evolvingBoard.length) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x >= 0 && x < evolvingBoard[y + 1].length)) {
                     if (evolvingBoard[y + 1][x] == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y].length)) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y + 1].length)) {
                     if (evolvingBoard[y + 1][x + 1] == 1) {
                         neighbors++;
                     }
@@ -393,19 +393,19 @@ public class FileEditor implements Initializable {
                 }
 
                 //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size())) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y - 1).size())) {
                     if (evolvingBoard.get(y - 1).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y - 1 >= 0 && y - 1 < evolvingBoard.size()) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x >= 0 && x < evolvingBoard.get(y - 1).size())) {
                     if (evolvingBoard.get(y - 1).get(x) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size())) {
+                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y - 1).size())) {
                     if (evolvingBoard.get(y - 1).get(x + 1) == 1) {
                         neighbors++;
                     }
@@ -423,19 +423,19 @@ public class FileEditor implements Initializable {
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size())) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y + 1).size())) {
                     if (evolvingBoard.get(y + 1).get(x - 1) == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < evolvingBoard.size()) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x >= 0 && x < evolvingBoard.get(y + 1).size())) {
                     if (evolvingBoard.get(y + 1).get(x) == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size())) {
+                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y + 1).size())) {
                     if (evolvingBoard.get(y + 1).get(x + 1) == 1) {
                         neighbors++;
                     }

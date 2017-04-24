@@ -10,15 +10,43 @@ import javafx.scene.paint.Color;
  */
 public class StaticBoard extends Board {
 
-    private int width = 12;
-    private int height = 8;
-    private int[] visitedCellWithDrag = new int[2];
+    private int width;
+    private int height;
+    private int[] visitedCellWithDrag;
     private byte[][] currentBoard;
     private byte[][] nextBoard;
 
+
+    /**
+     * Constructor sets initial board size and ensures correct size of currentBoard and nextBoard through newBoard().
+     */
     public StaticBoard() {
 
+        width = 12;
+        height = 8;
+        visitedCellWithDrag = new int[2];
         newBoard();
+    }
+
+
+    /**
+     * Constructor for deep copy of the current live game board object. To be used by GifCreator and other features that
+     * need a copy of the board to work with without changing the live game board.
+     * @param inputBoard the current game board is supplied as input for the copy
+     */
+    public StaticBoard(StaticBoard inputBoard) {
+
+        width = inputBoard.width;
+        height = inputBoard.height;
+        visitedCellWithDrag = new int[2];
+        newBoard();
+        // Copy the currentBoard array
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                currentBoard[y][x] = inputBoard.currentBoard[y][x];
+            }
+        }
+
     }
 
 
@@ -82,19 +110,19 @@ public class StaticBoard extends Board {
                 }
 
                 //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y - 1].length)) {
                     if (currentBoard[y - 1][x - 1] == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y - 1 >= 0 && y - 1 < currentBoard.length) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x >= 0 && x < currentBoard[y - 1].length)) {
                     if (currentBoard[y - 1][x] == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y - 1].length)) {
                     if (currentBoard[y - 1][x + 1] == 1) {
                         neighbors++;
                     }
@@ -112,19 +140,19 @@ public class StaticBoard extends Board {
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y].length)) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y + 1].length)) {
                     if (currentBoard[y + 1][x - 1] == 1) {
                         neighbors++;
                     }
                 }
 
-                if (y + 1 >= 0 && y + 1 < currentBoard.length) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x >= 0 && x < currentBoard[y + 1].length)) {
                     if (currentBoard[y + 1][x] == 1) {
                         neighbors++;
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y].length)) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y + 1].length)) {
                     if (currentBoard[y + 1][x + 1] == 1) {
                         neighbors++;
                     }

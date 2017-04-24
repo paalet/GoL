@@ -12,14 +12,39 @@ public class DynamicBoard extends Board{
 
     private int width = 12;
     private int height = 8;
+    private int[] visitedCellWithDrag;
     private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
     private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
-    private int[] visitedCellWithDrag = new int[2];
 
 
+    /**
+     * Constructor sets initial board size and ensures correct size of currentBoard and nextBoard through newBoard().
+     */
     public DynamicBoard() {
 
-    newBoard();
+        width = 12;
+        height = 8;
+        visitedCellWithDrag = new int[2];
+        newBoard();
+
+    }
+
+
+    /**
+     *
+     */
+    public DynamicBoard(DynamicBoard inputBoard) {
+
+        width = inputBoard.width;
+        height = inputBoard.height;
+        visitedCellWithDrag = new int[2];
+        newBoard();
+        // Copy the currentBoard arraylist
+        for (int y = 0; y < inputBoard.currentBoard.size(); y++) {
+            for (int x = 0; x < inputBoard.currentBoard.get(y).size(); x++) {
+                currentBoard.get(y).set(x, inputBoard.currentBoard.get(y).get(x));
+            }
+        }
     }
 
 
@@ -141,7 +166,7 @@ public class DynamicBoard extends Board{
                     }
                 }
 
-                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y +1).size())) {
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y + 1).size())) {
                     if (currentBoard.get(y + 1).get(x + 1) == 1) {
                         neighbors++;
                     }

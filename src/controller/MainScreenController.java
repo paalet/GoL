@@ -79,7 +79,6 @@ public class MainScreenController implements Initializable {
             draw();
         }
     }));
-    private Stage gifStage = new Stage();
 
 
     @Override
@@ -98,19 +97,6 @@ public class MainScreenController implements Initializable {
         GoL.setCurrRate(5.0);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
-
-        // Create GIF Stage
-        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
-        try {
-            Parent gifRoot = gifLoader.load();
-            Scene gifScene = new Scene(gifRoot);
-            gifStage.setScene(gifScene);
-        } catch (IOException e) {
-            System.out.println("gifLoader.load() did not produce Parent");
-        }
-        GifCreatorController gifController = gifLoader.getController();
-        gifStage.setTitle("Create GIF");
-        gifStage.initModality(Modality.APPLICATION_MODAL);
 
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
@@ -200,14 +186,30 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Shows the GIF creator interface and pauses the game if it is running.
+     * Creates and displays the GIF creator interface and pauses the game if it is running.
      */
     public void gifCreatorEvent() {
 
         if (GoL.getIsRunning()) {
             pause();
         }
-        // gifController.setStatic/DynamicBoard som gjør deep copy via constructor med brett som input
+
+        // Create GIF Stage
+        Stage gifStage = new Stage();
+        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
+        GifCreatorController gifController = new GifCreatorController(board);
+        gifLoader.setController(gifController);
+        try {
+            Parent gifRoot = gifLoader.load();
+            Scene gifScene = new Scene(gifRoot);
+            gifStage.setScene(gifScene);
+        } catch (IOException e) {
+            System.out.println("gifLoader.load() did not produce Parent");
+            e.printStackTrace();
+        }
+
+        gifStage.setTitle("Create GIF");
+        gifStage.initModality(Modality.APPLICATION_MODAL);
         gifStage.showAndWait();
     }
 

@@ -552,6 +552,7 @@ public class FileEditor implements Initializable {
 
                         //Returns a value to a temporary array based on the rules method in the GoL class.
                         evolvedBoard[y][x] = GoL.rules(neighbors, aliveStatus);
+
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //
@@ -591,6 +592,7 @@ public class FileEditor implements Initializable {
                                 neighbors++;
                             }
                         }
+
 
                         if (y - 1 >= 0 && y - 1 < evolvingBoard.size()) {
                             if (evolvingBoard.get(y - 1).get(x) == 1) {
@@ -636,6 +638,7 @@ public class FileEditor implements Initializable {
 
                         //Returns a value to a temporary array based on the rules method in the GoL class.
                         byte nextStatus = GoL.rules(neighbors, aliveStatus);
+
 
                         evolvedBoard.get(y).add(x, nextStatus);
                     }

@@ -15,11 +15,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -27,7 +24,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
-import javax.xml.soap.Text;
 import java.io.*;
 import java.util.HashMap;
 
@@ -42,7 +38,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button mainMenuButton;
     @FXML
-    private TextArea gameMessagesText;
+    public TextArea gameMessagesText;
     @FXML
     private Button staticBoardLoadButton;
     @FXML
@@ -223,19 +219,19 @@ public class MainScreenController implements Initializable {
     public void setCellSizeEvent() {
         gameMessagesText.setText("");
         GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
-        calculateBoardSize(656.0, 985.0);
+        calculateBoardSize(656, 985);
 
         try {
             boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
         }
         catch(RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of memory\nor exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.\nPlease alert the developers.");
         }
         try {
-            boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
+            boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
         }
         catch(RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of memory\nor exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
         }
 
         draw();
@@ -288,6 +284,7 @@ public class MainScreenController implements Initializable {
      * Increases speed incrementally with 0.5 fps, and sets the label to display the new value.
      */
     public void increaseSpeedEvent() {
+        timeline.pause();
 
         if (GoL.getIsRunning()) {
 
@@ -312,6 +309,7 @@ public class MainScreenController implements Initializable {
      * @param event
      */
     public void cellClickEvent(MouseEvent event) {
+        timeline.pause();
 
         board.cellClickDraw(event, gc, boardCanvas);
     }
@@ -329,7 +327,7 @@ public class MainScreenController implements Initializable {
      * Opens
      */
     public void openRulesEditor() {
-
+        pause();
 
         RulesEditor rulesEditor = RulesEditor.getInstance();
         rulesEditor.setVisible(true);
@@ -339,6 +337,7 @@ public class MainScreenController implements Initializable {
 
 
     public void readFileFromDisk() throws IOException {
+        pause();
 
         File rleFile = FileManagement.loadFileFromDisk();
         if ( rleFile != null) {
@@ -351,6 +350,7 @@ public class MainScreenController implements Initializable {
 
 
     public void readFileFromURL() throws Exception {
+        pause();
 
         InputStream rleStream = FileManagement.loadFileFromURL();
         if (rleStream != null) {
@@ -362,6 +362,8 @@ public class MainScreenController implements Initializable {
     }
 
     public void openFileEditorWindow() throws Exception{
+
+        pause();
 
 
         Stage fileEditor = new Stage();
@@ -375,7 +377,7 @@ public class MainScreenController implements Initializable {
         fileEditor.setScene(scene);
         fileEditor.setTitle("Preview pattern");
         fileEditor.setResizable(false);
-        fileEditor.initModality(Modality.APPLICATION_MODAL);
+        fileEditor.initModality(Modality.WINDOW_MODAL);
 
         String title = "";
         String origin = "";
@@ -413,9 +415,9 @@ public class MainScreenController implements Initializable {
         edController.setBornAmountField(bornString);
         edController.setSurviveAmountField(surviveString);
         switch(boardType) {
-            case "Static": edController.drawAllCanvasesStatic(board.getCurrentBoard(), board.getHeight(), board.getWidth());
+            case "Static": edController.drawAllCanvasesStatic(board.getWidth(), board.getHeight(),board.getCurrentBoard(), board.getHeight(), board.getWidth());
                 break;
-            case "Dynamic": edController.drawAllCanvasesDynamic(board.getCurrentBoard(), board.getHeight(), board.getWidth());
+            case "Dynamic": edController.drawAllCanvasesDynamic(board.getWidth(), board.getHeight(), board.getCurrentBoard(), board.getHeight(), board.getWidth());
                 break;
             default: System.out.println("ERROR: Could not find board-type.");
                 break;
@@ -426,6 +428,12 @@ public class MainScreenController implements Initializable {
 
         fileEditor.show();
 
+    }
+
+
+    public void setGameMessagesText(String text) {
+        gameMessagesText.setText(text);
+        System.out.println(text);
     }
 
     /**
@@ -546,7 +554,6 @@ public class MainScreenController implements Initializable {
         }
 
         String reportString = new String(report);
-
 
         CustomDialog importInfo = new CustomDialog("File load", true, reportString);
     }

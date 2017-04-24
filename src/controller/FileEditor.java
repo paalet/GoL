@@ -1,14 +1,24 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.GoL;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static javafx.scene.paint.Color.BLACK;
 
 
 /**
@@ -78,6 +88,12 @@ public class FileEditor implements Initializable {
     private GraphicsContext gcFourteen;
     private GraphicsContext gcFifteen;
 
+    private byte[][] staticBoard;
+    private ArrayList<ArrayList<Byte>> dynamicBoard;
+    private int boardWidth = 0;
+    private int boardHeight = 0;
+    private String boardType;
+
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         mainGc = mainCanvas.getGraphicsContext2D();
@@ -125,132 +141,298 @@ public class FileEditor implements Initializable {
 
     }
 
-    public void drawAllCanvasesStatic(byte[][] board, int HEIGHT, int WIDTH) {
-        Color aliveCellColor = Color.BLACK;
-        Color mainCanvasBackgroundColor = Color.WHITE;
-        Color deadCellColor = Color.valueOf("#F4F4F4");
-        double cellSizeMainCanvas = calculateCellSize(mainCanvas, HEIGHT);
-        double cellSizePreviewCanvas = calculateCellSize(previewOne, HEIGHT);
+    public void closeEvent() {
 
-        drawStatic(mainGc, cellSizeMainCanvas, aliveCellColor, mainCanvasBackgroundColor, board, HEIGHT, WIDTH);
+        Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
+        primaryStage.close();
+    }
 
-        byte[][] nextBoard = nextGenerationStatic(board, HEIGHT, WIDTH);
-        drawStatic(gcOne, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+    public void saveFileEvent() throws IOException {
+        FileChooser chooser = new FileChooser();
+        File userDirectory = new File(System.getProperty("user.home"));
+        if (!userDirectory.canRead()) {
+            userDirectory = new File("c:/");
+        }
+        chooser.setInitialDirectory(userDirectory);
+        chooser.setTitle("Save RLE file");
+        File returnFile = chooser.showSaveDialog(null);
+        if (returnFile != null) {
+            saveFile(returnFile);
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcTwo, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        }
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcThree, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+    }
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcFour, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+    public void saveFile(File returnFile) throws IOException {
+        StringBuilder rleFileStringBuilder = new StringBuilder();
+        String title = "";
+        String origin = "";
+        String comments = "";
+        String dimensions = "";
+        String rules = "";
+        String board = "";
+        if (!previewTitleArea.getText().isEmpty()) {
+            title = "#T " + previewTitleArea.getText() + "\n";
+        }
+        if (!previewOriginArea.getText().isEmpty()) {
+            origin = "#O " + previewOriginArea.getText() + "\n";
+        }
+        if (!previewCommentsArea.getText().isEmpty()) {
+            comments = previewCommentsArea.getText();
+            int i = 0;
+            StringBuilder commentsString = new StringBuilder();
+            for (int index = 0; index < comments.length(); index++) {
+                if (comments.charAt(index) == 10) {
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcFive, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+                    String subString = "#C " + comments.substring(i, index) + "\n";
+                    commentsString.append(subString);
+                    i = index + 1;
+                }
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcSix, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+            }
+            String subString = "#C " + comments.substring(i, comments.length()) + "\n";
+            commentsString.append(subString);
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcSeven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+            comments = new String(commentsString);
+        }
+        if (boardWidth != 0 && boardHeight != 0) {
+            dimensions = "x = " + boardWidth + ", y = " + boardHeight + ", ";
+        }
+        if (!previewBornAmountField.getText().isEmpty() && !previewSurviveAmountField.getText().isEmpty()) {
+            rules = "rules = B" + previewBornAmountField.getText() + "/S" + previewSurviveAmountField.getText() + "\n";
+        }
+        board = readBoardToString();
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcEight, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        rleFileStringBuilder.append(title + origin + comments + dimensions + rules + board);
+        String rleFileString = new String(rleFileStringBuilder);
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcNine, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        FileWriter fw = new FileWriter(returnFile + ".rle");
+        fw.write(rleFileString);
+        fw.close();
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcTen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        String message = returnFile + ".rle has been saved.";
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcEleven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
+        primaryStage.close();
 
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcTwelve, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
-
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcThirteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
-
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcFourteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
-
-        nextBoard = nextGenerationStatic(nextBoard, HEIGHT, WIDTH);
-        drawStatic(gcFifteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, HEIGHT, WIDTH);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../view/mainScreen.fxml"));
+        loader.load();
+        MainScreenController mainController = loader.getController();
+        mainController.setGameMessagesText(message);
 
 
     }
 
-    public void drawAllCanvasesDynamic(ArrayList<ArrayList<Byte>> board, int height, int width) {
-        Color aliveCellColor = Color.BLACK;
+    public String readBoardToString() {
+        int activeValue = 0;
+        if (boardType.equals("Dynamic")) {
+            activeValue = dynamicBoard.get(0).get(0);
+        } else {
+            activeValue = staticBoard[0][0];
+        }
+        String valueIdentifier = "";
+        StringBuilder boardStringBuilder = new StringBuilder();
+        for (int y = 0; y < boardHeight; y++) {
+            int countOfSaidValue = 0;
+            if (y != 0) {
+                boardStringBuilder.append("$");
+            }
+            for (int x = 0; x < boardWidth; x++) {
+                int thisValue = 0;
+                if (boardType.equals("Dynamic")) {
+                    thisValue = dynamicBoard.get(y).get(x);
+                } else {
+                    thisValue = staticBoard[y][x];
+                }
+                if (thisValue == activeValue) {
+                    countOfSaidValue++;
+                } else {
+                    switch (activeValue) {
+                        case 0:
+                            valueIdentifier = "b";
+                            break;
+                        case 1:
+                            valueIdentifier = "o";
+                            break;
+                        default:
+                            break;
+                    }
+                    boardStringBuilder.append(countOfSaidValue + valueIdentifier);
+                    activeValue = thisValue;
+                    countOfSaidValue = 1;
+                }
+                if (x == (boardWidth - 1)) {
+                    switch (thisValue) {
+                        case 0:
+                            valueIdentifier = "b";
+                            break;
+                        case 1:
+                            valueIdentifier = "o";
+                            break;
+                        default:
+                            break;
+                    }
+                    boardStringBuilder.append(countOfSaidValue + valueIdentifier);
+                    activeValue = thisValue;
+                }
+
+            }
+            if (y == (boardHeight - 1)) {
+                boardStringBuilder.append("!");
+            }
+
+        }
+
+        return new String(boardStringBuilder);
+
+    }
+
+    public void drawAllCanvasesStatic(int boardWidth, int boardHeight, byte[][] board, int height, int width) {
+        staticBoard = board;
+        boardType = "Static";
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
+
+        Color aliveCellColor = BLACK;
         Color mainCanvasBackgroundColor = Color.WHITE;
         Color deadCellColor = Color.valueOf("#F4F4F4");
-        double cellSizeMainCanvas = calculateCellSize(mainCanvas, height);
-        double cellSizePreviewCanvas = calculateCellSize(previewOne, height);
+        double cellSizeMainCanvas = calculateCellSize(mainCanvas, height, width);
+        double cellSizePreviewCanvas = calculateCellSize(previewOne, height, width);
 
-        drawDynamic(mainGc, cellSizeMainCanvas, aliveCellColor, mainCanvasBackgroundColor, board, height, width);
+        drawStatic(mainGc, cellSizeMainCanvas, aliveCellColor, mainCanvasBackgroundColor, board, height, width);
+
+        byte[][] nextBoard = nextGenerationStatic(board, height, width);
+        drawStatic(gcOne, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcTwo, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcThree, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcFour, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcFive, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcSix, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcSeven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcEight, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcNine, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcTen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcEleven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcTwelve, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcThirteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcFourteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+        nextBoard = nextGenerationStatic(nextBoard, height, width);
+        drawStatic(gcFifteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+
+
+    }
+
+    public void drawAllCanvasesDynamic(int boardWidth, int boardHeight, ArrayList<ArrayList<Byte>> board, int height, int width) {
+        dynamicBoard = board;
+        boardType = "Dynamic";
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
+
+        Color aliveCellColor = BLACK;
+        Color mainCanvasBackgroundColor = Color.WHITE;
+        Color deadCellColor = Color.valueOf("#F4F4F4");
+        double cellSizeMainCanvas = calculateCellSize(mainCanvas, height, width);
+        double cellSizePreviewCanvas = calculateCellSize(previewOne, height, width);
+
+        drawDynamic(mainGc, mainCanvas, cellSizeMainCanvas, aliveCellColor, mainCanvasBackgroundColor, board, height, width);
 
         ArrayList<ArrayList<Byte>> nextBoard = nextGenerationDynamic(board, height, width);
-        drawDynamic(gcOne, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcOne, previewOne, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcTwo, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcTwo, previewTwo, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcThree, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcThree, previewThree, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcFour, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcFour, previewFour, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcFive, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcFive, previewFive, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcSix, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcSix, previewSix, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcSeven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcSeven, previewSeven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcEight, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcEight, previewEight, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcNine, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcNine, previewNine, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcTen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcTen, previewTen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcEleven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcEleven, previewEleven, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcTwelve, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcTwelve, previewTwelve, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcThirteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcThirteen, previewThirteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcFourteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcFourteen, previewFourteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
         nextBoard = nextGenerationDynamic(nextBoard, height, width);
-        drawDynamic(gcFifteen, cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
+        drawDynamic(gcFifteen, previewFifteen,  cellSizePreviewCanvas, aliveCellColor, deadCellColor, nextBoard, height, width);
 
 
     }
 
-    public double calculateCellSize(Canvas canvas, int height) {
+    public double calculateCellSize(Canvas canvas, int height, int width) {
         double canvasHeight = canvas.getHeight();
+        double canvasWidth = canvas.getWidth();
         double cellAmountHeight = (double) height;
+        double cellAmountWidth = (double) width;
 
-        return canvasHeight / cellAmountHeight;
+        if (height < width) {
+            return canvasWidth / cellAmountWidth;
+        }
+        else {
+            return canvasHeight / cellAmountHeight;
+        }
+
 
 
     }
 
 
-    public void drawStatic(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, byte[][] board, int height, int width) {
+    public void drawStatic(GraphicsContext gc, double cellSize, Color aliveCellColor, Color deadCellColor, byte[][] board, int height, int width) {
 
+        gc.strokeRect(0, 0, width, height);
 
         try {
             for (int y = 0; y < height; y++) {
@@ -258,10 +440,10 @@ public class FileEditor implements Initializable {
                     for (int x = 0; x < width; x++) {
                         if (board[y][x] == 1) {
                             gc.setFill(aliveCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.fillRect((x * cellSize), (y * cellSize), cellSize, cellSize);
                         } else {
                             gc.setFill(deadCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.fillRect((x * cellSize), (y * cellSize), cellSize, cellSize);
                         }
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -273,8 +455,11 @@ public class FileEditor implements Initializable {
         }
     }
 
-    public void drawDynamic(GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, ArrayList<ArrayList<Byte>> board, int height, int width) {
+    public void drawDynamic(GraphicsContext gc, Canvas canvas, double cellSize, Color aliveCellColor, Color deadCellColor, ArrayList<ArrayList<Byte>> board, int height, int width) {
 
+        gc.strokeRect(0, 0,     canvas.getWidth(), canvas.getHeight());
+        gc.setFill(deadCellColor);
+        gc.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
 
         try {
             for (int y = 0; y < height; y++) {
@@ -282,17 +467,17 @@ public class FileEditor implements Initializable {
                     for (int x = 0; x < width; x++) {
                         if (board.get(y).get(x) == 1) {
                             gc.setFill(aliveCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.fillRect((x * cellSize), (y * cellSize), cellSize, cellSize);
                         } else {
                             gc.setFill(deadCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.fillRect((x * cellSize), (y * cellSize), cellSize, cellSize);
                         }
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException e) {
 
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
 
         }
     }
@@ -300,74 +485,82 @@ public class FileEditor implements Initializable {
     public byte[][] nextGenerationStatic(byte[][] evolvingBoard, int height, int width) {
         byte[][] evolvedBoard = new byte[height][width];
 
-        for (int y = 0; y < height; y++) {
+        try {
+            for (int y = 0; y < height; y++) {
+                try {
+                    for (int x = 0; x < width; x++) {
 
-            for (int x = 0; x < width; x++) {
+                        int neighbors = 0;
+                        int aliveStatus = 0;
 
-                int neighbors = 0;
-                int aliveStatus = 0;
+                        //Check the status of the cell, whether it is alive or dead.
+                        if (evolvingBoard[y][x] == 1) {
+                            aliveStatus = 1;
+                        }
+                        if (evolvingBoard[y][x] == 0) {
+                            aliveStatus = 0;
+                        }
 
-                //Check the status of the cell, whether it is alive or dead.
-                if (evolvingBoard[y][x] == 1) {
-                    aliveStatus = 1;
-                }
-                if (evolvingBoard[y][x] == 0) {
-                    aliveStatus = 0;
-                }
+                        //Count the number of living neighbors of the particular cell
+                        if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y].length)) {
+                            if (evolvingBoard[y - 1][x - 1] == 1) {
+                                neighbors++;
+                            }
+                        }
 
-                //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y - 1].length)) {
-                    if (evolvingBoard[y - 1][x - 1] == 1) {
-                        neighbors++;
+                        if (y - 1 >= 0 && y - 1 < evolvingBoard.length) {
+                            if (evolvingBoard[y - 1][x] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y].length)) {
+                            if (evolvingBoard[y - 1][x + 1] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (x - 1 >= 0 && x - 1 < evolvingBoard[y].length) {
+                            if (evolvingBoard[y][x - 1] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (x + 1 >= 0 && x + 1 < evolvingBoard[y].length) {
+                            if (evolvingBoard[y][x + 1] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y].length)) {
+                            if (evolvingBoard[y + 1][x - 1] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (y + 1 >= 0 && y + 1 < evolvingBoard.length) {
+                            if (evolvingBoard[y + 1][x] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y].length)) {
+                            if (evolvingBoard[y + 1][x + 1] == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        //Returns a value to a temporary array based on the rules method in the GoL class.
+                        evolvedBoard[y][x] = GoL.rules(neighbors, aliveStatus);
+
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    //
                 }
 
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x >= 0 && x < evolvingBoard[y - 1].length)) {
-                    if (evolvingBoard[y - 1][x] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y - 1].length)) {
-                    if (evolvingBoard[y - 1][x + 1] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if (x - 1 >= 0 && x - 1 < evolvingBoard[y].length) {
-                    if (evolvingBoard[y][x - 1] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if (x + 1 >= 0 && x + 1 < evolvingBoard[y].length) {
-                    if (evolvingBoard[y][x + 1] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x - 1 >= 0 && x - 1 < evolvingBoard[y + 1].length)) {
-                    if (evolvingBoard[y + 1][x - 1] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x >= 0 && x < evolvingBoard[y + 1].length)) {
-                    if (evolvingBoard[y + 1][x] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.length) && (x + 1 >= 0 && x + 1 < evolvingBoard[y + 1].length)) {
-                    if (evolvingBoard[y + 1][x + 1] == 1) {
-                        neighbors++;
-                    }
-                }
-
-                //Returns a value to a temporary array based on the rules method in the GoL class.
-                evolvedBoard[y][x] = GoL.rules(neighbors, aliveStatus);
             }
-
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //
         }
         return evolvedBoard;
 
@@ -377,78 +570,87 @@ public class FileEditor implements Initializable {
 
         ArrayList<ArrayList<Byte>> evolvedBoard = new ArrayList<>();
 
-        for (int y = 0; y < height; y++) {
+        try {
+            for (int y = 0; y < height; y++) {
+                try {
+                    evolvedBoard.add(new ArrayList<>());
+                    for (int x = 0; x < width; x++) {
 
-            evolvedBoard.add(new ArrayList<>());
-            for (int x = 0; x < width; x++) {
+                        int neighbors = 0;
+                        int aliveStatus = 0;
 
-                int neighbors = 0;
-                int aliveStatus = 0;
+                        //Check the status of the cell, whether it is alive or dead.
+                        if (evolvingBoard.get(y).get(x) == 1) {
+                            aliveStatus = 1;
+                        } else if (evolvingBoard.get(y).get(x) == 0) {
+                            aliveStatus = 0;
+                        }
 
-                //Check the status of the cell, whether it is alive or dead.
-                if (evolvingBoard.get(y).get(x) == 1) {
-                    aliveStatus = 1;
-                } else if (evolvingBoard.get(y).get(x) == 0) {
-                    aliveStatus = 0;
-                }
+                        //Count the number of living neighbors of the particular cell
+                        if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size())) {
+                            if (evolvingBoard.get(y - 1).get(x - 1) == 1) {
+                                neighbors++;
+                            }
+                        }
 
-                //Count the number of living neighbors of the particular cell
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y - 1).size())) {
-                    if (evolvingBoard.get(y - 1).get(x - 1) == 1) {
-                        neighbors++;
+
+                        if (y - 1 >= 0 && y - 1 < evolvingBoard.size()) {
+                            if (evolvingBoard.get(y - 1).get(x) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size())) {
+                            if (evolvingBoard.get(y - 1).get(x + 1) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size()) {
+                            if (evolvingBoard.get(y).get(x - 1) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size()) {
+                            if (evolvingBoard.get(y).get(x + 1) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size())) {
+                            if (evolvingBoard.get(y + 1).get(x - 1) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if (y + 1 >= 0 && y + 1 < evolvingBoard.size()) {
+                            if (evolvingBoard.get(y + 1).get(x) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size())) {
+                            if (evolvingBoard.get(y + 1).get(x + 1) == 1) {
+                                neighbors++;
+                            }
+                        }
+
+                        //Returns a value to a temporary array based on the rules method in the GoL class.
+                        byte nextStatus = GoL.rules(neighbors, aliveStatus);
+
+
+                        evolvedBoard.get(y).add(x, nextStatus);
                     }
+
+                } catch (IndexOutOfBoundsException e) {
+                    //
                 }
-
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x >= 0 && x < evolvingBoard.get(y - 1).size())) {
-                    if (evolvingBoard.get(y - 1).get(x) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y - 1 >= 0 && y - 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y - 1).size())) {
-                    if (evolvingBoard.get(y - 1).get(x + 1) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if (x - 1 >= 0 && x - 1 < evolvingBoard.get(y).size()) {
-                    if (evolvingBoard.get(y).get(x - 1) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if (x + 1 >= 0 && x + 1 < evolvingBoard.get(y).size()) {
-                    if (evolvingBoard.get(y).get(x + 1) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x - 1 >= 0 && x - 1 < evolvingBoard.get(y + 1).size())) {
-                    if (evolvingBoard.get(y + 1).get(x - 1) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x >= 0 && x < evolvingBoard.get(y + 1).size())) {
-                    if (evolvingBoard.get(y + 1).get(x) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                if ((y + 1 >= 0 && y + 1 < evolvingBoard.size()) && (x + 1 >= 0 && x + 1 < evolvingBoard.get(y + 1).size())) {
-                    if (evolvingBoard.get(y + 1).get(x + 1) == 1) {
-                        neighbors++;
-                    }
-                }
-
-                //Returns a value to a temporary array based on the rules method in the GoL class.
-                byte nextStatus = GoL.rules(neighbors, aliveStatus);
-
-                evolvedBoard.get(y).add(x, nextStatus);
             }
 
+        } catch (IndexOutOfBoundsException e) {
+            //
         }
         return evolvedBoard;
-
     }
 }

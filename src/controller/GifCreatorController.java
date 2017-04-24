@@ -23,6 +23,9 @@ public class GifCreatorController implements Initializable {
     @FXML
     private Button cancelGifBtn;
 
+    @FXML
+    private Button createGifBtn;
+
     public GifCreatorController(Board gameBoard) {
 
         if (gameBoard instanceof StaticBoard) {
@@ -40,7 +43,7 @@ public class GifCreatorController implements Initializable {
         // Initialize GIF creation input values
         GifCreator.setPath("GoLgif.gif");
         GifCreator.setCellSize(30);
-        GifCreator.setTimePerMilliSecond(200);
+        GifCreator.setTimePerMilliSecond(2000);
         GifCreator.calculateImageSize(gifBoard);
         GifCreator.setAliveCellColor(new java.awt.Color((float) GoL.getAliveCellColor().getRed(),
                 (float) GoL.getAliveCellColor().getGreen(),
@@ -50,6 +53,7 @@ public class GifCreatorController implements Initializable {
                 (float) GoL.getDeadCellColor().getGreen(),
                 (float) GoL.getDeadCellColor().getBlue(),
                 (float) GoL.getDeadCellColor().getOpacity()));
+
     }
 
 
@@ -61,14 +65,17 @@ public class GifCreatorController implements Initializable {
                 GifCreator.getPath(),
                 GifCreator.getTimePerMilliSecond());
         gwriter.setBackgroundColor(java.awt.Color.black);
-        GifCreator.writeGif(gwriter, gifBoard);
+        GifCreator.writeGif(gwriter, gifBoard, 20);
+        Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
+        gifStage.close();
+
     }
 
 
     public void cancelGifEvent() {
 
-        Stage stage = (Stage) cancelGifBtn.getScene().getWindow();
-        stage.close();
+        Stage gifStage = (Stage) cancelGifBtn.getScene().getWindow();
+        gifStage.close();
     }
 
 }

@@ -13,19 +13,23 @@ public class GifCreator {
     private static java.awt.Color aliveCellColor;
     private static java.awt.Color deadCellColor;
 
-    public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard) throws Exception {
+    public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCounter) throws Exception {
 
-        // end condish
-        for (int i = 0; i < 10; i++) {
+        if (genCounter == 0) {
+
+            drawGifImage(gwriter, gifBoard);
+            gwriter.insertCurrentImage();
+            gwriter.close();
+            new CustomDialog("GIF created", true,
+                    "Your gif was made! Check ur folder.");
+
+        } else {
+
             drawGifImage(gwriter, gifBoard);
             gwriter.insertAndProceed();
             gifBoard.nextGeneration();
+            writeGif(gwriter, gifBoard, genCounter - 1);
         }
-        //recursive call writeGif()
-        gwriter.insertCurrentImage();
-        gwriter.close();
-        CustomDialog errMsg = new CustomDialog("GIF created", true,
-                "Your gif was made! Check ur folder.");
     }
 
 

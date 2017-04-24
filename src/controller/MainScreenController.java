@@ -83,7 +83,6 @@ public class MainScreenController implements Initializable {
             draw();
         }
     }));
-    private Stage gifStage = new Stage();
 
 
     @Override
@@ -200,6 +199,7 @@ public class MainScreenController implements Initializable {
         }
 
         // Create GIF Stage
+        Stage gifStage = new Stage();
         FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
         GifCreatorController gifController = new GifCreatorController(board);
         gifLoader.setController(gifController);
@@ -209,6 +209,7 @@ public class MainScreenController implements Initializable {
             gifStage.setScene(gifScene);
         } catch (IOException e) {
             System.out.println("gifLoader.load() did not produce Parent");
+            e.printStackTrace();
         }
 
         gifStage.setTitle("Create GIF");

@@ -49,6 +49,7 @@ public class CustomDialog extends JDialog implements ActionListener {
 
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.isAlwaysOnTop();
         frame.pack();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.setVisible(true);

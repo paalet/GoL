@@ -76,12 +76,12 @@
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Save" />
+                        <Button fx:id="saveButton" onAction="#saveFileEvent" mnemonicParsing="false" text="Save" />
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button onAction="#closeEvent" mnemonicParsing="false" text="Cancel" />
                      </children>
                   </StackPane>
                </children>

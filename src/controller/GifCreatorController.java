@@ -47,7 +47,7 @@ public class GifCreatorController implements Initializable {
         // Initialize GIF creation input values
         GifCreator.setPath("GoLgif.gif");
         GifCreator.setCellSize(30);
-        GifCreator.setTimePerMilliSecond(2000);
+        GifCreator.setTimePerMilliSecond(200);
         GifCreator.calculateImageSize(gifBoard);
         GifCreator.setAliveCellColor(new java.awt.Color((float) GoL.getAliveCellColor().getRed(),
                 (float) GoL.getAliveCellColor().getGreen(),
@@ -80,8 +80,9 @@ public class GifCreatorController implements Initializable {
         GifCreator.writeGif(gwriter, gifBoard, 20);
 
         // Five feedback to user and close stage
+        String filePath = GifCreator.getPath();
         new CustomDialog("GIF created", true,
-                "Your gif was made! Check ur folder.");
+                "Your gif was made and saved at" + filePath);
         Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
         gifStage.close();
 

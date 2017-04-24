@@ -218,19 +218,22 @@ public class MainScreenController implements Initializable {
      */
     public void setCellSizeEvent() {
         gameMessagesText.setText("");
-        GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
-        calculateBoardSize(656, 985);
+        if(boardType.equals("Dynamic")) {
+            GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
+            calculateBoardSize(656, 985);
+        }
+        else {
+            GoL.setCellSize(cellSizeSlider.getValue());
+        }
 
         try {
             boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
-        }
-        catch(RuntimeException er) {
+        } catch (RuntimeException er) {
             gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.\nPlease alert the developers.");
         }
         try {
             boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
-        }
-        catch(RuntimeException er) {
+        } catch (RuntimeException er) {
             gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
         }
 

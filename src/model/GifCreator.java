@@ -20,8 +20,6 @@ public class GifCreator {
             drawGifImage(gwriter, gifBoard);
             gwriter.insertCurrentImage();
             gwriter.close();
-            new CustomDialog("GIF created", true,
-                    "Your gif was made! Check ur folder.");
 
         } else {
 

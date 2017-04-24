@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.CustomDialog;
 import model.GoL;
 
 import java.io.File;
@@ -209,17 +210,16 @@ public class FileEditor implements Initializable {
         FileWriter fw = new FileWriter(returnFile + ".rle");
         fw.write(rleFileString);
         fw.close();
+        String fileName = returnFile.getName();
+        String path = returnFile.getPath();
+        path = path.replace(fileName, "");
 
-        String message = returnFile + ".rle has been saved.";
+        String message = fileName + ".rle has been saved at " + path;
 
         Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
         primaryStage.close();
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../view/mainScreen.fxml"));
-        loader.load();
-        MainScreenController mainController = loader.getController();
-        mainController.setGameMessagesText(message);
+        new CustomDialog("File saved", true, message);
 
 
     }

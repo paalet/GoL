@@ -27,7 +27,7 @@ public class FileManagement {
 
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("RLE Files", "*.rle"));
+                new FileChooser.ExtensionFilter("RLE Files (*.rle)", "*.rle"));
         chooser.setTitle("Choose Game of Life pattern file");
         File returnFile = chooser.showOpenDialog(null);
         if (returnFile != null) {

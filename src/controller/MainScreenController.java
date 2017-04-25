@@ -98,6 +98,11 @@ public class MainScreenController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
 
+        gameMessagesText.setText("");
+        titleText.setText("");
+        originText.setText("");
+        commentText.setText("");
+
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
@@ -123,7 +128,7 @@ public class MainScreenController implements Initializable {
     }
 
     public void returnToMenuEvent() throws Exception {
-
+        GoL.setLoadedData(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
         Stage primaryStage = (Stage) pane.getScene().getWindow();
         Pane root = loader.load();
@@ -183,6 +188,20 @@ public class MainScreenController implements Initializable {
         timeline.pause();
         GoL.setIsRunning(false);
         playButton.setText("Resume");
+    }
+
+    public void resetEvent() throws IOException {
+        if(GoL.getIsRunning()) {
+            pause();
+        }
+        if(GoL.getLoadedData() != null) {
+            HashMap<String, String> fileData = GoL.getLoadedData();
+            applyFileData(fileData);
+        }
+        else {
+            board.newBoard();
+            draw();
+        }
     }
 
     /**
@@ -287,7 +306,6 @@ public class MainScreenController implements Initializable {
      * Increases speed incrementally with 0.5 fps, and sets the label to display the new value.
      */
     public void increaseSpeedEvent() {
-        timeline.pause();
 
         if (GoL.getIsRunning()) {
 
@@ -330,7 +348,10 @@ public class MainScreenController implements Initializable {
      * Opens
      */
     public void openRulesEditor() {
-        pause();
+        if(GoL.getIsRunning()) {
+
+            pause();
+        }
 
         RulesEditor rulesEditor = RulesEditor.getInstance();
         rulesEditor.setVisible(true);
@@ -340,12 +361,16 @@ public class MainScreenController implements Initializable {
 
 
     public void readFileFromDisk() throws IOException {
-        pause();
+        if(GoL.getIsRunning()) {
+
+            pause();
+        }
 
         File rleFile = FileManagement.loadFileFromDisk();
         if ( rleFile != null) {
 
-            HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile));
+            String absolutePath = rleFile.getAbsolutePath();
+            HashMap<String, String> fileData = FileManagement.readFile(new FileReader(rleFile), absolutePath);
             applyFileData(fileData);
             confirmFileData(fileData);
         }
@@ -353,12 +378,15 @@ public class MainScreenController implements Initializable {
 
 
     public void readFileFromURL() throws Exception {
-        pause();
+        if(GoL.getIsRunning()) {
+
+            pause();
+        }
 
         InputStream rleStream = FileManagement.loadFileFromURL();
         if (rleStream != null) {
 
-            HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream));
+            HashMap<String, String> fileData = FileManagement.readFile(new InputStreamReader(rleStream), "URL");
             applyFileData(fileData);
             confirmFileData(fileData);
         }
@@ -366,7 +394,11 @@ public class MainScreenController implements Initializable {
 
     public void openFileEditorWindow() throws Exception{
 
-        pause();
+
+        if(GoL.getIsRunning()) {
+
+            pause();
+        }
 
 
         Stage fileEditor = new Stage();
@@ -382,19 +414,9 @@ public class MainScreenController implements Initializable {
         fileEditor.setResizable(false);
         fileEditor.initModality(Modality.WINDOW_MODAL);
 
-        String title = "";
-        String origin = "";
-        String comments = "";
-
-        if(!titleText.getText().equals("")) {
-            title = titleText.getText();
-        }
-        if(!originText.getText().equals("")) {
-            origin = originText.getText();
-        }
-        if(!commentText.getText().equals("")) {
-            comments = commentText.getText();
-        }
+        String title = titleText.getText();
+        String origin = originText.getText();
+        String comments = commentText.getText();
 
         StringBuilder bornStringBuilder = new StringBuilder();
         for(int i : GoL.getBornAmount()) {
@@ -444,7 +466,7 @@ public class MainScreenController implements Initializable {
      * @param fileData
      * @throws IOException
      */
-    private void applyFileData(HashMap<String, String> fileData) throws IOException {
+    public void applyFileData(HashMap<String, String> fileData) throws IOException {
 
         // Show metadata in GUI
         titleText.setText(fileData.get("title"));
@@ -471,6 +493,7 @@ public class MainScreenController implements Initializable {
             int[] initSurviveAmount = {2, 3};
             GoL.setBornAmount(initBornAmount);
             GoL.setSurviveAmount(initSurviveAmount);
+            displayRules();
         }
 
         // Apply pattern

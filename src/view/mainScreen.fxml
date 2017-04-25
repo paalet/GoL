@@ -47,7 +47,7 @@
                   </StackPane>
                   <StackPane prefHeight="42.0" prefWidth="104.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#resetEvent" text="Reset" textAlignment="CENTER" />
                      </children>
                   </StackPane>
                   <StackPane layoutX="10.0" layoutY="60.0" prefHeight="42.0" prefWidth="104.0">

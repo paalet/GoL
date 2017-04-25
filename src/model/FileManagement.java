@@ -48,7 +48,7 @@ public class FileManagement {
 
         try {
             TextInputDialog inputDialog = new TextInputDialog();
-            inputDialog.setHeaderText("Please enter the destination URL to your Game of Life .rle pattern file");
+            inputDialog.setHeaderText("Please enter the URL to your Game of Life .rle pattern file");
             Optional<String> input = inputDialog.showAndWait();
             if (input.isPresent()) {
 
@@ -63,7 +63,7 @@ public class FileManagement {
         } catch (MalformedURLException e) {
             CustomDialog errMsg = new CustomDialog("Error opening file from URL", true,
                     "There was a problem opening the specified URL.\r\n" +
-                            "Please make sure you have the correct location address.");
+                            "Please make sure you have entered the correct address.");
             throw new IOException(e);
         }
 
@@ -77,10 +77,12 @@ public class FileManagement {
 
      * @throws IOException
      */
-    public static HashMap<String, String> readFile(Reader r) throws IOException {
+    public static HashMap<String, String> readFile(Reader r, String absoluteFilePath) throws IOException {
 
         HashMap<String, String> fileData = new HashMap<>();
         StringBuilder fileStringBuilder = new StringBuilder();
+
+        fileData.put("File Path", absoluteFilePath);
 
         /**
          * Reads the file and builds a String with its contents off which the rest of the method is based on.
@@ -268,7 +270,7 @@ public class FileManagement {
         index++;
         int surviveNumbers = 0;
         if(allOk) {
-            while (index < stringLength) {
+            while (index < stringLength - 1) {
                 surviveNumbers++;
                 index++;
             }

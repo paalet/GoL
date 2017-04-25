@@ -1,8 +1,6 @@
 package model;
 
 
-import javafx.scene.paint.Color;
-
 public class GifCreator {
 
     private static String path;

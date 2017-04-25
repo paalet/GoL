@@ -105,6 +105,7 @@ public class GoL {
         loadedData = newFileData;
     }
 
+
     public static HashMap<String, String> getLoadedData() {
         return loadedData;
     }

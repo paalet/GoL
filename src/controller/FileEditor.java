@@ -12,12 +12,15 @@ import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.CustomDialog;
+import model.FileManagement;
 import model.GoL;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static javafx.scene.paint.Color.BLACK;
 
@@ -149,14 +152,36 @@ public class FileEditor implements Initializable {
     }
 
     public void saveFileEvent() throws IOException {
-        FileChooser chooser = new FileChooser();
-        File userDirectory = new File(System.getProperty("user.home"));
-        if (!userDirectory.canRead()) {
-            userDirectory = new File("c:/");
+        File returnFile;
+        if(GoL.getLoadedData() != null) {
+            HashMap<String, String> fileData = GoL.getLoadedData();
+            String absolutePath = fileData.get("File Path");
+            File f = new File(absolutePath);
+            if(f.exists() && !f.isDirectory()) {
+                returnFile = f;
+            }
+            else
+            {
+                FileChooser chooser = new FileChooser();
+                File userDirectory = new File(System.getProperty("user.home"));
+                if (!userDirectory.canRead()) {
+                    userDirectory = new File("c:/");
+                }
+                chooser.setInitialDirectory(userDirectory);
+                chooser.setTitle("Save RLE file");
+                returnFile = chooser.showSaveDialog(null);
+            }
         }
-        chooser.setInitialDirectory(userDirectory);
-        chooser.setTitle("Save RLE file");
-        File returnFile = chooser.showSaveDialog(null);
+        else {
+            FileChooser chooser = new FileChooser();
+            File userDirectory = new File(System.getProperty("user.home"));
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("c:/");
+            }
+            chooser.setInitialDirectory(userDirectory);
+            chooser.setTitle("Save RLE file");
+            returnFile = chooser.showSaveDialog(null);
+        }
         if (returnFile != null) {
             saveFile(returnFile);
 
@@ -171,14 +196,14 @@ public class FileEditor implements Initializable {
         String comments = "";
         String dimensions = "";
         String rules = "";
-        String board = "";
-        if (!previewTitleArea.getText().isEmpty()) {
-            title = "#T " + previewTitleArea.getText() + "\n";
+
+        if (previewTitleArea.getText() != null) {
+            title = "#N " + previewTitleArea.getText() + "\n";
         }
-        if (!previewOriginArea.getText().isEmpty()) {
+        if (previewOriginArea != null) {
             origin = "#O " + previewOriginArea.getText() + "\n";
         }
-        if (!previewCommentsArea.getText().isEmpty()) {
+        if (previewCommentsArea != null) {
             comments = previewCommentsArea.getText();
             int i = 0;
             StringBuilder commentsString = new StringBuilder();
@@ -202,7 +227,8 @@ public class FileEditor implements Initializable {
         if (!previewBornAmountField.getText().isEmpty() && !previewSurviveAmountField.getText().isEmpty()) {
             rules = "rules = B" + previewBornAmountField.getText() + "/S" + previewSurviveAmountField.getText() + "\n";
         }
-        board = readBoardToString();
+
+        String board = readBoardToString();
 
         rleFileStringBuilder.append(title + origin + comments + dimensions + rules + board);
         String rleFileString = new String(rleFileStringBuilder);
@@ -211,15 +237,27 @@ public class FileEditor implements Initializable {
         fw.write(rleFileString);
         fw.close();
         String fileName = returnFile.getName();
+        String absolutePath = returnFile.getAbsolutePath();
         String path = returnFile.getPath();
         path = path.replace(fileName, "");
+
 
         String message = fileName + ".rle has been saved at " + path;
 
         Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
         primaryStage.close();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        loader.load();
+
+        HashMap<String, String> fileData = FileManagement.readFile(new FileReader(returnFile + ".rle"), absolutePath);
+
+        MainScreenController mainController = loader.getController();
+        mainController.applyFileData(fileData);
+
         new CustomDialog("File saved", true, message);
+
+        loader.setController(mainController);
 
 
     }

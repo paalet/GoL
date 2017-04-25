@@ -34,7 +34,7 @@ public class FileManagementTest {
         expectedResult.put("pattern", "2b2o3b$bobo3b$o2bob2o$2obo2bo$bobo3b$bo2bo2b$2b2o!");
 
         // Act
-        HashMap<String, String> actualResult = FileManagement.readFile(new FileReader(rleFile));
+        HashMap<String, String> actualResult = FileManagement.readFile(new FileReader(rleFile), "Test");
 
         // Assert
         Assert.assertEquals(expectedResult, actualResult);

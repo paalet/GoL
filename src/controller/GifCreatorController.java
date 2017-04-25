@@ -80,29 +80,31 @@ public class GifCreatorController implements Initializable {
 
     }
 
-    public void inputGenCountEvent() {
+    public boolean inputGenCount(boolean ok) {
 
         try {
             genCount = Integer.parseInt(genCountTxtFld.getText());
 
         } catch (NumberFormatException e) {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
-    public void inputGpsEvent() {
+    public boolean inputGps(boolean ok) {
 
         try {
             GifCreator.calculateAndSetMilliSecondsPerGen(Integer.parseInt(gpsTxtFld.getText()));
 
         } catch (NumberFormatException e) {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
-    public void inputSizeEvent() {
+    public boolean inputSize(boolean ok) {
 
         try {
             int size = Integer.parseInt(sizeTxtFld.getText());
@@ -115,44 +117,54 @@ public class GifCreatorController implements Initializable {
             }
         } catch (NumberFormatException e) {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
     /**
      *
      */
-    public void createGifEvent(){
+    public void createGifEvent() {
 
         lieng.GIFWriter gwriter;
         boolean ok = true;
 
-        
-        // ok set to false if path is not set
-         ok = GifCreator.inputPathfromFileChooser(ok);
 
-        if (ok) {
-            try {
-                // Create GIFWriter object and write to .gif
-                gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
-                        GifCreator.getImageHeight(),
-                        GifCreator.getPath(),
-                        GifCreator.getMilliSecondsPerGen());
-                gwriter.setBackgroundColor(java.awt.Color.black);
-                gwriter.flush();
-                GifCreator.writeGif(gwriter, gifBoard, genCount);
-            } catch (Exception e) {
-                new CustomDialog("GIF not created", true,
-                        "GIF creation could not complete.");
-                ok = false;
+        // input variables from GUI. ok set to false if any can't be set
+        ok = inputGenCount(ok);
+        ok = inputGps(ok);
+        ok = inputSize(ok);
+        if (!ok) {
 
-            }
+            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+
+        } else {
+
+            ok = GifCreator.inputPathfromFileChooser(ok);
             if (ok) {
-                // Give feedback to user and close stage
-                Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
-                gifStage.close();
-                new CustomDialog("GIF created", true,
-                        "Your GIF has been created and saved to " + GifCreator.getPath());
+                try {
+                    // Create GIFWriter object and write to .gif
+                    gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
+                            GifCreator.getImageHeight(),
+                            GifCreator.getPath(),
+                            GifCreator.getMilliSecondsPerGen());
+                    gwriter.setBackgroundColor(java.awt.Color.black);
+                    gwriter.flush();
+                    GifCreator.writeGif(gwriter, gifBoard, genCount);
+                } catch (Exception e) {
+                    new CustomDialog("GIF not created", true,
+                            "GIF creation could not complete.");
+                    ok = false;
+
+                }
+                if (ok) {
+                    // Give feedback to user and close stage
+                    Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
+                    gifStage.close();
+                    new CustomDialog("GIF created", true,
+                            "Your GIF has been created and saved to " + GifCreator.getPath());
+                }
             }
         }
     }

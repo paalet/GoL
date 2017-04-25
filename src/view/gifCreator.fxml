@@ -39,9 +39,9 @@
          <children>
             <Label text="Generations per second:   " GridPane.rowIndex="1" />
             <Label text="Number of generations:   " />
-            <TextField fx:id="genCountTxtFld" onAction="#inputGenCountEvent" GridPane.columnIndex="1" />
-            <TextField fx:id="gpsTxtFld" onAction="#inputGpsEvent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="sizeTxtFld" onAction="#inputSizeEvent" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="genCountTxtFld"  GridPane.columnIndex="1" />
+            <TextField fx:id="gpsTxtFld"  GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="sizeTxtFld"  GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="24.0" text="( ? )" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <tooltip>
                   <Tooltip maxWidth="300.0" text="Specify the size of your dimension of choice in pixels. It will be adjusted slightly to fit the number of cells on your board and the other dimension will be set accordingly." wrapText="true">

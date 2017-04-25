@@ -407,12 +407,12 @@ public class MainScreenController implements Initializable {
 
         Scene scene = new Scene(root, 900, 700);
 
-        scene.getStylesheets().add("../view/previewPatternStyles.css");
+        scene.getStylesheets().add("/view/previewPatternStyles.css");
 
         fileEditor.setScene(scene);
         fileEditor.setTitle("Preview pattern");
         fileEditor.setResizable(false);
-        fileEditor.initModality(Modality.WINDOW_MODAL);
+        fileEditor.initModality(Modality.APPLICATION_MODAL);
 
         String title = titleText.getText();
         String origin = originText.getText();
@@ -430,8 +430,6 @@ public class MainScreenController implements Initializable {
         }
 
         String surviveString = new String(surviveStringBuilder);
-        System.out.println(bornString);
-        System.out.println(surviveString);
 
         FileEditor edController = loader.getController();
         edController.setTitleArea(title);
@@ -444,7 +442,7 @@ public class MainScreenController implements Initializable {
                 break;
             case "Dynamic": edController.drawAllCanvasesDynamic(board.getWidth(), board.getHeight(), board.getCurrentBoard(), board.getHeight(), board.getWidth());
                 break;
-            default: System.out.println("ERROR: Could not find board-type.");
+            default: gameMessagesText.setText("");
                 break;
 
         }

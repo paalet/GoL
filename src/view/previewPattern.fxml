@@ -17,75 +17,64 @@
    <children>
       <VBox id="vboxLeft" prefHeight="499.0" prefWidth="218.0" style="-fx-padding: 10;">
          <children>
-            <StackPane prefHeight="91.0" prefWidth="218.0">
+            <StackPane prefHeight="52.0" prefWidth="198.0">
                <children>
                   <Label style="-fx-font-size: 25;" text="Metadata" />
                </children>
             </StackPane>
-            <StackPane prefHeight="32.0" prefWidth="218.0">
+            <StackPane prefHeight="24.0" prefWidth="198.0" />
+            <StackPane prefHeight="14.0" prefWidth="198.0">
                <children>
-                  <Label text="Title" />
+                  <TextField fx:id="previewTitleField" prefHeight="20.0" prefWidth="218.0" promptText="Title" />
                </children>
             </StackPane>
-            <StackPane prefHeight="38.0" prefWidth="218.0">
+            <StackPane prefHeight="17.0" prefWidth="198.0" />
+            <StackPane prefHeight="24.0" prefWidth="198.0">
                <children>
-                  <TextArea fx:id="previewTitleArea" prefHeight="38.0" prefWidth="218.0" />
+                  <TextField fx:id="previewOriginField" prefHeight="20.0" prefWidth="198.0" promptText="Origin" />
                </children>
             </StackPane>
-            <StackPane prefHeight="26.0" prefWidth="218.0">
+            <StackPane prefHeight="17.0" prefWidth="198.0" />
+            <StackPane prefHeight="91.0" prefWidth="198.0">
                <children>
-                  <Label text="Origin" />
-               </children></StackPane>
-            <StackPane prefHeight="38.0" prefWidth="218.0">
-               <children>
-                  <TextArea fx:id="previewOriginArea" prefHeight="48.0" prefWidth="218.0" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="26.0" prefWidth="218.0">
-               <children>
-                  <Label text="Comments" />
-               </children></StackPane>
-            <StackPane prefHeight="38.0" prefWidth="218.0">
-               <children>
-                  <TextArea fx:id="previewCommentsArea" prefHeight="48.0" prefWidth="218.0" />
+                  <TextArea fx:id="previewCommentsArea" prefHeight="48.0" prefWidth="218.0" promptText="Comments" />
                </children></StackPane>
             <StackPane prefHeight="26.0" prefWidth="218.0">
                <children>
                   <Label text="Rules:" />
                </children></StackPane>
-            <StackPane prefHeight="38.0" prefWidth="218.0">
+            <StackPane prefHeight="33.0" prefWidth="198.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="33.0" prefWidth="198.0">
                      <children>
                         <VBox prefHeight="44.0" prefWidth="108.0">
                            <children>
-                              <Label text="Born Amount:" />
-                              <TextField fx:id="previewBornAmountField" />
+                              <TextField fx:id="previewBornAmountField" promptText="Born Count" />
                            </children>
                         </VBox>
                         <VBox prefHeight="44.0" prefWidth="114.0">
                            <children>
-                              <Label text="Survive Amount:" />
-                              <TextField fx:id="previewSurviveAmountField" />
+                              <TextField fx:id="previewSurviveAmountField" promptText="Survive Count" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                </children></StackPane>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <StackPane prefHeight="43.0" prefWidth="198.0">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="saveButton" onAction="#saveFileEvent" mnemonicParsing="false" text="Save" />
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Button onAction="#closeEvent" mnemonicParsing="false" text="Cancel" />
-                     </children>
-                  </StackPane>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFileEvent" text="Save" />
                </children>
-            </HBox>
+            </StackPane>
+            <StackPane layoutX="20.0" layoutY="394.0" prefHeight="43.0" prefWidth="198.0">
+               <children>
+                  <Button fx:id="saveAsButton" mnemonicParsing="false" onAction="#saveAsEvent" text="Save as..." />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="43.0" prefWidth="198.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#closeEvent" text="Close" />
+               </children>
+            </StackPane>
          </children>
       </VBox>
       <ScrollPane fx:id="scrollPane" layoutX="4.0" layoutY="500.0" prefHeight="200.0" prefWidth="894.0">

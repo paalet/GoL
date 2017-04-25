@@ -2,7 +2,8 @@
 }
 
 #vboxLeft {
-	fx-border: 1px solid black;
+    fx-color: BLACK;
+	fx-border: 1px;
 }
 
 textarea {

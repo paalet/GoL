@@ -82,7 +82,7 @@ public class GifCreatorController implements Initializable {
         // Five feedback to user and close stage
         String filePath = GifCreator.getPath();
         new CustomDialog("GIF created", true,
-                "Your gif was made and saved at" + filePath);
+                "Your gif was made and saved at " + filePath);
         Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
         gifStage.close();
 

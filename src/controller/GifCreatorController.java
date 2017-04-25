@@ -1,22 +1,19 @@
 package controller;
 
 
-import com.sun.javafx.iio.png.PNGIDATChunkInputStream;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.filechooser.FileSystemView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,6 +26,25 @@ public class GifCreatorController implements Initializable {
 
     @FXML
     private Button createGifBtn;
+
+    @FXML
+    private ChoiceBox dimensionChoiceBox;
+
+    @FXML
+    private TextField genCountTxtFld;
+
+    @FXML
+    private TextField gpsTxtFld;
+
+    @FXML
+    private TextField sizeTxtFld;
+
+    @FXML
+    private Label inputFeedbackLbl;
+
+
+    ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
+    int genCount;
 
     public GifCreatorController(Board gameBoard) {
 
@@ -45,10 +61,14 @@ public class GifCreatorController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Initialize GIF creation input values
-        GifCreator.setPath("GoLgif.gif");
-        GifCreator.setCellSize(30);
-        GifCreator.setTimePerMilliSecond(200);
-        GifCreator.calculateImageSize(gifBoard);
+        dimensionChoiceBox.setItems(dimensions);
+        dimensionChoiceBox.setValue(dimensions.get(0));
+        genCount = 20;
+        genCountTxtFld.setText("20");
+        GifCreator.calculateAndSetMilliSecondsPerGen(5);
+        gpsTxtFld.setText("5");
+        GifCreator.setImageSize(gifBoard, "height", 600);
+        sizeTxtFld.setText("600");
         GifCreator.setAliveCellColor(new java.awt.Color((float) GoL.getAliveCellColor().getRed(),
                 (float) GoL.getAliveCellColor().getGreen(),
                 (float) GoL.getAliveCellColor().getBlue(),
@@ -60,32 +80,81 @@ public class GifCreatorController implements Initializable {
 
     }
 
+    public void inputGenCountEvent() {
 
-    public void createGifEvent() throws Exception{
+        try {
+            genCount = Integer.parseInt(genCountTxtFld.getText());
 
-        // Let user choose file name and path
-        FileChooser pathChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
-        pathChooser.getExtensionFilters().add(extFilter);
-        GifCreator.setPath(pathChooser.showSaveDialog(null).getPath());
-        GifCreator.calculateImageSize(gifBoard);
+        } catch (NumberFormatException e) {
 
-        // Create GIFWriter object and write to .gif
-        lieng.GIFWriter gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
-                GifCreator.getImageHeight(),
-                GifCreator.getPath(),
-                GifCreator.getTimePerMilliSecond());
-        gwriter.setBackgroundColor(java.awt.Color.black);
-        gwriter.flush();
-        GifCreator.writeGif(gwriter, gifBoard, 20);
+            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+        }
+    }
 
-        // Five feedback to user and close stage
-        String filePath = GifCreator.getPath();
-        new CustomDialog("GIF created", true,
-                "Your gif was made and saved at " + filePath);
-        Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
-        gifStage.close();
+    public void inputGpsEvent() {
 
+        try {
+            GifCreator.calculateAndSetMilliSecondsPerGen(Integer.parseInt(gpsTxtFld.getText()));
+
+        } catch (NumberFormatException e) {
+
+            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+        }
+    }
+
+    public void inputSizeEvent() {
+
+        try {
+            int size = Integer.parseInt(sizeTxtFld.getText());
+            if (dimensionChoiceBox.getValue() == dimensions.get(0)) {
+
+                GifCreator.setImageSize(gifBoard, "height", size);
+            } else {
+
+                GifCreator.setImageSize(gifBoard, "width", size);
+            }
+        } catch (NumberFormatException e) {
+
+            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+        }
+    }
+
+    /**
+     *
+     */
+    public void createGifEvent(){
+
+        lieng.GIFWriter gwriter;
+        boolean ok = true;
+
+        
+        // ok set to false if path is not set
+         ok = GifCreator.inputPathfromFileChooser(ok);
+
+        if (ok) {
+            try {
+                // Create GIFWriter object and write to .gif
+                gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
+                        GifCreator.getImageHeight(),
+                        GifCreator.getPath(),
+                        GifCreator.getMilliSecondsPerGen());
+                gwriter.setBackgroundColor(java.awt.Color.black);
+                gwriter.flush();
+                GifCreator.writeGif(gwriter, gifBoard, genCount);
+            } catch (Exception e) {
+                new CustomDialog("GIF not created", true,
+                        "GIF creation could not complete.");
+                ok = false;
+
+            }
+            if (ok) {
+                // Give feedback to user and close stage
+                Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
+                gifStage.close();
+                new CustomDialog("GIF created", true,
+                        "Your GIF has been created and saved to " + GifCreator.getPath());
+            }
+        }
     }
 
 

@@ -330,13 +330,12 @@ public class MainScreenController implements Initializable {
      * @param event
      */
     public void cellClickEvent(MouseEvent event) {
-        timeline.pause();
 
         board.cellClickDraw(event, gc, boardCanvas);
     }
 
     /**
-     * Functionally the same as cellClickEvent, only with the possibility of dragging across mutiple cells to kill/give birth to cells quickly.
+     * Functionally the same as cellClickEvent, only with the possibility of dragging across multiple cells to kill/give birth to cells quickly.
      * @param event
      */
     public void boardDragEvent(MouseEvent event) {
@@ -348,6 +347,7 @@ public class MainScreenController implements Initializable {
      * Opens
      */
     public void openRulesEditor() {
+
         if(GoL.getIsRunning()) {
 
             pause();
@@ -355,12 +355,12 @@ public class MainScreenController implements Initializable {
 
         RulesEditor rulesEditor = RulesEditor.getInstance();
         rulesEditor.setVisible(true);
-        //TODO make listener that notices rulesEditor closing and calls displayRules
         displayRules();
     }
 
 
     public void readFileFromDisk() throws IOException {
+
         if(GoL.getIsRunning()) {
 
             pause();
@@ -378,6 +378,7 @@ public class MainScreenController implements Initializable {
 
 
     public void readFileFromURL() throws Exception {
+
         if(GoL.getIsRunning()) {
 
             pause();
@@ -393,7 +394,6 @@ public class MainScreenController implements Initializable {
     }
 
     public void openFileEditorWindow() throws Exception{
-
 
         if(GoL.getIsRunning()) {
 

@@ -43,8 +43,8 @@ public class GifCreatorController implements Initializable {
     private Label inputFeedbackLbl;
 
 
-    ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
-    int genCount;
+    private ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
+    private int genCount;
 
     public GifCreatorController(Board gameBoard) {
 
@@ -80,7 +80,7 @@ public class GifCreatorController implements Initializable {
 
     }
 
-    public boolean inputGenCount(boolean ok) {
+    private boolean inputGenCount(boolean ok) {
 
         try {
             genCount = Integer.parseInt(genCountTxtFld.getText());
@@ -92,7 +92,7 @@ public class GifCreatorController implements Initializable {
         return ok;
     }
 
-    public boolean inputGps(boolean ok) {
+    private boolean inputGps(boolean ok) {
 
         try {
             GifCreator.calculateAndSetMilliSecondsPerGen(Integer.parseInt(gpsTxtFld.getText()));
@@ -104,7 +104,7 @@ public class GifCreatorController implements Initializable {
         return ok;
     }
 
-    public boolean inputSize(boolean ok) {
+    private boolean inputSize(boolean ok) {
 
         try {
             int size = Integer.parseInt(sizeTxtFld.getText());

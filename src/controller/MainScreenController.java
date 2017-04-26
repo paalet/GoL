@@ -211,7 +211,14 @@ public class MainScreenController implements Initializable {
         }
         else {
             board.newBoard();
+            board.setHeight(8);
+            board.setWidth(12);
+            boardCanvas.setHeight(656.0);
+            boardCanvas.setWidth(986.0);
+            GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
+            cellSizeSlider.setValue(GoL.getCellSize());
             draw();
+
         }
     }
 

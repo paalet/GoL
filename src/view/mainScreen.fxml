@@ -94,7 +94,7 @@
                                  </children></StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="autoFillCheckBox" mnemonicParsing="false" text="Auto-Fill Canvas" />
+                                    <CheckBox onAction="#setCellSizeEvent" fx:id="autoFillCheckBox" mnemonicParsing="false" text="Auto-Fill Canvas" />
                                  </children>
                               </StackPane>
                            </children>

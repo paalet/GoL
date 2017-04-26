@@ -251,8 +251,12 @@ public class DynamicBoard extends Board {
 
         if (upperEdge) {
 
-            currentBoard.add(new ArrayList<>());
-            nextBoard.add(new ArrayList<>());
+            currentBoard.add( new ArrayList<>());
+            nextBoard.add( new ArrayList<>());
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+                currentBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
+                nextBoard.get(nextBoard.size() - 1).add(x, (byte) 0);
+            }
             for (int y = currentBoard.size() - 1; y > 0; y--) {
 
                 for (int x = 0; x < currentBoard.get(y).size(); x++) {

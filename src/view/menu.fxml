@@ -4,9 +4,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <children>
-      <VBox layoutX="246.0" layoutY="211.0" prefHeight="446.0" prefWidth="554.0">
+      <VBox layoutX="373.0" layoutY="213.0" prefHeight="446.0" prefWidth="554.0">
          <children>
             <StackPane prefHeight="31.0" prefWidth="554.0">
                <children>

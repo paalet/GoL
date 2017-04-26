@@ -67,6 +67,12 @@ public class MainScreenController implements Initializable {
     private TextArea originText;
     @FXML
     private TextArea commentText;
+    @FXML
+    private CheckBox autoFillCheckBox;
+    @FXML
+    private Label loadedDimensionsLabel;
+    @FXML
+    private Label currentDimensionsLabel;
 
     private Board board = new StaticBoard();
     private String boardType;
@@ -103,6 +109,8 @@ public class MainScreenController implements Initializable {
         originText.setText("");
         commentText.setText("");
 
+        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
@@ -119,11 +127,13 @@ public class MainScreenController implements Initializable {
 
         board = new StaticBoard();
         boardType = "Static";
+        autoFillCheckBox.setSelected(false);
     }
 
     public void initializeDynamicBoard() {
         board = new DynamicBoard();
         boardType = "Dynamic";
+        autoFillCheckBox.setSelected(true);
 
     }
 
@@ -132,7 +142,7 @@ public class MainScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
         Stage primaryStage = (Stage) pane.getScene().getWindow();
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1045, 868);
+        Scene scene = new Scene(root, 1299, 872);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -155,6 +165,7 @@ public class MainScreenController implements Initializable {
     public double calculateCanvasWidth(int boardWidth) {
         double boardWidthDouble = (double) boardWidth;
         return GoL.getCellSize() * boardWidthDouble;
+
     }
 
     /**
@@ -237,7 +248,8 @@ public class MainScreenController implements Initializable {
      */
     public void setCellSizeEvent() {
         gameMessagesText.setText("");
-        if(boardType.equals("Dynamic")) {
+
+        if(autoFillCheckBox.isSelected()) {
             GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
             calculateBoardSize(656, 985);
         }
@@ -255,7 +267,7 @@ public class MainScreenController implements Initializable {
         } catch (RuntimeException er) {
             gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
         }
-
+        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
         draw();
 
 
@@ -454,11 +466,6 @@ public class MainScreenController implements Initializable {
     }
 
 
-    public void setGameMessagesText(String text) {
-        gameMessagesText.setText(text);
-        System.out.println(text);
-    }
-
     /**
      * Applies data obtained from the readFile method in FileManagement into the running program, such as title, origin, comments, board dimensions, rules, and the board.
      * @param fileData
@@ -508,6 +515,8 @@ public class MainScreenController implements Initializable {
 
         //Set data as loaded data
         GoL.setLoadedData(fileData);
+        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        loadedDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
     }
 
     public void confirmFileData(HashMap<String, String> fileData) {

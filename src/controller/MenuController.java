@@ -28,7 +28,7 @@ public class MenuController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1045, 868);
+        Scene scene = new Scene(root, 1299, 872);
         primaryStage.setScene(scene);
 
         MainScreenController mainScreenController = loader.getController();
@@ -42,7 +42,7 @@ public class MenuController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
-        Scene scene = new Scene(root, 1045, 868);
+        Scene scene = new Scene(root, 1299, 872);
         primaryStage.setScene(scene);
 
         MainScreenController mainScreenController = loader.getController();

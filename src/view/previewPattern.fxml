@@ -49,7 +49,7 @@
                      <children>
                         <VBox prefHeight="44.0" prefWidth="108.0">
                            <children>
-                              <TextField fx:id="previewBornAmountField" promptText="Born Count" />
+                              <TextField fx:id="previewBornAmountField"  promptText="Born Count" />
                            </children>
                         </VBox>
                         <VBox prefHeight="44.0" prefWidth="114.0">

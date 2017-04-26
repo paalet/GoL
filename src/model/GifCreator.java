@@ -7,11 +7,12 @@ import javax.swing.filechooser.FileSystemView;
 
 public class GifCreator {
 
-    private static String path;
+
     private static int milliSecondsPerGen;
     private static int cellSize;
-    private static int imageWidth;
     private static int imageHeight;
+    private static int imageWidth;
+    private static String path;
     private static java.awt.Color aliveCellColor;
     private static java.awt.Color deadCellColor;
 
@@ -72,6 +73,12 @@ public class GifCreator {
     }
 
 
+    public static void calculateAndSetMilliSecondsPerGen(int gps) {
+
+        milliSecondsPerGen = 1000 / gps;
+    }
+
+
     public static void setImageSize(Board gifBoard, String dim, int inputSize) {
 
         if (gifBoard instanceof StaticBoard) {
@@ -109,19 +116,15 @@ public class GifCreator {
         }
     }
 
-    public static void calculateAndSetMilliSecondsPerGen(int gps) {
 
-        milliSecondsPerGen = 1000 / gps;
-    }
-
-    public static boolean inputPathfromFileChooser(boolean ok) {
+    public static boolean inputPathFromFileChooser(boolean ok) {
 
         FileChooser pathChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
                 pathChooser.getExtensionFilters().add(extFilter);
                 pathChooser.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
         try {
-            GifCreator.setPath(pathChooser.showSaveDialog(null).getPath());
+            path = pathChooser.showSaveDialog(null).getPath();
         } catch(NullPointerException e) {
             new CustomDialog("GIF not created", true,
                     "GIF creation canceled. Choose a filename and target directory to create GIF.");
@@ -130,37 +133,6 @@ public class GifCreator {
         return ok;
     }
 
-    public static String getPath() {
-        return path;
-    }
-
-    public static int getMilliSecondsPerGen() {
-        return milliSecondsPerGen;
-    }
-
-    public static int getImageWidth() {
-        return imageWidth;
-    }
-
-    public static int getImageHeight() {
-        return imageHeight;
-    }
-
-    public static void setPath(String path) {
-        GifCreator.path = path;
-    }
-
-    public static void setCellSize(int cellSize) {
-        GifCreator.cellSize = cellSize;
-    }
-
-    public static void setImageWidth(int imageWidth) {
-        GifCreator.imageWidth = imageWidth;
-    }
-
-    public static void setImageHeight(int imageHeight) {
-        GifCreator.imageHeight = imageHeight;
-    }
 
     public static void setAliveCellColor(java.awt.Color aliveCellColor) {
         GifCreator.aliveCellColor = aliveCellColor;
@@ -168,5 +140,21 @@ public class GifCreator {
 
     public static void setDeadCellColor(java.awt.Color deadCellColor) {
         GifCreator.deadCellColor = deadCellColor;
+    }
+
+    public static int getMilliSecondsPerGen() {
+        return milliSecondsPerGen;
+    }
+
+    public static int getImageHeight() {
+        return imageHeight;
+    }
+
+    public static int getImageWidth() {
+        return imageWidth;
+    }
+
+    public static String getPath() {
+        return path;
     }
 }

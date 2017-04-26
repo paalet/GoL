@@ -1,10 +1,16 @@
 package model;
 
+import controller.MainScreenController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Creates and displays an options pane with functionality for the user to set the rules of the game.
@@ -31,7 +37,7 @@ public class RulesEditor extends JDialog {
      */
     private RulesEditor() {
 
-        int width = 500;
+        int width = 550;
         int height = 500;
 
         int[] birthRulesArray = GoL.getBornAmount();
@@ -516,6 +522,7 @@ public class RulesEditor extends JDialog {
                 for (int i = 0; i < birthRulesArray.length; i++) {
                     birthRulesArray[i] = birthRules.get(i);
                 }
+                Arrays.sort(birthRulesArray);
                 GoL.setBornAmount(birthRulesArray);
 
                 // Convert survival rule list back to array and implement it
@@ -523,12 +530,14 @@ public class RulesEditor extends JDialog {
                 for (int i = 0; i < survivalRulesArray.length; i++) {
                     survivalRulesArray[i] = survivalRules.get(i);
                 }
+                Arrays.sort(survivalRulesArray);
                 GoL.setSurviveAmount(survivalRulesArray);
+
+                // Display updated rule set
+                // @TODO update rulesLabel through mainsScreenController
 
                 // Hide the rules editor
                 frame.setVisible(false);
-                //frame.dispose();
-
             }
         });
 

@@ -1,6 +1,5 @@
 package controller;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,17 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
 
-import javax.swing.filechooser.FileSystemView;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class GifCreatorController implements Initializable {
 
-    private Board gifBoard;
 
     @FXML
     private Button cancelGifBtn;
@@ -43,19 +42,23 @@ public class GifCreatorController implements Initializable {
     private Label inputFeedbackLbl;
 
 
-    ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
-    int genCount;
+    private Board gifBoard;
+    private ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
+    private int genCount;
+
 
     public GifCreatorController(Board gameBoard) {
 
         if (gameBoard instanceof StaticBoard) {
 
             gifBoard = new StaticBoard((StaticBoard) gameBoard);
+
         } else if (gameBoard instanceof DynamicBoard) {
 
             gifBoard = new DynamicBoard((DynamicBoard) gameBoard);
         }
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,34 +80,58 @@ public class GifCreatorController implements Initializable {
                 (float) GoL.getDeadCellColor().getGreen(),
                 (float) GoL.getDeadCellColor().getBlue(),
                 (float) GoL.getDeadCellColor().getOpacity()));
-
     }
 
-    public void inputGenCountEvent() {
+    /**
+     * Regex check genCount input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
+    private boolean inputGenCount(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(genCountTxtFld.getText());
+        if (matcher.matches()) {
+
             genCount = Integer.parseInt(genCountTxtFld.getText());
 
-        } catch (NumberFormatException e) {
+        } else {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
-    public void inputGpsEvent() {
+    /**
+     * Regex check GPS input input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
+    private boolean inputGps(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(gpsTxtFld.getText());
+        if (matcher.matches()) {
             GifCreator.calculateAndSetMilliSecondsPerGen(Integer.parseInt(gpsTxtFld.getText()));
 
-        } catch (NumberFormatException e) {
+        } else {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
-    public void inputSizeEvent() {
+    /**
+     * Regex check size input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
+    private boolean inputSize(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(gpsTxtFld.getText());
+        if (matcher.matches()) {
+
             int size = Integer.parseInt(sizeTxtFld.getText());
             if (dimensionChoiceBox.getValue() == dimensions.get(0)) {
 
@@ -113,51 +140,65 @@ public class GifCreatorController implements Initializable {
 
                 GifCreator.setImageSize(gifBoard, "width", size);
             }
-        } catch (NumberFormatException e) {
+        } else {
 
-            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+            ok = false;
         }
+        return ok;
     }
 
     /**
-     *
+     * Create a GIF. This is done by applying input data from GUI, creating a GIFWriter object,
+     * writing to .gif file through use of GIFWriter and logic in model.GifCreator. Finally feedback is provided
+     * to user and stage closed.
      */
-    public void createGifEvent(){
+    public void createGifEvent() {
 
         lieng.GIFWriter gwriter;
         boolean ok = true;
 
-        
-        // ok set to false if path is not set
-         ok = GifCreator.inputPathfromFileChooser(ok);
 
-        if (ok) {
-            try {
-                // Create GIFWriter object and write to .gif
-                gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
-                        GifCreator.getImageHeight(),
-                        GifCreator.getPath(),
-                        GifCreator.getMilliSecondsPerGen());
-                gwriter.setBackgroundColor(java.awt.Color.black);
-                gwriter.flush();
-                GifCreator.writeGif(gwriter, gifBoard, genCount);
-            } catch (Exception e) {
-                new CustomDialog("GIF not created", true,
-                        "GIF creation could not complete.");
-                ok = false;
+        // Input variables from GUI. ok set to false if either can not be set
+        ok = inputGenCount(ok);
+        ok = inputGps(ok);
+        ok = inputSize(ok);
+        if (!ok) {
 
-            }
+            inputFeedbackLbl.setText("Input must be whole numbers greater than zero");
+
+        } else {
+
+            ok = GifCreator.inputPathFromFileChooser(ok);
             if (ok) {
-                // Give feedback to user and close stage
-                Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
-                gifStage.close();
-                new CustomDialog("GIF created", true,
-                        "Your GIF has been created and saved to " + GifCreator.getPath());
+                try {
+                    // Create GIFWriter object and write to .gif
+                    gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
+                            GifCreator.getImageHeight(),
+                            GifCreator.getPath(),
+                            GifCreator.getMilliSecondsPerGen());
+                    gwriter.setBackgroundColor(java.awt.Color.black);
+                    gwriter.flush();
+                    GifCreator.writeGif(gwriter, gifBoard, genCount);
+                } catch (Exception e) {
+                    new CustomDialog("GIF not created", true,
+                            "GIF creation could not complete.");
+                    ok = false;
+
+                }
+                if (ok) {
+                    // Give feedback to user and close stage
+                    Stage gifStage = (Stage) createGifBtn.getScene().getWindow();
+                    gifStage.close();
+                    new CustomDialog("GIF created", true,
+                            "Your GIF has been created and saved to " + GifCreator.getPath());
+                }
             }
         }
     }
 
-
+    /**
+     * Close the GIF creator without making a GIF
+     */
     public void cancelGifEvent() {
 
         Stage gifStage = (Stage) cancelGifBtn.getScene().getWindow();

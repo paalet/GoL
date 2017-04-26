@@ -31,7 +31,9 @@ public class DynamicBoard extends Board{
 
 
     /**
-     *
+     * Constructor for creation of a deep copy of a DynamicBoard object. To be used when operations must be made on
+     * a board object without changing the state of the original.
+     * @param inputBoard DynamicBoard object to be deep copied.
      */
     public DynamicBoard(DynamicBoard inputBoard) {
 
@@ -76,11 +78,8 @@ public class DynamicBoard extends Board{
      */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
 
-        gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
-        gc.strokeRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
-        try {
             for (int y = 0; y < height; y++) {
-                try {
+
                     for (int x = 0; x < width; x++) {
                         if (currentBoard.get(y).get(x) == 1) {
                             gc.setFill(aliveCellColor);
@@ -92,13 +91,9 @@ public class DynamicBoard extends Board{
                             gc.strokeRect((x * size), (y * size), size, size);
                         }
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
 
-                }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
 
-        }
     }
 
 
@@ -200,33 +195,38 @@ public class DynamicBoard extends Board{
      */
     public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
 
-        // Calculate target cell from mouse position
-        double posX = event.getX();
-        double posY = event.getY();
-        double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-        double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+        try {
+            // Calculate target cell from mouse position
+            double posX = event.getX();
+            double posY = event.getY();
+            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
-        double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
+            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
 
-        int cellX = (int) cellPosX;
-        int cellY = (int) cellPosY;
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
 
-        if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
-            visitedCellWithDrag[0] = 999999999;
-            visitedCellWithDrag[1] = 999999999;
-        } else {
-            // Change cell status
-            if (currentBoard.get(cellY).get(cellX) == 1) {
-
-                currentBoard.get(cellY).set(cellX, (byte) 0);
+            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+                visitedCellWithDrag[0] = 999999999;
+                visitedCellWithDrag[1] = 999999999;
             } else {
+                // Change cell status
+                if (currentBoard.get(cellY).get(cellX) == 1) {
 
-                currentBoard.get(cellY).set(cellX, (byte) 1);
+                    currentBoard.get(cellY).set(cellX, (byte) 0);
+                } else {
+
+                    currentBoard.get(cellY).set(cellX, (byte) 1);
+                }
+
+                // Draw new currentBoard
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
 
-            // Draw new currentBoard
-            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+            // Do nothing as a click on the the edge of the canvas is harmless
         }
     }
 
@@ -271,7 +271,8 @@ public class DynamicBoard extends Board{
             }
         }
         catch(ArrayIndexOutOfBoundsException e) {
-            //Do nothing
+
+            //Do nothing as a mouse drag outside the canvas is harmless
         }
     }
 

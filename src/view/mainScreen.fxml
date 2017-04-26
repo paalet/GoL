@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+
     <children>
       <HBox layoutX="275.0" layoutY="712.0" prefHeight="146.0" prefWidth="997.0">
          <children>
@@ -112,6 +114,7 @@
          <children>
             <StackPane prefHeight="109.0" prefWidth="228.0">
                <children>
+
                   <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#returnToMenuEvent" prefHeight="60.0" prefWidth="122.0" text="Main Menu" textAlignment="CENTER" />
                </children>
             </StackPane>
@@ -123,13 +126,16 @@
             <HBox prefHeight="63.0" prefWidth="229.0">
                <children>
                   <StackPane prefHeight="42.0" prefWidth="114.0">
+
                      <children>
                         <Button fx:id="playButton" mnemonicParsing="false" onAction="#playEvent" text="Start" textAlignment="CENTER" />
                      </children>
                   </StackPane>
                   <StackPane prefHeight="42.0" prefWidth="114.0">
                      <children>
+
                         <Button mnemonicParsing="false" onAction="#resetEvent" text="Reset" textAlignment="CENTER" />
+
                      </children>
                   </StackPane>
                </children>

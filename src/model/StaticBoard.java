@@ -30,9 +30,9 @@ public class StaticBoard extends Board {
 
 
     /**
-     * Constructor for deep copy of the current live game board object. To be used by GifCreator and other features that
-     * need a copy of the board to work with without changing the live game board.
-     * @param inputBoard the current game board is supplied as input for the copy
+     * Constructor for creation of a deep copy of a StaticBoard object. To be used when operations must be made on
+     * a board object without changing the state of the original.
+     * @param inputBoard StaticBoard object to be deep copied.
      */
     public StaticBoard(StaticBoard inputBoard) {
 
@@ -62,28 +62,22 @@ public class StaticBoard extends Board {
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
 
-        gc.clearRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
-        gc.strokeRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
-        try {
-            for (int y = 0; y < height; y++) {
-                try {
-                    for (int x = 0; x < width; x++) {
-                        if (currentBoard[y][x] == 1) {
-                            gc.setFill(aliveCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
-                            gc.strokeRect((x * size), (y * size), size, size);
-                        } else {
-                            gc.setFill(deadCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
-                            gc.strokeRect((x * size), (y * size), size, size);
-                        }
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
 
+                if (currentBoard[y][x] == 1) {
+
+                    gc.setFill(aliveCellColor);
+                    gc.fillRect((x * size), (y * size), size, size);
+                    gc.strokeRect((x * size), (y * size), size, size);
+
+                } else {
+
+                    gc.setFill(deadCellColor);
+                    gc.fillRect((x * size), (y * size), size, size);
+                    gc.strokeRect((x * size), (y * size), size, size);
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-
         }
     }
 
@@ -181,33 +175,37 @@ public class StaticBoard extends Board {
      */
     public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
 
-        // Calculate target cell from mouse position
-        double posX = event.getX();
-        double posY = event.getY();
-        double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-        double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+        try {
+            // Calculate target cell from mouse position
+            double posX = event.getX();
+            double posY = event.getY();
+            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
 
-        double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
-        double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
+            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
 
-        int cellX = (int) cellPosX;
-        int cellY = (int) cellPosY;
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
 
-        if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
-            visitedCellWithDrag[0] = 999999999;
-            visitedCellWithDrag[1] = 999999999;
-        } else {
-            // Change cell status
-            if (currentBoard[cellY][cellX] == 1) {
-
-                currentBoard[cellY][cellX] = 0;
+            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+                visitedCellWithDrag[0] = 999999999;
+                visitedCellWithDrag[1] = 999999999;
             } else {
+                // Change cell status
+                if (currentBoard[cellY][cellX] == 1) {
 
-                currentBoard[cellY][cellX] = 1;
+                    currentBoard[cellY][cellX] = 0;
+                } else {
+
+                    currentBoard[cellY][cellX] = 1;
+                }
+
+                // Draw new currentBoard
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
             }
-
-            // Draw new currentBoard
-            draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Do nothing as a click on the edge of the canvas is harmless
         }
     }
 
@@ -238,20 +236,20 @@ public class StaticBoard extends Board {
                 if (currentBoard[cellY][cellX] == 1) {
 
                     currentBoard[cellY][cellX] = 0;
+
                 } else {
 
                     currentBoard[cellY][cellX] = 1;
                 }
 
-
                 draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
-
                 visitedCellWithDrag[0] = cellX;
                 visitedCellWithDrag[1] = cellY;
             }
         }
         catch(ArrayIndexOutOfBoundsException e) {
-            //Do nothing
+
+            //Do nothing as a mouse drag outside the canvas is harmless
         }
     }
 

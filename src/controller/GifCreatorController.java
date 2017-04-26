@@ -1,6 +1,5 @@
 package controller;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,17 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
 
-import javax.swing.filechooser.FileSystemView;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class GifCreatorController implements Initializable {
 
-    private Board gifBoard;
 
     @FXML
     private Button cancelGifBtn;
@@ -43,19 +42,23 @@ public class GifCreatorController implements Initializable {
     private Label inputFeedbackLbl;
 
 
+    private Board gifBoard;
     private ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
     private int genCount;
+
 
     public GifCreatorController(Board gameBoard) {
 
         if (gameBoard instanceof StaticBoard) {
 
             gifBoard = new StaticBoard((StaticBoard) gameBoard);
+
         } else if (gameBoard instanceof DynamicBoard) {
 
             gifBoard = new DynamicBoard((DynamicBoard) gameBoard);
         }
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,36 +80,58 @@ public class GifCreatorController implements Initializable {
                 (float) GoL.getDeadCellColor().getGreen(),
                 (float) GoL.getDeadCellColor().getBlue(),
                 (float) GoL.getDeadCellColor().getOpacity()));
-
     }
 
+    /**
+     * Regex check genCount input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
     private boolean inputGenCount(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(genCountTxtFld.getText());
+        if (matcher.matches()) {
+
             genCount = Integer.parseInt(genCountTxtFld.getText());
 
-        } catch (NumberFormatException e) {
+        } else {
 
             ok = false;
         }
         return ok;
     }
 
+    /**
+     * Regex check GPS input input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
     private boolean inputGps(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(gpsTxtFld.getText());
+        if (matcher.matches()) {
             GifCreator.calculateAndSetMilliSecondsPerGen(Integer.parseInt(gpsTxtFld.getText()));
 
-        } catch (NumberFormatException e) {
+        } else {
 
             ok = false;
         }
         return ok;
     }
 
+    /**
+     * Regex check size input for positive integer and apply it.
+     * @param ok
+     * @return
+     */
     private boolean inputSize(boolean ok) {
 
-        try {
+        Pattern intPattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = intPattern.matcher(gpsTxtFld.getText());
+        if (matcher.matches()) {
+
             int size = Integer.parseInt(sizeTxtFld.getText());
             if (dimensionChoiceBox.getValue() == dimensions.get(0)) {
 
@@ -115,7 +140,7 @@ public class GifCreatorController implements Initializable {
 
                 GifCreator.setImageSize(gifBoard, "width", size);
             }
-        } catch (NumberFormatException e) {
+        } else {
 
             ok = false;
         }
@@ -123,7 +148,9 @@ public class GifCreatorController implements Initializable {
     }
 
     /**
-     *
+     * Create a GIF. This is done by applying input data from GUI, creating a GIFWriter object,
+     * writing to .gif file through use of GIFWriter and logic in model.GifCreator. Finally feedback is provided
+     * to user and stage closed.
      */
     public void createGifEvent() {
 
@@ -131,7 +158,7 @@ public class GifCreatorController implements Initializable {
         boolean ok = true;
 
 
-        // input variables from GUI. ok set to false if any can't be set
+        // Input variables from GUI. ok set to false if either can not be set
         ok = inputGenCount(ok);
         ok = inputGps(ok);
         ok = inputSize(ok);
@@ -141,7 +168,7 @@ public class GifCreatorController implements Initializable {
 
         } else {
 
-            ok = GifCreator.inputPathfromFileChooser(ok);
+            ok = GifCreator.inputPathFromFileChooser(ok);
             if (ok) {
                 try {
                     // Create GIFWriter object and write to .gif
@@ -169,7 +196,9 @@ public class GifCreatorController implements Initializable {
         }
     }
 
-
+    /**
+     * Close the GIF creator without making a GIF
+     */
     public void cancelGifEvent() {
 
         Stage gifStage = (Stage) cancelGifBtn.getScene().getWindow();

@@ -113,9 +113,8 @@ public class GoL {
     /**
     * Calculates a cellsize and snaps it to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
     */
-    public static void calculateCellSize (int boardHeight, int boardWidth, double canvasHeight, double canvasWidth, Slider cellSizeSlider, TextArea gameMessagesText) {
+    public static void calculateCellSizeFromSlider(int boardHeight, int boardWidth, double canvasHeight, double canvasWidth, Slider cellSizeSlider, TextArea gameMessagesText) {
 
-        //Bolean values that will set to true if the dimension it represents exceeds the maximum allowed value.
         boolean heightExceeded = false;
         boolean widthExceeded = false;
 

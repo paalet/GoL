@@ -78,6 +78,7 @@ public abstract class Board {
 
     public abstract void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
 
+
     /**
      * Adds new rows to the board array if the new cellsizes set makes the board not fully cover the canvas, in order to fulfill this need.
      * @param canvasHeight

@@ -85,7 +85,7 @@ public class MainScreenController implements Initializable {
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-
+          
             long start = System.currentTimeMillis();
             ExecutorService executor = Executors.newFixedThreadPool(cores);
 
@@ -124,7 +124,6 @@ public class MainScreenController implements Initializable {
                 */
             }
             
-
         }
     }));
 
@@ -191,7 +190,7 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * A simple function that calles the draw function in the Board class.
+     * A simple function that calls the draw function in the Board class.
      */
     private void draw() {
 
@@ -296,10 +295,12 @@ public class MainScreenController implements Initializable {
      * Calculates a cellsize and snaps it, and the slider to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
      */
     public void setCellSizeEvent() {
+
         gameMessagesText.setText("");
 
+
         if(autoFillCheckBox.isSelected()) {
-            GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
+            GoL.calculateCellSizeFromSlider(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
             calculateBoardSize(656, 985);
         }
         else {
@@ -558,7 +559,7 @@ public class MainScreenController implements Initializable {
 
             ((DynamicBoard) board).setCurrentBoard(FileManagement.readPatternDynamicBoard(fileData.get("pattern"), height, width));
         }
-        calculateCellSizeOnPatternLoad();
+        calculateCellSize();
         boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
         draw();
 
@@ -663,7 +664,7 @@ public class MainScreenController implements Initializable {
     /**
      * Re-evaluates an appropriate cellsize if a new board pattern is loaded.
      */
-    public void calculateCellSizeOnPatternLoad() {
+    public void calculateCellSize() {
 
 
         double canvasHeightDouble = boardCanvas.getHeight();
@@ -672,7 +673,5 @@ public class MainScreenController implements Initializable {
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
     }
-
-
 }
 

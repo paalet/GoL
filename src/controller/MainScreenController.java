@@ -255,15 +255,12 @@ public class MainScreenController implements Initializable {
      * Calculates a cellsize and snaps it, and the slider to the nearest possible value that would fit in the canvas perfectly based on the horizontal size.
      */
     public void setCellSizeEvent() {
+
         gameMessagesText.setText("");
-<<<<<<< HEAD
+
 
         if(autoFillCheckBox.isSelected()) {
-            GoL.calculateCellSize(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
-=======
-        if(boardType.equals("Dynamic")) {
             GoL.calculateCellSizeFromSlider(board.getHeight(), board.getWidth(), boardCanvas.getHeight(), boardCanvas.getWidth(), cellSizeSlider, gameMessagesText);
->>>>>>> PaalExpandingBoardTB
             calculateBoardSize(656, 985);
         }
         else {

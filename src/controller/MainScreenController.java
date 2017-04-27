@@ -26,6 +26,9 @@ import model.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -77,12 +80,51 @@ public class MainScreenController implements Initializable {
     private Board board = new StaticBoard();
     private String boardType;
     private GraphicsContext gc;
+    int cores =  Runtime.getRuntime().availableProcessors();
+
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
 
-            board.nextGeneration();
-            draw();
+            long start = System.currentTimeMillis();
+            ExecutorService executor = Executors.newFixedThreadPool(cores);
+
+            NextGenerationThread [] nextGenThreads = new NextGenerationThread[cores];
+            //DrawThread[] drawThreads = new DrawThread[cores];
+
+            for (int i = 0; i < cores; i++) {
+                nextGenThreads[i] = new NextGenerationThread(i + 1, cores, board);
+            }
+
+            for (int i = 0; i < nextGenThreads.length; i++) {
+                executor.execute(nextGenThreads[i]);
+            }
+            executor.shutdown();
+            boolean finished = false;
+            try{
+                finished = executor.awaitTermination(500, TimeUnit.MILLISECONDS);
+            }
+            catch(InterruptedException e) {
+                gameMessagesText.setText("Generation wait time exceeded. Board is not being refreshed.");
+            }
+
+            //executor = Executors.newFixedThreadPool(cores);
+
+            if(finished) {
+                board.copyBoard();
+                draw();
+                /*
+                for (int i = 0; i < cores; i++) {
+                    drawThreads[i] = new DrawThread(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), board,  i + 1, cores);
+                }
+
+                for (int i = 0; i < drawThreads.length; i++) {
+                    executor.execute(drawThreads[i]);
+                }
+                */
+            }
+            
+
         }
     }));
 

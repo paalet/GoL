@@ -81,6 +81,42 @@ public class StaticBoard extends Board {
         }
     }
 
+    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
+
+        int widthPerCore = width / cores;
+
+        int startWidth = (core - 1) * widthPerCore;
+        int endWidth = startWidth + widthPerCore;
+
+        try {
+            for (int y = 0; y < height; y++) {
+                try {
+                    for (int x = startWidth; x < endWidth; x++) {
+
+                        if (currentBoard[y][x] == 1) {
+
+                            gc.setFill(aliveCellColor);
+                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.strokeRect((x * size), (y * size), size, size);
+
+                        } else {
+
+                            gc.setFill(deadCellColor);
+                            gc.fillRect((x * size), (y * size), size, size);
+                            gc.strokeRect((x * size), (y * size), size, size);
+                        }
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException e) {
+                    //
+                }
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+            //
+        }
+    }
+
 
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
@@ -88,6 +124,7 @@ public class StaticBoard extends Board {
      * At the end of the loops, the nextBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
      */
     public void nextGeneration() {
+
 
         for (int y = 0; y < height; y++) {
 
@@ -163,6 +200,94 @@ public class StaticBoard extends Board {
             System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, width);
         }
     }
+
+    public void nextGenerationConcurrent(int cores , int core) {
+
+        int widthPerCore = width / cores;
+
+
+        int startWidth = (core - 1) * widthPerCore;
+        int endWidth = startWidth + widthPerCore;
+
+
+        for (int y = 0; y < height; y++) {
+
+            for (int x = startWidth; x < endWidth; x++) {
+
+                int neighbors = 0;
+                int aliveStatus = 0;
+
+                //Check the status of the cell, whether it is alive or dead.
+                if (currentBoard[y][x] == 1) {
+                    aliveStatus = 1;
+                } else if (currentBoard[y][x] == 0) {
+                    aliveStatus = 0;
+                }
+
+                //Count the number of living neighbors of the particular cell
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y - 1].length)) {
+                    if (currentBoard[y - 1][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x >= 0 && x < currentBoard[y - 1].length)) {
+                    if (currentBoard[y - 1][x] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y - 1 >= 0 && y - 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y - 1].length)) {
+                    if (currentBoard[y - 1][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x - 1 >= 0 && x - 1 < currentBoard[y].length) {
+                    if (currentBoard[y][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x + 1 >= 0 && x + 1 < currentBoard[y].length) {
+                    if (currentBoard[y][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x - 1 >= 0 && x - 1 < currentBoard[y + 1].length)) {
+                    if (currentBoard[y + 1][x - 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x >= 0 && x < currentBoard[y + 1].length)) {
+                    if (currentBoard[y + 1][x] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.length) && (x + 1 >= 0 && x + 1 < currentBoard[y + 1].length)) {
+                    if (currentBoard[y + 1][x + 1] == 1) {
+                        neighbors++;
+                    }
+                }
+
+                //Returns a value to a temporary array based on the rules method in the GoL class.
+                nextBoard[y][x] = GoL.rules(neighbors, aliveStatus);
+            }
+
+        }
+
+    }
+
+    public void copyBoard() {
+        for (int y = 0; y < height; y++) {
+
+            System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, width);
+        }
+    }
+
 
     /**
      *A functions to change the alive status of each cell, and give this cell ist new color based on this status.

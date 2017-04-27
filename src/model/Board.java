@@ -5,24 +5,37 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Abstract lass containing data and logic related to the size, contents and drawing of the game board.
  */
 public abstract class Board {
 
     private int width, height;
+    int a = 0;
+
+
 
 
     /**
      * A draw function that loops through every cell and sets the appropriate color based on its alive status.
      * ArrayOutOfBoundsExceptions to catch the cases when it exceeds values in the array.
+     *
      * @param boardCanvas
      * @param gc
      * @param size
      * @param aliveCellColor
      * @param deadCellColor
+
      */
     public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
+
+    public abstract void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores);
 
 
     /**
@@ -36,6 +49,12 @@ public abstract class Board {
      * At the end of the loops, the nextBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
      */
     public abstract void nextGeneration();
+
+
+    public abstract void nextGenerationConcurrent(int cores, int core);
+
+    public abstract void copyBoard();
+
 
 
     /**

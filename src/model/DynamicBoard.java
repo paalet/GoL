@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class DynamicBoard extends Board{
+public class DynamicBoard extends Board {
 
     private int width = 12;
     private int height = 8;
@@ -96,12 +96,18 @@ public class DynamicBoard extends Board{
 
     }
 
+    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
+        //
+    }
+
 
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
      * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
      * At the end of the loops, the nextBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
      */
+
+
     public void nextGeneration() {
 
         for (int y = 0; y < height; y++) {
@@ -182,6 +188,15 @@ public class DynamicBoard extends Board{
                 currentBoard.get(y).set(x, nextBoard.get(y).get(x));
             }
         }
+    }
+
+    public void nextGenerationConcurrent(int cores, int core) {
+        //
+
+    }
+
+    public void copyBoard() {
+        //
     }
 
     /**

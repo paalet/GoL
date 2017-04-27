@@ -231,10 +231,11 @@ public class FileManagement {
         index++;
         int bornNumbers = 0;
         if (allOk) {
-            while (rulesString.charAt(index) != 47) {
-                bornNumbers++;
-                index++;
-            }
+                while (rulesString.charAt(index) != 47 && rulesString.charAt(index) != 10 && rulesString.charAt(index) != 32) {
+                    bornNumbers++;
+                    index++;
+                }
+
         }
         int [] bornAmount = new int[bornNumbers];
 
@@ -270,7 +271,7 @@ public class FileManagement {
         index++;
         int surviveNumbers = 0;
         if(allOk) {
-            while (index < stringLength - 1) {
+            while (index < stringLength) {
                 surviveNumbers++;
                 index++;
             }

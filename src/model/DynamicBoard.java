@@ -192,6 +192,12 @@ public class DynamicBoard extends Board {
         }
     }
 
+    /**
+     * Expands the board arraylist if there are live cells at the edge of the board. This is done by first iterating through
+     * the board to find which sides have live cells and thus need to be expanded. Then rows are added to the board, and
+     * cell values are moved if needed, to set a complete row of dead cells at the correct edges of the board.
+     * @return
+     */
     public boolean autoBoardExpansion() {
 
         boolean expOccurred = false;
@@ -231,7 +237,7 @@ public class DynamicBoard extends Board {
             }
         }
 
-        // Expand the board if live cells are found at the edge of the board
+        // Expand the board side for side if live cells have been found found at the edge of the board
         if (leftEdge) {
 
             for (int y = 0; y < currentBoard.size(); y++) {
@@ -264,6 +270,10 @@ public class DynamicBoard extends Board {
                     currentBoard.get(y).set(x, currentBoard.get(y - 1).get(x));
                 }
             }
+            for (int  x = 0; x < currentBoard.get(0).size(); x++) {
+
+                currentBoard.get(0).set(x, (byte) 0);
+            }
             height++;
             expOccurred = true;
         }
@@ -291,8 +301,6 @@ public class DynamicBoard extends Board {
             height++;
             expOccurred = true;
         }
-        System.out.println("H " + height + " " + currentBoard.size());
-        System.out.println("W " + width + " " + currentBoard.get(1).size());
         return expOccurred;
     }
 

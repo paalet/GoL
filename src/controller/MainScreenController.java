@@ -13,9 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -25,7 +22,6 @@ import javafx.util.Duration;
 import model.*;
 
 import java.io.*;
-import java.text.CollationElementIterator;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -197,6 +193,10 @@ public class MainScreenController implements Initializable {
     private void draw() {
 
         board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
+        if (!GoL.getIsRunning()) {
+
+            board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
+        }
     }
 
     /**
@@ -241,8 +241,8 @@ public class MainScreenController implements Initializable {
 
         timeline.pause();
         GoL.setIsRunning(false);
-        board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
         playButton.setText("Resume");
+        board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
     }
 
     public void resetEvent() throws IOException {
@@ -396,7 +396,9 @@ public class MainScreenController implements Initializable {
      */
     public void cellClickEvent(MouseEvent event) {
 
-        board.cellClickDraw(event, gc, boardCanvas);
+        pause();
+        board.cellClick(event, gc, boardCanvas);
+        draw();
     }
 
     /**
@@ -405,7 +407,9 @@ public class MainScreenController implements Initializable {
      */
     public void boardDragEvent(MouseEvent event) {
 
-        board.cellDragDraw(event, gc, boardCanvas);
+        pause();
+        board.cellDrag(event, gc, boardCanvas);
+        draw();
     }
 
     /**

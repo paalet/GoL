@@ -5,12 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * Abstract lass containing data and logic related to the size, contents and drawing of the game board.
  */
@@ -35,8 +29,14 @@ public abstract class Board {
      */
     public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor);
 
-    public abstract void drawGrid(GraphicsContext gc, double size, Color gridColor);
 
+    /**
+     * Draws a cell grid in black on the cnavas
+     * @param gc
+     * @param size
+     * @param gridColor
+     */
+    public abstract void drawGrid(GraphicsContext gc, double size, Color gridColor);
 
     /**
      * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.
@@ -66,17 +66,17 @@ public abstract class Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public abstract void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
+    public abstract void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
 
     /**
-     * Functionally the same as cellClickDraw.
+     * Functionally the same as cellClick.
      * visitedCellWithDrag is an array which contains the board coordinates of the last visited cell, in order to avoid multiple re-calculations your mouse is hovering in.
      * @param event
      * @param gc
      * @param boardCanvas
      */
 
-    public abstract void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
+    public abstract void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException;
 
 
     /**

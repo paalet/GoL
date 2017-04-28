@@ -1,8 +1,10 @@
 package controller;
 
 
+import com.sun.codemodel.internal.JOp;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,8 +24,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jdk.nashorn.internal.scripts.JD;
 import model.*;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.*;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -41,13 +49,13 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button mainMenuButton;
     @FXML
-    public TextArea gameMessagesText;
+    private TextArea gameMessagesText;
     @FXML
     private Button staticBoardLoadButton;
     @FXML
     private Button autoExpandBoardLoadButton;
     @FXML
-    private Canvas boardCanvas;
+    public Canvas boardCanvas;
     @FXML
     private Button playButton;
     @FXML
@@ -75,11 +83,13 @@ public class MainScreenController implements Initializable {
     @FXML
     private Label loadedDimensionsLabel;
     @FXML
-    private Label currentDimensionsLabel;
+    public Label currentDimensionsLabel;
+    @FXML
+    private Label boardTypeLabel;
 
     private Board board = new StaticBoard();
     private String boardType;
-    private GraphicsContext gc;
+    public GraphicsContext gc;
     int cores =  Runtime.getRuntime().availableProcessors();
 
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
@@ -90,7 +100,6 @@ public class MainScreenController implements Initializable {
             ExecutorService executor = Executors.newFixedThreadPool(cores);
 
             NextGenerationThread [] nextGenThreads = new NextGenerationThread[cores];
-            //DrawThread[] drawThreads = new DrawThread[cores];
 
             for (int i = 0; i < cores; i++) {
                 nextGenThreads[i] = new NextGenerationThread(i + 1, cores, board);
@@ -108,20 +117,10 @@ public class MainScreenController implements Initializable {
                 gameMessagesText.setText("Generation wait time exceeded. Board is not being refreshed.");
             }
 
-            //executor = Executors.newFixedThreadPool(cores);
 
             if(finished) {
                 board.copyBoard();
                 draw();
-                /*
-                for (int i = 0; i < cores; i++) {
-                    drawThreads[i] = new DrawThread(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), board,  i + 1, cores);
-                }
-
-                for (int i = 0; i < drawThreads.length; i++) {
-                    executor.execute(drawThreads[i]);
-                }
-                */
             }
             
         }
@@ -169,12 +168,14 @@ public class MainScreenController implements Initializable {
         board = new StaticBoard();
         boardType = "Static";
         autoFillCheckBox.setSelected(false);
+        boardTypeLabel.setText("Board type: Static Board");
     }
 
     public void initializeDynamicBoard() {
         board = new DynamicBoard();
         boardType = "Dynamic";
         autoFillCheckBox.setSelected(true);
+        boardTypeLabel.setText("Board type: Auto-expanding Board");
 
     }
 
@@ -192,7 +193,7 @@ public class MainScreenController implements Initializable {
     /**
      * A simple function that calls the draw function in the Board class.
      */
-    private void draw() {
+    public void draw() {
 
         board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
     }
@@ -418,6 +419,27 @@ public class MainScreenController implements Initializable {
         RulesEditor rulesEditor = RulesEditor.getInstance();
         rulesEditor.setVisible(true);
         displayRules();
+    }
+
+    public void openSetDimensionsWindow() throws InterruptedException {
+
+
+        JFrame frame = new JFrame("Set Board Size");
+        new CustomInputDialog(frame, "<html><body><p style='text-align:center'>Enter your desired dimensions.</p></body></html>", board);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        calculateCellSize();
+                        draw();
+                        setCellSizeEvent();
+                    }
+                });
+
+            }
+        });
     }
 
 

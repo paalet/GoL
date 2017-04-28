@@ -81,43 +81,6 @@ public class StaticBoard extends Board {
         }
     }
 
-    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
-
-        int widthPerCore = width / cores;
-
-        int startWidth = (core - 1) * widthPerCore;
-        int endWidth = startWidth + widthPerCore;
-
-        try {
-            for (int y = 0; y < height; y++) {
-                try {
-                    for (int x = startWidth; x < endWidth; x++) {
-
-                        if (currentBoard[y][x] == 1) {
-
-                            gc.setFill(aliveCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
-                            gc.strokeRect((x * size), (y * size), size, size);
-
-                        } else {
-
-                            gc.setFill(deadCellColor);
-                            gc.fillRect((x * size), (y * size), size, size);
-                            gc.strokeRect((x * size), (y * size), size, size);
-                        }
-                    }
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
-                    //
-                }
-            }
-        }
-        catch(ArrayIndexOutOfBoundsException e) {
-            //
-        }
-    }
-
-
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
      * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.

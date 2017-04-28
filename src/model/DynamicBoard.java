@@ -104,10 +104,6 @@ public class DynamicBoard extends Board {
 
     }
 
-    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
-        //
-    }
-
 
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
@@ -199,12 +195,95 @@ public class DynamicBoard extends Board {
     }
 
     public void nextGenerationConcurrent(int cores, int core) {
-        //
+
+
+        int widthPerCore = width / cores;
+
+
+        int startWidth = (core - 1) * widthPerCore;
+        int endWidth = startWidth + widthPerCore;
+
+        //Check the status of each cell of the board, whether it is alive or dead.
+        for (int y = 0; y < height; y++) {
+
+            for (int x = startWidth; x < endWidth; x++) {
+
+                int neighbors = 0;
+                int aliveStatus = 0;
+
+                if (currentBoard.get(y).get(x) == 1) {
+                    aliveStatus = 1;
+                } else if (currentBoard.get(y).get(x) == 0) {
+                    aliveStatus = 0;
+                }
+
+                //Count the number of living neighbors of the particular cell
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y - 1).size())) {
+                    if (currentBoard.get(y - 1).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y - 1 >= 0 && y - 1 < currentBoard.size()) {
+                    if (currentBoard.get(y - 1).get(x) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y - 1).size())) {
+                    if (currentBoard.get(y - 1).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x - 1 >= 0 && x - 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x + 1 >= 0 && x + 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y + 1 >= 0 && y + 1 < currentBoard.size() && (x >= 0 && x < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                //Returns a value to a temporary array based on the rules method in the GoL class.
+                byte nextStatus = GoL.rules(neighbors, aliveStatus);
+                nextBoard.get(y).set(x, nextStatus);
+            }
+
+        }
 
     }
 
     public void copyBoard() {
-        //
+        // Update currentBoard with values from nextBoard
+        for (int y = 0; y < currentBoard.size(); y++) {
+
+            for (int x = 0; x < currentBoard.get(y).size(); x++) {
+
+                currentBoard.get(y).set(x, nextBoard.get(y).get(x));
+            }
+        }
     }
 
     /**

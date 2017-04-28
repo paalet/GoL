@@ -4,7 +4,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * Concrete class extending Board for implementation of the Game with a static board size.
@@ -63,22 +62,39 @@ public class StaticBoard extends Board {
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
-
-        gc.setFill(gridColor);
+        // Fill board with deadCellColor
+        gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
+        // Draw boarder around the board
+        gc.setStroke(gridColor);
+        gc.strokeRect(0, 0, width * size, height * size);
+        // Draw live cells
+        gc.setFill(aliveCellColor);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
                 if (currentBoard[y][x] == 1) {
 
-                    gc.setFill(aliveCellColor);
-                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
-
-                } else {
-
-                    gc.setFill(deadCellColor);
                     gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
                 }
+            }
+        }
+    }
+
+    /**
+     * Draws a cell grid in black on the cnavas
+     * @param gc
+     * @param size
+     * @param gridColor
+     */
+    public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
+
+        gc.setStroke(gridColor);
+        for (int y = 0; y < height; y++) {
+
+            for (int x = 0; x < width; x++) {
+
+                gc.strokeRect(x * size, y * size, size, size);
             }
         }
     }
@@ -263,7 +279,7 @@ public class StaticBoard extends Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
+    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
 
         try {
             // Calculate target cell from mouse position
@@ -290,9 +306,6 @@ public class StaticBoard extends Board {
 
                     currentBoard[cellY][cellX] = 1;
                 }
-
-                // Draw new currentBoard
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // Do nothing as a click on the edge of the canvas is harmless
@@ -300,14 +313,14 @@ public class StaticBoard extends Board {
     }
 
     /**
-     * Functionally the same as cellClickDraw.
+     * Functionally the same as cellClick.
      * visitedCellWithDrag is an array which contains the board coordinates of the last visited cell, in order to avoid multiple re-calculations your mouse is hovering in.
      * @param event
      * @param gc
      * @param boardCanvas
      */
 
-    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
+    public void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
 
         try {
             double posX = event.getX();
@@ -331,8 +344,6 @@ public class StaticBoard extends Board {
 
                     currentBoard[cellY][cellX] = 1;
                 }
-
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
                 visitedCellWithDrag[0] = cellX;
                 visitedCellWithDrag[1] = cellY;
             }

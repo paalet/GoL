@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.AmbientLight?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ContextMenu?>
@@ -39,9 +38,9 @@
          <children>
             <Label text="Generations per second:   " GridPane.rowIndex="1" />
             <Label text="Number of generations:   " />
-            <TextField fx:id="genCountTxtFld"  GridPane.columnIndex="1" />
-            <TextField fx:id="gpsTxtFld"  GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="sizeTxtFld"  GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="genCountTxtFld" GridPane.columnIndex="1" />
+            <TextField fx:id="gpsTxtFld" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="sizeTxtFld" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="24.0" text="( ? )" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <tooltip>
                   <Tooltip maxWidth="300.0" text="Specify the size of your dimension of choice in pixels. It will be adjusted slightly to fit the number of cells on your board and the other dimension will be set accordingly." wrapText="true">
@@ -66,7 +65,6 @@
             </ChoiceBox>
          </children>
       </GridPane>
-      <AmbientLight color="CHARTREUSE" layoutX="47.0" layoutY="50.0" lightOn="true" />
       <Label fx:id="inputFeedbackLbl" layoutX="37.0" layoutY="265.0" prefHeight="17.0" prefWidth="263.0" />
    </children>
 </AnchorPane>

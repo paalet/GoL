@@ -43,7 +43,7 @@
                         </StackPane>
                         <StackPane prefHeight="34.0" prefWidth="211.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Set Dimensions" />
+                              <Button onAction="#openSetDimensionsWindow" mnemonicParsing="false" text="Set Dimensions" />
                            </children>
                         </StackPane>
                      </children>
@@ -279,7 +279,7 @@
                 </StackPane>
             <StackPane prefHeight="42.0" prefWidth="104.0">
                <children>
-                  <Label text="Boardtype:" />
+                  <Label fx:id="boardTypeLabel" text="Boardtype:" />
                </children>
             </StackPane>
          </children>

@@ -35,9 +35,6 @@ public abstract class Board {
      */
     public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor);
 
-    public abstract void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor, int core, int cores);
-
-
     /**
      * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.
      */

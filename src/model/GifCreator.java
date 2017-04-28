@@ -1,12 +1,23 @@
 package model;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import javax.swing.filechooser.FileSystemView;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class GifCreator {
-
 
     private static int milliSecondsPerGen;
     private static int cellSize;
@@ -15,6 +26,7 @@ public class GifCreator {
     private static String path;
     private static java.awt.Color aliveCellColor;
     private static java.awt.Color deadCellColor;
+
 
 
     public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCount) throws Exception {

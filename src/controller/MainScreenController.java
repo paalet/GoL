@@ -111,7 +111,7 @@ public class MainScreenController implements Initializable {
                 finished = executor.awaitTermination(500, TimeUnit.MILLISECONDS);
             }
             catch(InterruptedException e) {
-                gameMessagesText.setText("Generation wait time exceeded. Board is not being refreshed.");
+                gameMessagesText.setText("Generation wait time exceeded. Board is not being refreshed.\nPlease alert the developers of this error.");
             }
 
 
@@ -449,8 +449,6 @@ public class MainScreenController implements Initializable {
         });
     }
 
-    //TISS BÆSJ PROMP
-    
 
 
     public void readFileFromDisk() throws IOException {

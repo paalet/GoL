@@ -88,7 +88,11 @@ public class MainScreenController implements Initializable {
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-          
+
+            if (board instanceof DynamicBoard) {
+                ((DynamicBoard) board).autoBoardExpansion();
+            }
+
             long start = System.currentTimeMillis();
             ExecutorService executor = Executors.newFixedThreadPool(cores);
 

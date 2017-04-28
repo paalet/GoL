@@ -16,6 +16,7 @@ public class GoL {
     private static double cellSize;
     private static Color aliveCellColor;
     private static Color deadCellColor;
+    private static Color gridColor;
     private static double currRate;
     private static int[] bornAmount;
     private static int[] surviveAmount;
@@ -69,6 +70,13 @@ public class GoL {
         return deadCellColor;
     }
 
+    public static Color getGridColor() {
+        return gridColor;
+    }
+
+    public static void setGridColor(Color gridColor) {
+        GoL.gridColor = gridColor;
+    }
 
     public static void setCurrRate(double rate) {
 

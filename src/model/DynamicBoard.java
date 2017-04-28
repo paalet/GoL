@@ -80,8 +80,10 @@ public class DynamicBoard extends Board {
      * @param aliveCellColor
      * @param deadCellColor
      */
-    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
+    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+        gc.setFill(gridColor);
+        gc.fillRect(0, 0,width * size, height * size);
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {
@@ -89,14 +91,12 @@ public class DynamicBoard extends Board {
                 if (currentBoard.get(y).get(x) == 1) {
 
                     gc.setFill(aliveCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
+                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
 
                 } else {
 
                     gc.setFill(deadCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
+                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
                 }
             }
 
@@ -104,7 +104,7 @@ public class DynamicBoard extends Board {
 
     }
 
-    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
+    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor, int core, int cores) {
         //
     }
 
@@ -357,7 +357,7 @@ public class DynamicBoard extends Board {
                 }
 
                 // Draw new currentBoard
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
 
@@ -399,7 +399,7 @@ public class DynamicBoard extends Board {
                 }
 
 
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
 
                 visitedCellWithDrag[0] = cellX;
                 visitedCellWithDrag[1] = cellY;

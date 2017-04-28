@@ -14,16 +14,19 @@ public class DrawThread implements Runnable {
     private double size;
     private Color aliveCellColor;
     private Color deadCellColor;
+    private Color gridColor;
     private int cores;
     private int core;
     public Board board;
 
-    public DrawThread(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Board  board, int core, int cores) {
+    public DrawThread(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor, Board  board, int core, int cores) {
         this.boardCanvas = boardCanvas;
         this.gc = gc;
         this.size = size;
         this.aliveCellColor = aliveCellColor;
         this.deadCellColor = deadCellColor;
+        this.gridColor = gridColor;
+
         this.cores = cores;
         this.core = core;
         this.board = board;
@@ -31,6 +34,6 @@ public class DrawThread implements Runnable {
 
     public void run() {
 
-        board.drawConcurrent(boardCanvas, gc, size, aliveCellColor, deadCellColor, core, cores);
+        board.drawConcurrent(boardCanvas, gc, size, aliveCellColor, deadCellColor, gridColor, core, cores);
     }
 }

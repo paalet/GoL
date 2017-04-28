@@ -33,7 +33,7 @@ public abstract class Board {
      * @param deadCellColor
 
      */
-    public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor);
+    public abstract void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor);
 
     /**
      * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.

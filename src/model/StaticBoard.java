@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * Concrete class extending Board for implementation of the Game with a static board size.
@@ -60,22 +61,23 @@ public class StaticBoard extends Board {
     }
 
 
-    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
+    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+
+        gc.setFill(gridColor);
+        gc.fillRect(0, 0,width * size, height * size);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
                 if (currentBoard[y][x] == 1) {
 
                     gc.setFill(aliveCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
+                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
 
                 } else {
 
                     gc.setFill(deadCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
+                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
                 }
             }
         }
@@ -290,7 +292,7 @@ public class StaticBoard extends Board {
                 }
 
                 // Draw new currentBoard
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // Do nothing as a click on the edge of the canvas is harmless
@@ -330,7 +332,7 @@ public class StaticBoard extends Board {
                     currentBoard[cellY][cellX] = 1;
                 }
 
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
                 visitedCellWithDrag[0] = cellX;
                 visitedCellWithDrag[1] = cellY;
             }

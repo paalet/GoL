@@ -29,6 +29,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.text.CollationElementIterator;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -136,6 +137,7 @@ public class MainScreenController implements Initializable {
         boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
+        GoL.setGridColor(Color.valueOf("000000"));
         GoL.setCurrRate(5.0);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
@@ -191,7 +193,7 @@ public class MainScreenController implements Initializable {
      */
     public void draw() {
 
-        board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
+        board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
     }
 
     /**

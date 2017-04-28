@@ -15,6 +15,7 @@ public class DynamicBoard extends Board {
     private int[] visitedCellWithDrag;
     private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
     private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
+    private Color white = Color.valueOf("ffffff");
 
 
     /**
@@ -82,6 +83,9 @@ public class DynamicBoard extends Board {
      */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+        // Clear canvas
+        gc.setFill(white);
+        gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
         // Fill board with deadCellColor
         gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
@@ -103,7 +107,7 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Draws a cell grid in black on the cnavas
+     * Draws a cell grid on the cnavas
      * @param gc
      * @param size
      * @param gridColor
@@ -217,6 +221,7 @@ public class DynamicBoard extends Board {
 
         int startWidth = (core - 1) * widthPerCore;
         int endWidth = startWidth + widthPerCore;
+        System.out.println(endWidth);
 
         //Check the status of each cell of the board, whether it is alive or dead.
         for (int y = 0; y < height; y++) {
@@ -389,6 +394,9 @@ public class DynamicBoard extends Board {
 
         if (rightEdge) {
 
+            System.out.println(width);
+            System.out.println(currentBoard.get(0).size());
+
             for (int y = 0; y < currentBoard.size(); y++) {
 
                 currentBoard.get(y).add((byte) 0);
@@ -397,6 +405,8 @@ public class DynamicBoard extends Board {
             }
             width++;
             expOccurred = true;
+            System.out.println(width);
+            System.out.println(currentBoard.get(0).size());
         }
         if (lowerEdge) {
 

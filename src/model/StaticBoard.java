@@ -82,7 +82,7 @@ public class StaticBoard extends Board {
     }
 
     /**
-     * Draws a cell grid in black on the cnavas
+     * Draws a cell grid on the cnavas
      * @param gc
      * @param size
      * @param gridColor

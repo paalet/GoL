@@ -91,6 +91,8 @@ public class MainScreenController implements Initializable {
 
             if (board instanceof DynamicBoard) {
                 ((DynamicBoard) board).autoBoardExpansion();
+                calculateCellSize();
+                boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
             }
 
             long start = System.currentTimeMillis();
@@ -220,6 +222,7 @@ public class MainScreenController implements Initializable {
         if (!GoL.getIsRunning()) {
 
             play();
+
         } else {
 
             pause();

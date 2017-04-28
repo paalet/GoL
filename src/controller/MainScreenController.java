@@ -1,7 +1,6 @@
 package controller;
 
 
-import com.sun.codemodel.internal.JOp;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -24,14 +23,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jdk.nashorn.internal.scripts.JD;
 import model.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.*;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;

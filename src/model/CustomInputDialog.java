@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -45,7 +45,21 @@ public class CustomInputDialog extends JDialog implements ActionListener {
         gbc.gridy = 0;
         panel.add(messageLabel, gbc);
 
-        yLabel = new JLabel("<html><body><div style='text-align: center'>Width</div></body></html>");
+
+        xLabel = new JLabel("<html><body><div style='text-align: center'>Width</div></body></html>");
+        gbc.insets = new Insets(50, 20, 70, 100);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(xLabel, gbc);
+
+        xField = new JTextField();
+        xField.setPreferredSize(new Dimension(50, 24));
+        gbc.insets = new Insets(50, 20, 20, 100);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(xField, gbc);
+
+        yLabel = new JLabel("<html><body><div style='text-align: center'>Height</div></body></html>");
         gbc.insets = new Insets(50, 100, 70, 20);
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -58,19 +72,6 @@ public class CustomInputDialog extends JDialog implements ActionListener {
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(yField, gbc);
-
-        xLabel = new JLabel("<html><body><div style='text-align: center'>Height</div></body></html>");
-        gbc.insets = new Insets(50, 20, 70, 100);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        panel.add(xLabel, gbc);
-
-        xField = new JTextField();
-        xField.setPreferredSize(new Dimension(50, 24));
-        gbc.insets = new Insets(50, 20, 20, 100);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        panel.add(xField, gbc);
 
 
         multiplyLabel = new JLabel("<html><body><div style='text-align: center'>X</div></body></html>");

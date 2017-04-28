@@ -440,8 +440,6 @@ public class MainScreenController implements Initializable {
         });
     }
 
-    //TISS BÆSJ PROMP
-    
 
 
     public void readFileFromDisk() throws IOException {

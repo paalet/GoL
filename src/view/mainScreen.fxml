@@ -43,7 +43,7 @@
                         </StackPane>
                         <StackPane prefHeight="34.0" prefWidth="211.0">
                            <children>
-                              <Button onAction="#openSetDimensionsWindow" mnemonicParsing="false" text="Set Dimensions" />
+                              <Button mnemonicParsing="false" onAction="#openSetDimensionsWindow" text="Set Dimensions" />
                            </children>
                         </StackPane>
                      </children>
@@ -189,9 +189,24 @@
                   <Label text="Cell Size:" />
                </children>
             </StackPane>
+            <HBox prefHeight="24.0" prefWidth="228.0">
+               <children>
+                  <StackPane prefHeight="22.0" prefWidth="45.0">
+                     <children>
+                        <Label text="1.0" />
+                     </children>
+                  </StackPane>
+                  <Pane prefHeight="22.0" prefWidth="123.0" />
+                  <StackPane prefHeight="22.0" prefWidth="60.0">
+                     <children>
+                        <Label text="100.0" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
             <StackPane prefHeight="24.0" prefWidth="122.0">
                <children>
-                  <Slider fx:id="cellSizeSlider" max="100.0" min="5.0" onMouseReleased="#setCellSizeEvent" value="10.0">
+                  <Slider fx:id="cellSizeSlider" max="100.0" min="1.0" onMouseReleased="#setCellSizeEvent" value="10.0">
                      <StackPane.margin>
                         <Insets left="15.0" right="15.0" />
                      </StackPane.margin>

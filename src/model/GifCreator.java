@@ -1,9 +1,17 @@
 package model;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import javax.swing.filechooser.FileSystemView;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class GifCreator {
 
@@ -15,6 +23,18 @@ public class GifCreator {
     private static String path;
     private static java.awt.Color aliveCellColor;
     private static java.awt.Color deadCellColor;
+
+    private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+
+
+        }
+    }));
+
+    public static void drawPreviewCanvas() {
+        
+    }
 
 
     public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCount) throws Exception {

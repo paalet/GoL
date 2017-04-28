@@ -64,7 +64,7 @@ public class StaticBoard extends Board {
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
 
-        gc.setFill(gridColor);
+        gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -74,11 +74,28 @@ public class StaticBoard extends Board {
                     gc.setFill(aliveCellColor);
                     gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
 
-                } else {
+                }/* else {
 
                     gc.setFill(deadCellColor);
                     gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
-                }
+                }*/
+            }
+        }
+    }
+
+    public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
+
+        gc.setStroke(gridColor);
+
+        // Draw board edge
+       // gc.strokeRect(0, 0, currentBoard[0].length * size, currentBoard.length * size);
+
+        // Draw grid
+        for (int y = 0; y < height; y++) {
+
+            for (int x = 0; x < width; x++) {
+
+                gc.strokeRect(x * size, y * size, size, size);
             }
         }
     }

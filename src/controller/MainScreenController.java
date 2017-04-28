@@ -241,6 +241,7 @@ public class MainScreenController implements Initializable {
 
         timeline.pause();
         GoL.setIsRunning(false);
+        board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
         playButton.setText("Resume");
     }
 

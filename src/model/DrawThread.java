@@ -34,6 +34,6 @@ public class DrawThread implements Runnable {
 
     public void run() {
 
-        board.drawConcurrent(boardCanvas, gc, size, aliveCellColor, deadCellColor, gridColor, core, cores);
+       // board.drawConcurrent(boardCanvas, gc, size, aliveCellColor, deadCellColor, gridColor, core, cores);
     }
 }

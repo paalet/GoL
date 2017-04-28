@@ -104,7 +104,7 @@ public class DynamicBoard extends Board {
 
     }
 
-    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor, int core, int cores) {
+    public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
         //
     }
 

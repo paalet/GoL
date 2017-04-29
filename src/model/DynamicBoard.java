@@ -218,7 +218,7 @@ public class DynamicBoard extends Board {
 
         int widthPerCore = width / cores;
 
-
+        //må flyttes til før forloop creation av threads
         int startWidth = (core - 1) * widthPerCore;
         int endWidth = startWidth + widthPerCore;
         System.out.println(endWidth);

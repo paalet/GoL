@@ -228,7 +228,7 @@
                         </StackPane>
                         <StackPane prefHeight="39.0" prefWidth="119.0">
                            <children>
-                              <ColorPicker fx:id="deadCellColorPicker" onAction="#setDeadCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
+                              <ColorPicker fx:id="aliveCellColorPicker" onAction="#setDeadCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
                            </children>
                         </StackPane>
                      </children>
@@ -242,7 +242,7 @@
                         </StackPane>
                         <StackPane prefHeight="39.0" prefWidth="119.0">
                            <children>
-                              <ColorPicker fx:id="aliveCellColorPicker" onAction="#setAliveCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
+                              <ColorPicker fx:id="deadCellColorPicker" onAction="#setAliveCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
                            </children>
                         </StackPane>
                      </children></VBox>

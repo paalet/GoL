@@ -150,7 +150,7 @@
             </StackPane>
             <StackPane prefHeight="42.0" prefWidth="104.0">
                <children>
-                  <Button fx:id="gifCreator" mnemonicParsing="false" onAction="#gifCreatorEvent" text="Create GIF" textAlignment="CENTER" />
+                  <Button fx:id="gifCreator" mnemonicParsing="false" onAction="#openGifCreatorEvent" text="Create GIF" textAlignment="CENTER" />
                </children>
             </StackPane>
             <StackPane opacity="0.5" prefHeight="30.0" prefWidth="229.0">

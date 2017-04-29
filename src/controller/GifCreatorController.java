@@ -60,9 +60,9 @@ public class GifCreatorController implements Initializable {
     private byte[][] nextStaticBoard;
     private byte[][] firstStaticBoard;
 
-    private ArrayList<ArrayList<Byte>> currentDynamicBoard;
-    private ArrayList<ArrayList<Byte>> nextDynamicBoard;
-    private ArrayList<ArrayList<Byte>> firstDynamicBoard;
+    private ArrayList<ArrayList<Byte>> currentDynamicBoard = new ArrayList<>();
+    private ArrayList<ArrayList<Byte>> nextDynamicBoard = new ArrayList<>();
+    private ArrayList<ArrayList<Byte>> firstDynamicBoard = new ArrayList<>();
 
     private double cellSize;
 
@@ -102,19 +102,16 @@ public class GifCreatorController implements Initializable {
         if (gameBoard instanceof StaticBoard) {
 
             gifBoard = new StaticBoard((StaticBoard) gameBoard);
-            currentStaticBoard = gifBoard.getCurrentBoard();
-            nextStaticBoard = gifBoard.getCurrentBoard();
-            firstStaticBoard = gifBoard.getCurrentBoard();
 
         } else if (gameBoard instanceof DynamicBoard) {
 
             gifBoard = new DynamicBoard((DynamicBoard) gameBoard);
-            currentDynamicBoard = gifBoard.getCurrentBoard();
-            nextDynamicBoard = gifBoard.getCurrentBoard();
-            firstDynamicBoard = gifBoard.getCurrentBoard();
+
         }
+
         height = gifBoard.getHeight();
         width = gifBoard.getWidth();
+
     }
 
 
@@ -142,19 +139,83 @@ public class GifCreatorController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
 
-        currentStaticBoard = gifBoard.getCurrentBoard();
-        nextStaticBoard = gifBoard.getCurrentBoard();
-        firstStaticBoard = gifBoard.getCurrentBoard();
-
-        loopCount = 0;
-
         gc = previewCanvas.getGraphicsContext2D();
         cellSize = calculateCellSize();
-        drawPreviewCanvas(cellSize, GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getDeadCellColor());
+
         start();
+
     }
 
     public void start() {
+
+
+        if(gifBoard instanceof DynamicBoard) {
+            ArrayList<ArrayList<Byte>> dynBoard = ((DynamicBoard) gifBoard).getCurrentBoard();
+
+            for (int y = 0; y < height; y++) {
+
+                currentDynamicBoard.add(new ArrayList<>());
+                nextDynamicBoard.add(new ArrayList<>());
+                firstDynamicBoard.add(new ArrayList<>());
+                for (int x = 0; x < width; x++) {
+
+                    currentDynamicBoard.get(y).add(x, (byte) 0);
+                    nextDynamicBoard.get(y).add(x, (byte) 0);
+                    firstDynamicBoard.get(y).add(x, (byte) 0);
+
+                }
+            }
+
+            for (int y = 0; y < dynBoard.size(); y++) {
+
+                for (int x = 0; x < dynBoard.get(y).size(); x++) {
+
+                    currentDynamicBoard.get(y).set(x, dynBoard.get(y).get(x));
+                }
+            }
+            for (int y = 0; y < dynBoard.size(); y++) {
+
+                for (int x = 0; x < dynBoard.get(y).size(); x++) {
+
+                    nextDynamicBoard.get(y).set(x, dynBoard.get(y).get(x));
+                }
+            }
+
+            for (int y = 0; y < dynBoard.size(); y++) {
+
+                for (int x = 0; x < dynBoard.get(y).size(); x++) {
+
+                    firstDynamicBoard.get(y).set(x, dynBoard.get(y).get(x));
+                }
+            }
+
+        }
+        else if(gifBoard instanceof StaticBoard) {
+
+            currentStaticBoard = new byte[height][width];
+            nextStaticBoard = new byte[height][width];
+            firstStaticBoard = new byte[height][width];
+
+            byte[][] statBoard = ((StaticBoard) gifBoard).getCurrentBoard();
+
+            for (int y = 0; y < height; y++) {
+
+                System.arraycopy(statBoard[y], 0, currentStaticBoard[y], 0, width);
+            }
+
+            for (int y = 0; y < height; y++) {
+
+                System.arraycopy(statBoard[y], 0, nextStaticBoard[y], 0, width);
+            }
+
+            for (int y = 0; y < height; y++) {
+
+                System.arraycopy(statBoard[y], 0, firstStaticBoard[y], 0, width);
+            }
+
+        }
+        drawPreviewCanvas(cellSize, GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getDeadCellColor());
+
         timeline.play();
     }
 
@@ -291,16 +352,15 @@ public class GifCreatorController implements Initializable {
             }
         }
         loopCount++;
-        if(loopCount >= genCount) {
+        if(loopCount > genCount) {
             for (int y = 0; y < currentDynamicBoard.size(); y++) {
 
                 for (int x = 0; x < currentDynamicBoard.get(y).size(); x++) {
 
                     currentDynamicBoard.get(y).set(x, firstDynamicBoard.get(y).get(x));
-                    nextDynamicBoard.get(y).set(x, firstDynamicBoard.get(y).get(x));
                 }
             }
-            loopCount = 0;
+            loopCount = 1;
         }
     }
 
@@ -381,13 +441,12 @@ public class GifCreatorController implements Initializable {
         }
 
         loopCount++;
-        if(loopCount >= genCount){
+        if(loopCount > genCount){
             for (int y = 0; y < height; y++) {
 
                 System.arraycopy(firstStaticBoard[y], 0, currentStaticBoard[y], 0, width);
-                System.arraycopy(firstStaticBoard[y], 0, nextStaticBoard[y], 0, width);
             }
-            loopCount = 0;
+            loopCount = 1;
         }
     }
 

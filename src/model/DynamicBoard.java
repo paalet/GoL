@@ -15,6 +15,7 @@ public class DynamicBoard extends Board {
     private int[] visitedCellWithDrag;
     private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
     private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
+    private Color white = Color.valueOf("ffffff");
 
 
     /**
@@ -80,34 +81,48 @@ public class DynamicBoard extends Board {
      * @param aliveCellColor
      * @param deadCellColor
      */
-    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor) {
+    public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+        // Clear canvas
+        gc.setFill(white);
+        gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
+        // Fill board with deadCellColor
+        gc.setFill(deadCellColor);
+        gc.fillRect(0, 0,width * size, height * size);
+        // Draw boarder around the board
+        gc.setStroke(gridColor);
+        gc.strokeRect(0, 0, width * size, height * size);
+        // Draw live cells
+        gc.setFill(aliveCellColor);
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {
 
                 if (currentBoard.get(y).get(x) == 1) {
 
-                    gc.setFill(aliveCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
-
-                } else {
-
-                    gc.setFill(deadCellColor);
-                    gc.fillRect((x * size), (y * size), size, size);
-                    gc.strokeRect((x * size), (y * size), size, size);
+                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
                 }
             }
-
         }
-
     }
 
-    public void drawConcurrent(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, int core, int cores) {
-        //
-    }
+    /**
+     * Draws a cell grid on the cnavas
+     * @param gc
+     * @param size
+     * @param gridColor
+     */
+    public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
+        gc.setStroke(gridColor);
+        for (int y = 0; y < height; y++) {
+
+            for (int x = 0; x < width; x++) {
+
+                gc.strokeRect(x * size, y * size, size, size);
+            }
+        }
+    }
 
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
@@ -199,12 +214,96 @@ public class DynamicBoard extends Board {
     }
 
     public void nextGenerationConcurrent(int cores, int core) {
-        //
+
+
+        int widthPerCore = width / cores;
+
+        //må flyttes til før forloop creation av threads
+        int startWidth = (core - 1) * widthPerCore;
+        int endWidth = startWidth + widthPerCore;
+        System.out.println(endWidth);
+
+        //Check the status of each cell of the board, whether it is alive or dead.
+        for (int y = 0; y < height; y++) {
+
+            for (int x = startWidth; x < endWidth; x++) {
+
+                int neighbors = 0;
+                int aliveStatus = 0;
+
+                if (currentBoard.get(y).get(x) == 1) {
+                    aliveStatus = 1;
+                } else if (currentBoard.get(y).get(x) == 0) {
+                    aliveStatus = 0;
+                }
+
+                //Count the number of living neighbors of the particular cell
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y - 1).size())) {
+                    if (currentBoard.get(y - 1).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y - 1 >= 0 && y - 1 < currentBoard.size()) {
+                    if (currentBoard.get(y - 1).get(x) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y - 1 >= 0 && y - 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y - 1).size())) {
+                    if (currentBoard.get(y - 1).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x - 1 >= 0 && x - 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (x + 1 >= 0 && x + 1 < currentBoard.get(y).size()) {
+                    if (currentBoard.get(y).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x - 1 >= 0 && x - 1 < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x - 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if (y + 1 >= 0 && y + 1 < currentBoard.size() && (x >= 0 && x < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                if ((y + 1 >= 0 && y + 1 < currentBoard.size()) && (x + 1 >= 0 && x + 1 < currentBoard.get(y + 1).size())) {
+                    if (currentBoard.get(y + 1).get(x + 1) == 1) {
+                        neighbors++;
+                    }
+                }
+
+                //Returns a value to a temporary array based on the rules method in the GoL class.
+                byte nextStatus = GoL.rules(neighbors, aliveStatus);
+                nextBoard.get(y).set(x, nextStatus);
+            }
+
+        }
 
     }
 
     public void copyBoard() {
-        //
+        // Update currentBoard with values from nextBoard
+        for (int y = 0; y < currentBoard.size(); y++) {
+
+            for (int x = 0; x < currentBoard.get(y).size(); x++) {
+
+                currentBoard.get(y).set(x, nextBoard.get(y).get(x));
+            }
+        }
     }
 
     /**
@@ -295,6 +394,9 @@ public class DynamicBoard extends Board {
 
         if (rightEdge) {
 
+            System.out.println(width);
+            System.out.println(currentBoard.get(0).size());
+
             for (int y = 0; y < currentBoard.size(); y++) {
 
                 currentBoard.get(y).add((byte) 0);
@@ -303,6 +405,8 @@ public class DynamicBoard extends Board {
             }
             width++;
             expOccurred = true;
+            System.out.println(width);
+            System.out.println(currentBoard.get(0).size());
         }
         if (lowerEdge) {
 
@@ -328,7 +432,7 @@ public class DynamicBoard extends Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void cellClickDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
+    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
 
         try {
             // Calculate target cell from mouse position
@@ -356,8 +460,6 @@ public class DynamicBoard extends Board {
                     currentBoard.get(cellY).set(cellX, (byte) 1);
                 }
 
-                // Draw new currentBoard
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
 
@@ -366,14 +468,14 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Functionally the same as cellClickDraw.
+     * Functionally the same as cellClick.
      * visitedCellWithDrag is an array which contains the board coordinates of the last visited cell, in order to avoid multiple re-calculations your mouse is hovering in.
      * @param event
      * @param gc
      * @param boardCanvas
      */
 
-    public void cellDragDraw(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
+    public void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
 
         // Calculate target cell from mouse position
         try {
@@ -397,9 +499,6 @@ public class DynamicBoard extends Board {
 
                     currentBoard.get(cellY).set(cellX, (byte) 1);
                 }
-
-
-                draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor());
 
                 visitedCellWithDrag[0] = cellX;
                 visitedCellWithDrag[1] = cellY;

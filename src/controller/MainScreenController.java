@@ -88,7 +88,13 @@ public class MainScreenController implements Initializable {
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-          
+
+            if (board instanceof DynamicBoard) {
+                ((DynamicBoard) board).autoBoardExpansion();
+                calculateCellSize();
+                boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+            }
+
             long start = System.currentTimeMillis();
             ExecutorService executor = Executors.newFixedThreadPool(cores);
 
@@ -216,6 +222,7 @@ public class MainScreenController implements Initializable {
         if (!GoL.getIsRunning()) {
 
             play();
+
         } else {
 
             pause();
@@ -266,7 +273,7 @@ public class MainScreenController implements Initializable {
     /**
      * Creates and displays the GIF creator interface and pauses the game if it is running.
      */
-    public void gifCreatorEvent() {
+    public void openGifCreatorEvent() {
 
         if (GoL.getIsRunning()) {
             pause();
@@ -412,16 +419,32 @@ public class MainScreenController implements Initializable {
     /**
      * Opens
      */
-    public void openRulesEditor() {
+    public void openRulesEditor() throws IOException {
 
         if(GoL.getIsRunning()) {
 
             pause();
         }
 
-        RulesEditor rulesEditor = RulesEditor.getInstance();
+
+        // Create GIF Stage
+        Stage ruleEdStage = new Stage();
+        FXMLLoader ruleEdLoader = new FXMLLoader(getClass().getResource("../view/rulesEditor.fxml"));
+
+            Parent gifRoot = ruleEdLoader.load();
+            Scene gifScene = new Scene(gifRoot);
+            ruleEdStage.setScene(gifScene);
+            RulesEditorController ruleEdCtrl = ruleEdLoader.getController();
+
+
+        ruleEdStage.setTitle("Edit rules");
+        ruleEdStage.initModality(Modality.APPLICATION_MODAL);
+        ruleEdStage.showAndWait();
+
+    /*    RulesEditor rulesEditor = RulesEditor.getInstance();
         rulesEditor.setVisible(true);
         displayRules();
+    */
     }
 
     public void openSetDimensionsWindow() throws InterruptedException {

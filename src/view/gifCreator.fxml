@@ -64,7 +64,6 @@
             </ChoiceBox>
          </children>
       </GridPane>
-      <AmbientLight color="CHARTREUSE" layoutX="47.0" layoutY="50.0" lightOn="true" />
       <Label fx:id="inputFeedbackLbl" layoutX="37.0" layoutY="265.0" prefHeight="17.0" prefWidth="263.0" />
       <Canvas fx:id="previewCanvas" height="220.0" layoutX="36.0" layoutY="245.0" width="328.0" />
    </children>

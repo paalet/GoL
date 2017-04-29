@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
-
     <children>
       <HBox layoutX="275.0" layoutY="712.0" prefHeight="146.0" prefWidth="997.0">
          <children>

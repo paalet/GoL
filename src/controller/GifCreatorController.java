@@ -2,6 +2,8 @@ package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -142,6 +144,30 @@ public class GifCreatorController implements Initializable {
         gc = previewCanvas.getGraphicsContext2D();
         cellSize = calculateCellSize();
 
+        gpsTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (oldPropertyValue)
+                {
+                    setPreviewRate();
+                }
+            }
+        });
+
+        genCountTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (oldPropertyValue)
+                {
+                    setGenCount();
+                }
+            }
+        });
+
         start();
 
     }
@@ -217,6 +243,41 @@ public class GifCreatorController implements Initializable {
         drawPreviewCanvas(cellSize, GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getDeadCellColor());
 
         timeline.play();
+    }
+
+    public void setPreviewRate() {
+        boolean ok = true;
+        double rate = 5;
+        String genCount = gpsTxtFld.getText();
+        try{
+            rate = Double.parseDouble(genCount);
+        }
+        catch(NumberFormatException numError) {
+            gpsTxtFld.setText("5");
+            new CustomDialog("Wrong format", true, "<html><body><div style='text-align: center'>Wrong number format.<br>Only numeric values allowed.</div></body></html>");
+            ok = false;
+        }
+        if(ok) {
+            timeline.setRate(rate);
+        }
+    }
+
+    public void setGenCount() {
+        boolean ok = true;
+        String countString = genCountTxtFld.getText();
+        int countInt = 0;
+        try{
+            countInt = Integer.parseInt(countString);
+        }
+        catch(NumberFormatException numError) {
+            genCountTxtFld.setText("20");
+            genCount = 20;
+            new CustomDialog("Wrong format", true, "<html><body><div style='text-align: center'>Wrong number format.<br>Only numeric values allowed.</div></body></html>");
+            ok = false;
+        }
+        if(ok) {
+            genCount = countInt;
+        }
     }
 
     public double calculateCellSize() {

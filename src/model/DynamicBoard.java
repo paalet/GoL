@@ -217,11 +217,16 @@ public class DynamicBoard extends Board {
 
 
         int widthPerCore = width / cores;
+        int moduloWidth = width % cores;
 
-        //må flyttes til før forloop creation av threads
         int startWidth = (core - 1) * widthPerCore;
         int endWidth = startWidth + widthPerCore;
-        System.out.println(endWidth);
+        if (core == moduloWidth) {
+
+            startWidth += (moduloWidth - 1);
+            endWidth += ((moduloWidth - 1) + moduloWidth);
+        }
+        System.out.println("Core " + core + ". sW " + startWidth + ". eW " + endWidth);
 
         //Check the status of each cell of the board, whether it is alive or dead.
         for (int y = 0; y < height; y++) {

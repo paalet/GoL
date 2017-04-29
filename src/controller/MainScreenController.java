@@ -426,25 +426,19 @@ public class MainScreenController implements Initializable {
             pause();
         }
 
-
-        // Create GIF Stage
+        // Create Rules Editor Stage
         Stage ruleEdStage = new Stage();
         FXMLLoader ruleEdLoader = new FXMLLoader(getClass().getResource("../view/rulesEditor.fxml"));
 
-            Parent gifRoot = ruleEdLoader.load();
-            Scene gifScene = new Scene(gifRoot);
-            ruleEdStage.setScene(gifScene);
+            Parent ruleEdRoot = ruleEdLoader.load();
+            Scene ruleEdScene = new Scene(ruleEdRoot);
+            ruleEdStage.setScene(ruleEdScene);
             RulesEditorController ruleEdCtrl = ruleEdLoader.getController();
 
 
         ruleEdStage.setTitle("Edit rules");
         ruleEdStage.initModality(Modality.APPLICATION_MODAL);
         ruleEdStage.showAndWait();
-
-    /*    RulesEditor rulesEditor = RulesEditor.getInstance();
-        rulesEditor.setVisible(true);
-        displayRules();
-    */
     }
 
     public void openSetDimensionsWindow() throws InterruptedException {

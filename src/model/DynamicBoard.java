@@ -405,19 +405,13 @@ public class DynamicBoard extends Board {
 
         if (rightEdge) {
 
-            System.out.println(width);
-            System.out.println(currentBoard.get(0).size());
-
             for (int y = 0; y < currentBoard.size(); y++) {
 
                 currentBoard.get(y).add((byte) 0);
                 nextBoard.get(y).add((byte) 0);
-
             }
             width++;
             expOccurred = true;
-            System.out.println(width);
-            System.out.println(currentBoard.get(0).size());
         }
         if (lowerEdge) {
 

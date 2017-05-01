@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
     <children>
       <HBox layoutX="275.0" layoutY="712.0" prefHeight="146.0" prefWidth="997.0">
          <children>
@@ -228,7 +235,7 @@
                         </StackPane>
                         <StackPane prefHeight="39.0" prefWidth="119.0">
                            <children>
-                              <ColorPicker fx:id="aliveCellColorPicker" onAction="#setDeadCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
+                              <ColorPicker fx:id="aliveCellColorPicker" onAction="#setAliveCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
                            </children>
                         </StackPane>
                      </children>
@@ -242,7 +249,7 @@
                         </StackPane>
                         <StackPane prefHeight="39.0" prefWidth="119.0">
                            <children>
-                              <ColorPicker fx:id="deadCellColorPicker" onAction="#setAliveCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
+                              <ColorPicker fx:id="deadCellColorPicker" onAction="#setDeadCellColorEvent" prefHeight="27.0" prefWidth="47.0" />
                            </children>
                         </StackPane>
                      </children></VBox>

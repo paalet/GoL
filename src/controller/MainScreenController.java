@@ -196,7 +196,7 @@ public class MainScreenController implements Initializable {
     public void draw() {
 
         board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
-        if (!GoL.getIsRunning()) {
+        if (!GoL.getIsRunning() && GoL.getCellSize() >= 4) {
 
             board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
         }
@@ -246,7 +246,9 @@ public class MainScreenController implements Initializable {
         timeline.pause();
         GoL.setIsRunning(false);
         playButton.setText("Resume");
-        board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
+        if (GoL.getCellSize() >= 4) {
+            board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
+        }
     }
 
     public void resetEvent() throws IOException {

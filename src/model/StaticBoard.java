@@ -90,6 +90,26 @@ public class StaticBoard extends Board {
     public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
         gc.setStroke(gridColor);
+
+        // Reduce grid line thickness with smaller cell size
+        if (size < 7) {
+
+            gc.setLineWidth(.1);
+
+        } else if (size < 10) {
+
+            gc.setLineWidth(0.2);
+
+        } else if (size < 20) {
+
+            gc.setLineWidth(.4);
+
+        } else {
+
+            gc.setLineWidth(.8);
+        }
+
+        // Draw grid
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {

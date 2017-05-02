@@ -22,13 +22,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
-import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
@@ -94,9 +92,12 @@ public class MainScreenController implements Initializable {
         public void handle(ActionEvent event) {
 
             if (board instanceof DynamicBoard) {
-                ((DynamicBoard) board).autoBoardExpansion();
-                calculateCellSize();
-                boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+                boolean expansionOccurred = ((DynamicBoard) board).autoBoardExpansion();
+                if (expansionOccurred) {
+                    calculateCellSize();
+                    boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+                    currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
+                }
             }
 
             long start = System.currentTimeMillis();
@@ -160,7 +161,7 @@ public class MainScreenController implements Initializable {
         originText.setText("");
         commentText.setText("");
 
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
 
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
@@ -263,23 +264,25 @@ public class MainScreenController implements Initializable {
     }
 
     public void resetEvent() throws IOException {
+
         if(GoL.getIsRunning()) {
             pause();
         }
         if(GoL.getLoadedData() != null) {
+
             HashMap<String, String> fileData = GoL.getLoadedData();
             applyFileData(fileData);
-        }
-        else {
-            board.newBoard();
+
+        } else {
+
             board.setHeight(8);
             board.setWidth(12);
+            board.newBoard();
             boardCanvas.setHeight(656.0);
             boardCanvas.setWidth(986.0);
             GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
             cellSizeSlider.setValue(GoL.getCellSize());
             draw();
-
         }
     }
 
@@ -316,6 +319,10 @@ public class MainScreenController implements Initializable {
      */
     public void setCellSizeEvent() {
 
+        if (GoL.getIsRunning()) {
+            pause();
+        }
+
         gameMessagesText.setText("");
 
 
@@ -337,7 +344,7 @@ public class MainScreenController implements Initializable {
         } catch (RuntimeException er) {
             gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
         }
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
         draw();
 
 
@@ -459,7 +466,7 @@ public class MainScreenController implements Initializable {
 
 
         JFrame frame = new JFrame("Set Board Size");
-        new CustomInputDialog(frame, "<html><body><p style='text-align:center'>Enter your desired dimensions.</p></body></html>", board);
+        new DimensionsInputDialog(frame, "<html><body><p style='text-align:center'>Enter your desired dimensions.</p></body></html>", board);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

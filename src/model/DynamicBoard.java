@@ -13,8 +13,8 @@ public class DynamicBoard extends Board {
     private int width = 12;
     private int height = 8;
     private int[] visitedCellWithDrag;
-    private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
-    private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
+    private ArrayList<ArrayList<Byte>> currentBoard;
+    private ArrayList<ArrayList<Byte>> nextBoard;
     private Color white = Color.valueOf("ffffff");
 
 
@@ -57,6 +57,8 @@ public class DynamicBoard extends Board {
      */
     public void newBoard() {
 
+        currentBoard = new ArrayList<>();
+        nextBoard = new ArrayList<>();
         for (int y = 0; y < height; y++) {
 
             currentBoard.add(new ArrayList<>());

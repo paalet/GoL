@@ -98,7 +98,7 @@ public class StaticBoard extends Board {
 
         } else if (size < 10) {
 
-            gc.setLineWidth(0.2);
+            gc.setLineWidth(.2);
 
         } else if (size < 20) {
 

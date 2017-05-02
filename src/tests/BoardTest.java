@@ -5,6 +5,8 @@ import model.StaticBoard;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.LinkedList;
+
 /**
  * Class for testing the logic in abstract class model.Board
  */
@@ -43,10 +45,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -91,10 +94,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -139,10 +143,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -187,10 +192,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -235,10 +241,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -283,10 +290,11 @@ public class BoardTest {
         testStaticBoard.setHeight(8);
         testStaticBoard.setWidth(8);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -327,10 +335,11 @@ public class BoardTest {
         testStaticBoard.setHeight(6);
         testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -379,10 +388,11 @@ public class BoardTest {
         testStaticBoard.setHeight(10);
         testStaticBoard.setWidth(5);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -431,10 +441,11 @@ public class BoardTest {
         testStaticBoard.setHeight(10);
         testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -483,10 +494,11 @@ public class BoardTest {
         testStaticBoard.setHeight(10);
         testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -534,10 +546,11 @@ public class BoardTest {
         testStaticBoard.setHeight(10);
         testStaticBoard.setWidth(10);
         testStaticBoard.newBoard();
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2,3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
 
         // Act
         testStaticBoard.setCurrentBoard(testBoard);

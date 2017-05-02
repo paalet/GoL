@@ -8,6 +8,7 @@ import model.GoL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 
 public class RulesEditorController implements Initializable {
@@ -67,20 +68,13 @@ public class RulesEditorController implements Initializable {
     private Button s8Btn;
 
     private String highlightColor = new String("#6f9fed");
-    private ArrayList<Integer> birthRules = new ArrayList<>();
-    private ArrayList<Integer> survivalRules = new ArrayList<>();
+    private LinkedList<Byte> birthRules;
+    private LinkedList<Byte> survivalRules;
 
     public RulesEditorController() {
 
-        // Store rules from GoL class in arraylists
-        int[] birthRulesArray = GoL.getBornAmount();
-        for (int rule : birthRulesArray) {
-            birthRules.add(rule);
-        }
-        int[] survivalRulesArray = GoL.getSurviveAmount();
-        for (int rule : survivalRulesArray) {
-            survivalRules.add(rule);
-        }
+        birthRules = GoL.getBirthRules();
+        survivalRules = GoL.getSurvivalRules();
     }
 
     @Override
@@ -162,21 +156,11 @@ public class RulesEditorController implements Initializable {
 
     public void okEvent() {
 
-        // Convert birth rule list back to array and implement it
-        int[] birthRulesArray = new int[birthRules.size()];
-        for (int i = 0; i < birthRulesArray.length; i++) {
-            birthRulesArray[i] = birthRules.get(i);
-        }
-        Arrays.sort(birthRulesArray);
-        GoL.setBornAmount(birthRulesArray);
+        // Sort the rule lists and implement them
 
-        // Convert survival rule list back to array and implement it
-        int[] survivalRulesArray = new int[survivalRules.size()];
-        for (int i = 0; i < survivalRulesArray.length; i++) {
-            survivalRulesArray[i] = survivalRules.get(i);
-        }
-        Arrays.sort(survivalRulesArray);
-        GoL.setSurviveAmount(survivalRulesArray);
+
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
 
         // Close the stage
         Stage ruleEdStage = (Stage) b0Btn.getScene().getWindow();
@@ -208,7 +192,7 @@ public class RulesEditorController implements Initializable {
             b0Btn.setStyle("");
 
         } else {
-            birthRules.add(0);
+            birthRules.add((byte) 0);
             b0Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -220,7 +204,7 @@ public class RulesEditorController implements Initializable {
             b1Btn.setStyle("");
 
         } else {
-            birthRules.add(1);
+            birthRules.add((byte) 1);
             b1Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -232,7 +216,7 @@ public class RulesEditorController implements Initializable {
             b2Btn.setStyle("");
 
         } else {
-            birthRules.add(2);
+            birthRules.add((byte) 2);
             b2Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -244,7 +228,7 @@ public class RulesEditorController implements Initializable {
             b3Btn.setStyle("");
 
         } else {
-            birthRules.add(3);
+            birthRules.add((byte) 3);
             b3Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -256,7 +240,7 @@ public class RulesEditorController implements Initializable {
             b4Btn.setStyle("");
 
         } else {
-            birthRules.add(4);
+            birthRules.add((byte) 4);
             b4Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -268,7 +252,7 @@ public class RulesEditorController implements Initializable {
             b5Btn.setStyle("");
 
         } else {
-            birthRules.add(5);
+            birthRules.add((byte) 5);
             b5Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -280,7 +264,7 @@ public class RulesEditorController implements Initializable {
             b6Btn.setStyle("");
 
         } else {
-            birthRules.add(6);
+            birthRules.add((byte) 6);
             b6Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -292,7 +276,7 @@ public class RulesEditorController implements Initializable {
             b7Btn.setStyle("");
 
         } else {
-            birthRules.add(7);
+            birthRules.add((byte) 7);
             b7Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -304,7 +288,7 @@ public class RulesEditorController implements Initializable {
             b8Btn.setStyle("");
 
         } else {
-            birthRules.add(8);
+            birthRules.add((byte) 8);
             b8Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -316,7 +300,7 @@ public class RulesEditorController implements Initializable {
             s0Btn.setStyle("");
 
         } else {
-            survivalRules.add(0);
+            survivalRules.add((byte) 0);
             s0Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -328,7 +312,7 @@ public class RulesEditorController implements Initializable {
             s1Btn.setStyle("");
 
         } else {
-            survivalRules.add(1);
+            survivalRules.add((byte) 1);
             s1Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -340,7 +324,7 @@ public class RulesEditorController implements Initializable {
             s2Btn.setStyle("");
 
         } else {
-            survivalRules.add(2);
+            survivalRules.add((byte) 2);
             s2Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -352,7 +336,7 @@ public class RulesEditorController implements Initializable {
             s3Btn.setStyle("");
 
         } else {
-            survivalRules.add(3);
+            survivalRules.add((byte) 3);
             s3Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -364,7 +348,7 @@ public class RulesEditorController implements Initializable {
             s4Btn.setStyle("");
 
         } else {
-            survivalRules.add(4);
+            survivalRules.add((byte) 4);
             s4Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -376,7 +360,7 @@ public class RulesEditorController implements Initializable {
             s5Btn.setStyle("");
 
         } else {
-            survivalRules.add(5);
+            survivalRules.add((byte) 5);
             s5Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -388,7 +372,7 @@ public class RulesEditorController implements Initializable {
             s6Btn.setStyle("");
 
         } else {
-            survivalRules.add(6);
+            survivalRules.add((byte) 6);
             s6Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -400,7 +384,7 @@ public class RulesEditorController implements Initializable {
             s7Btn.setStyle("");
 
         } else {
-            survivalRules.add(7);
+            survivalRules.add((byte) 7);
             s7Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }
@@ -412,7 +396,7 @@ public class RulesEditorController implements Initializable {
             s8Btn.setStyle("");
 
         } else {
-            survivalRules.add(8);
+            survivalRules.add((byte) 8);
             s8Btn.setStyle("-fx-background-color: " + highlightColor);
         }
     }

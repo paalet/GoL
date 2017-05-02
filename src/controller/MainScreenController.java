@@ -22,11 +22,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -131,15 +135,22 @@ public class MainScreenController implements Initializable {
 
         // Initialise game values
         GoL.setIsRunning(false);
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2, 3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
+
         GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
         boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setGridColor(Color.valueOf("000000"));
+
         GoL.setCurrRate(5.0);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
@@ -526,13 +537,13 @@ public class MainScreenController implements Initializable {
         String comments = commentText.getText();
 
         StringBuilder bornStringBuilder = new StringBuilder();
-        for(int i : GoL.getBornAmount()) {
+        for(byte i : GoL.getBirthRules()) {
             bornStringBuilder.append(i);
         }
         String bornString = new String(bornStringBuilder);
 
         StringBuilder surviveStringBuilder = new StringBuilder();
-        for(int i : GoL.getSurviveAmount()) {
+        for(byte i : GoL.getBirthRules()) {
             surviveStringBuilder.append(i);
         }
 
@@ -583,16 +594,20 @@ public class MainScreenController implements Initializable {
 
         // Apply rules if there are readable rules, if not, re-apply standard rules.
         if(FileManagement.readRules(fileData.get("rules")) != null) {
-            int rules[][] = FileManagement.readRules(fileData.get("rules"));
-            GoL.setBornAmount(rules[0]);
-            GoL.setSurviveAmount(rules[1]);
+            ArrayList<LinkedList<Byte>> rules = FileManagement.readRules(fileData.get("rules"));
+            GoL.setBirthRules(rules.get(0));
+            GoL.setSurvivalRules(rules.get(1));
             displayRules();
         }
         else {
-            int[] initBornAmount = {3};
-            int[] initSurviveAmount = {2, 3};
-            GoL.setBornAmount(initBornAmount);
-            GoL.setSurviveAmount(initSurviveAmount);
+
+            LinkedList<Byte> initBirthRules = new LinkedList<>();
+            initBirthRules.add((byte) 3);
+            LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+            initSurvivalRules.add((byte) 2);
+            initSurvivalRules.add((byte) 3);
+            GoL.setBirthRules(initBirthRules);
+            GoL.setSurvivalRules(initSurvivalRules);
             displayRules();
         }
 
@@ -691,16 +706,16 @@ public class MainScreenController implements Initializable {
      */
     public void displayRules() {
 
-        int[] bornArray = GoL.getBornAmount();
-        int[] surviveArray = GoL.getSurviveAmount();
+        LinkedList<Byte> birthRules = GoL.getBirthRules();
+        LinkedList<Byte> survivalRules = GoL.getSurvivalRules();
         StringBuilder rulesBuilder = new StringBuilder();
         rulesBuilder.append("B");
-        for (int aBornArray : bornArray) {
-            rulesBuilder.append(aBornArray);
+        for (byte b : birthRules) {
+            rulesBuilder.append(b);
         }
         rulesBuilder.append("/S");
-        for(int aSurviveArray : surviveArray) {
-            rulesBuilder.append(aSurviveArray);
+        for(byte s : survivalRules) {
+            rulesBuilder.append(s);
         }
         String rulesString = new String(rulesBuilder);
         rulesLabel.setText(rulesString);

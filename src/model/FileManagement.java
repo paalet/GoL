@@ -8,10 +8,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -210,8 +207,50 @@ public class FileManagement {
      * @param rulesString a String describing rule data .
      * @return array of int arrays with birth and survival rule cases.
      */
-    public static int[][] readRules(String rulesString) {
+    public static ArrayList<LinkedList<Byte>> readRules(String rulesString) {
 
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+
+        //Trims out "rules" in order to avoid conflict when searching for the index of "s" later in the method.
+        rulesString = rulesString.replace("rules", "");
+
+
+        char[] chars = rulesString.toCharArray();
+        boolean survivalPartOfRules = false;
+        for (char c : chars) {
+
+            // Check for "/", "S" and "s" which separates birth and survival rules in rulesString
+            if (c == 47 || c == 83 || c == 115) {
+
+                survivalPartOfRules = true;
+
+            // Insert numbers found of value 0-8 as rules in the correct linkedlist
+            } else if (c > 47 && c < 57){
+
+                String ruleNumber = Character.toString(c);
+                byte rule = Byte.parseByte(ruleNumber);
+                if (!survivalPartOfRules) {
+
+                    birthRules.add(rule);
+
+                } else {
+
+                    survivalRules.add(rule);
+                }
+
+            }
+        }
+
+        // Wrap and return rule linkedlists
+        ArrayList<LinkedList<Byte>> rulesWrapper = new ArrayList<>();
+        rulesWrapper.add(birthRules);
+        rulesWrapper.add(survivalRules);
+        return rulesWrapper;
+
+
+        /*
         //Trims out "rules" in order to avoid conflict when searching for the index of "s" later in the method.
         rulesString = rulesString.replace("rules", "");
 
@@ -307,7 +346,7 @@ public class FileManagement {
         {
             return null;
         }
-
+*/
     }
 
 

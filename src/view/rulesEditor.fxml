@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RulesEditorController">
+<Pane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RulesEditorController">
    <children>
       <VBox alignment="CENTER" prefHeight="509.0" prefWidth="562.0">
          <children>
@@ -100,7 +97,6 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="132.0" prefWidth="562.0" spacing="75.0">
                <children>
-                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelEvent" prefHeight="25.0" prefWidth="80.0" text="Cancel" />
                   <Button fx:id="okBtn" mnemonicParsing="false" onAction="#okEvent" prefHeight="25.0" prefWidth="80.0" text="OK" />
                </children>
             </HBox>

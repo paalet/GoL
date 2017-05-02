@@ -452,6 +452,7 @@ public class MainScreenController implements Initializable {
         ruleEdStage.setTitle("Edit rules");
         ruleEdStage.initModality(Modality.APPLICATION_MODAL);
         ruleEdStage.showAndWait();
+        displayRules();
     }
 
     public void openSetDimensionsWindow() throws InterruptedException {

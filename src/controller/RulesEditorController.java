@@ -67,18 +67,16 @@ public class RulesEditorController implements Initializable {
     @FXML
     private Button s8Btn;
 
-    private String highlightColor = new String("#6f9fed");
+    private String highlightColor = "#6f9fed";
     private LinkedList<Byte> birthRules;
     private LinkedList<Byte> survivalRules;
 
-    public RulesEditorController() {
-
-        birthRules = GoL.getBirthRules();
-        survivalRules = GoL.getSurvivalRules();
-    }
-
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+
+        // Import current rules
+        birthRules = GoL.getBirthRules();
+        survivalRules = GoL.getSurvivalRules();
 
         // Highlight buttons representing currently implemented rules
         for (int rule : birthRules) {
@@ -146,49 +144,44 @@ public class RulesEditorController implements Initializable {
         }
     }
 
-
-
-    public void cancelEvent() {
-
-        Stage ruleEdStage = (Stage) b0Btn.getScene().getWindow();
-        ruleEdStage.close();
-    }
-
     public void okEvent() {
 
-        // Sort the rule lists and implement them
+        // Sort rules in ascending order. Done with Array.
 
+        // Convert to Array and sort.
+        byte[] birthRulesArray = new byte[birthRules.size()];
+        for (int i = 0; i < birthRulesArray.length; i++) {
+            birthRulesArray[i] = birthRules.get(i);
+        }
+        byte[] survivalRulesArray = new byte[survivalRules.size()];
+        for (int i = 0; i < survivalRulesArray.length; i++) {
+            survivalRulesArray[i] = survivalRules.get(i);
+        }
 
-        GoL.setBirthRules(birthRules);
-        GoL.setSurvivalRules(survivalRules);
+        Arrays.sort(birthRulesArray);
+        Arrays.sort(survivalRulesArray);
+
+        // Place sorted rules back into List
+        birthRules.clear();
+        survivalRules.clear();
+        for (byte rule : birthRulesArray) {
+
+            birthRules.add(rule);
+        }
+        for (byte rule : survivalRulesArray) {
+
+            survivalRules.add(rule);
+        }
 
         // Close the stage
         Stage ruleEdStage = (Stage) b0Btn.getScene().getWindow();
         ruleEdStage.close();
     }
-    
-    /*public void birthRuleEvent(ActionEvent event) {
-
-        Button buttonClicked = (Button) event.getSource();
-        int ruleClicked = Integer.parseInt(buttonClicked.getText());
-
-        if (birthRules.contains(ruleClicked)) {
-
-            birthRules.remove(birthRules.indexOf(ruleClicked));
-
-            buttonClicked.setStyle("");
-
-        } else {
-
-            birthRules.add(ruleClicked);
-            buttonClicked.setStyle("-fx-background-color: " + highlightColor);
-        }
-    }*/
 
     public void b0Event() {
 
-        if (birthRules.contains(0)) {
-            birthRules.remove(birthRules.indexOf(0));
+        if (birthRules.contains((byte) 0)) {
+            birthRules.remove(birthRules.indexOf((byte) 0));
             b0Btn.setStyle("");
 
         } else {
@@ -199,8 +192,8 @@ public class RulesEditorController implements Initializable {
     
     public void b1Event() {
 
-        if (birthRules.contains(1)) {
-            birthRules.remove(birthRules.indexOf(1));
+        if (birthRules.contains((byte) 1)) {
+            birthRules.remove(birthRules.indexOf((byte) 1));
             b1Btn.setStyle("");
 
         } else {
@@ -211,8 +204,8 @@ public class RulesEditorController implements Initializable {
 
     public void b2Event() {
 
-        if (birthRules.contains(2)) {
-            birthRules.remove(birthRules.indexOf(2));
+        if (birthRules.contains((byte) 2)) {
+            birthRules.remove(birthRules.indexOf((byte) 2));
             b2Btn.setStyle("");
 
         } else {
@@ -223,8 +216,8 @@ public class RulesEditorController implements Initializable {
 
     public void b3Event() {
 
-        if (birthRules.contains(3)) {
-            birthRules.remove(birthRules.indexOf(3));
+        if (birthRules.contains((byte) 3)) {
+            birthRules.remove(birthRules.indexOf((byte) 3));
             b3Btn.setStyle("");
 
         } else {
@@ -235,8 +228,8 @@ public class RulesEditorController implements Initializable {
 
     public void b4Event() {
 
-        if (birthRules.contains(4)) {
-            birthRules.remove(birthRules.indexOf(4));
+        if (birthRules.contains((byte) 4)) {
+            birthRules.remove(birthRules.indexOf((byte) 4));
             b4Btn.setStyle("");
 
         } else {
@@ -247,8 +240,8 @@ public class RulesEditorController implements Initializable {
 
     public void b5Event() {
 
-        if (birthRules.contains(5)) {
-            birthRules.remove(birthRules.indexOf(5));
+        if (birthRules.contains((byte) 5)) {
+            birthRules.remove(birthRules.indexOf((byte) 5));
             b5Btn.setStyle("");
 
         } else {
@@ -259,8 +252,8 @@ public class RulesEditorController implements Initializable {
 
     public void b6Event() {
 
-        if (birthRules.contains(6)) {
-            birthRules.remove(birthRules.indexOf(6));
+        if (birthRules.contains((byte) 6)) {
+            birthRules.remove(birthRules.indexOf((byte) 6));
             b6Btn.setStyle("");
 
         } else {
@@ -271,8 +264,8 @@ public class RulesEditorController implements Initializable {
 
     public void b7Event() {
 
-        if (birthRules.contains(7)) {
-            birthRules.remove(birthRules.indexOf(7));
+        if (birthRules.contains((byte)7)) {
+            birthRules.remove(birthRules.indexOf((byte) 7));
             b7Btn.setStyle("");
 
         } else {
@@ -283,8 +276,8 @@ public class RulesEditorController implements Initializable {
 
     public void b8Event() {
 
-        if (birthRules.contains(8)) {
-            birthRules.remove(birthRules.indexOf(8));
+        if (birthRules.contains((byte) 8)) {
+            birthRules.remove(birthRules.indexOf((byte) 8));
             b8Btn.setStyle("");
 
         } else {
@@ -295,8 +288,8 @@ public class RulesEditorController implements Initializable {
 
     public void s0Event() {
 
-        if (survivalRules.contains(0)) {
-            survivalRules.remove(survivalRules.indexOf(0));
+        if (survivalRules.contains((byte) 0)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 0));
             s0Btn.setStyle("");
 
         } else {
@@ -307,8 +300,8 @@ public class RulesEditorController implements Initializable {
 
     public void s1Event() {
 
-        if (survivalRules.contains(1)) {
-            survivalRules.remove(survivalRules.indexOf(1));
+        if (survivalRules.contains((byte) 1)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 1));
             s1Btn.setStyle("");
 
         } else {
@@ -319,8 +312,8 @@ public class RulesEditorController implements Initializable {
 
     public void s2Event() {
 
-        if (survivalRules.contains(2)) {
-            survivalRules.remove(survivalRules.indexOf(2));
+        if (survivalRules.contains((byte) 2)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 2));
             s2Btn.setStyle("");
 
         } else {
@@ -331,8 +324,8 @@ public class RulesEditorController implements Initializable {
 
     public void s3Event() {
 
-        if (survivalRules.contains(3)) {
-            survivalRules.remove(survivalRules.indexOf(3));
+        if (survivalRules.contains((byte) 3)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 3));
             s3Btn.setStyle("");
 
         } else {
@@ -343,8 +336,8 @@ public class RulesEditorController implements Initializable {
 
     public void s4Event() {
 
-        if (survivalRules.contains(4)) {
-            survivalRules.remove(survivalRules.indexOf(4));
+        if (survivalRules.contains((byte) 4)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 4));
             s4Btn.setStyle("");
 
         } else {
@@ -355,8 +348,8 @@ public class RulesEditorController implements Initializable {
 
     public void s5Event() {
 
-        if (survivalRules.contains(5)) {
-            survivalRules.remove(survivalRules.indexOf(5));
+        if (survivalRules.contains((byte) 5)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 5));
             s5Btn.setStyle("");
 
         } else {
@@ -367,8 +360,8 @@ public class RulesEditorController implements Initializable {
 
     public void s6Event() {
 
-        if (survivalRules.contains(6)) {
-            survivalRules.remove(survivalRules.indexOf(6));
+        if (survivalRules.contains((byte) 6)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 6));
             s6Btn.setStyle("");
 
         } else {
@@ -379,8 +372,8 @@ public class RulesEditorController implements Initializable {
 
     public void s7Event() {
 
-        if (survivalRules.contains(7)) {
-            survivalRules.remove(survivalRules.indexOf(7));
+        if (survivalRules.contains((byte) 7)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 7));
             s7Btn.setStyle("");
 
         } else {
@@ -391,8 +384,8 @@ public class RulesEditorController implements Initializable {
 
     public void s8Event() {
 
-        if (survivalRules.contains(8)) {
-            survivalRules.remove(survivalRules.indexOf(8));
+        if (survivalRules.contains((byte) 8)) {
+            survivalRules.remove(survivalRules.indexOf((byte) 8));
             s8Btn.setStyle("");
 
         } else {

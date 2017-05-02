@@ -92,7 +92,7 @@ public class FileManagement {
             data = r.read();
         }
         String fileString = new String(fileStringBuilder);
-        int i = 0;
+        int index = 0;
 
         /**
          * Sifts out titles, origins and comments located in a .rle-file.
@@ -100,12 +100,12 @@ public class FileManagement {
         String title = null;
         String origin = null;
         StringBuilder commentBuilder = new StringBuilder();
-        while (fileString.indexOf(35, i) != -1) {
+        while (fileString.indexOf(35, index) != -1) {
 
-            int hashTag = fileString.indexOf(35, i);
+            int hashTag = fileString.indexOf(35, index);
             char nextChar = fileString.charAt(hashTag + 1);
-            int endOfLine = fileString.indexOf(10, i);
-            i = endOfLine + 1;
+            int endOfLine = fileString.indexOf(10, index);
+            index = endOfLine + 1;
             switch (nextChar) {
 
                 case 78:
@@ -134,7 +134,7 @@ public class FileManagement {
             /**
              * Finds the size of the x-coordinates a .rle file.
              */
-            int x = fileString.indexOf(120, i);
+            int x = fileString.indexOf(120, index);
             int comma = fileString.indexOf(44, x);
             String widthSubString = fileString.substring(x, comma);
             fileData.put("width", widthSubString);
@@ -143,7 +143,7 @@ public class FileManagement {
             /**
              * Finds the size of the y-coordinates in a .rle file.
              */
-            int y = fileString.indexOf(121, i);
+            int y = fileString.indexOf(121, index);
             comma = fileString.indexOf(44, y);
             String heightSubString = fileString.substring(y, comma);
             fileData.put("height", heightSubString);
@@ -159,7 +159,7 @@ public class FileManagement {
          */
         if (fileString.contains("rule")) {
 
-            int rulesIndex = fileString.indexOf("rule");
+            int rulesIndex = fileString.indexOf("rule", index);
             int rulesEndIndex = fileString.indexOf(10, rulesIndex);
             String rulesString = fileString.substring(rulesIndex, rulesEndIndex);
             fileData.put("rules", rulesString);
@@ -168,9 +168,9 @@ public class FileManagement {
         /**
          * Extracts a Game of Life board pattern.
          */
-        int endOfLine = fileString.indexOf(10, i);
-        i = endOfLine + 1;
-        String patternString = fileString.substring(i);
+        int endOfLine = fileString.indexOf(10, index);
+        index = endOfLine + 1;
+        String patternString = fileString.substring(index);
         fileData.put("pattern", patternString);
 
         return fileData;
@@ -221,7 +221,7 @@ public class FileManagement {
         boolean survivalPartOfRules = false;
         for (char c : chars) {
 
-            // Check for "/", "S" and "s" which separates birth and survival rules in rulesString
+            // Check for "/", "S" or "s" which separates birth and survival rules in rulesString
             if (c == 47 || c == 83 || c == 115) {
 
                 survivalPartOfRules = true;

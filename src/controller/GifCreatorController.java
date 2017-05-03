@@ -144,25 +144,19 @@ public class GifCreatorController implements Initializable {
         gc = previewCanvas.getGraphicsContext2D();
         cellSize = calculateCellSize();
 
-        gpsTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>()
-        {
+        gpsTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-            {
-                if (oldPropertyValue)
-                {
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (oldPropertyValue) {
                     setPreviewRate();
                 }
             }
         });
 
-        genCountTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>()
-        {
+        genCountTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-            {
-                if (oldPropertyValue)
-                {
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (oldPropertyValue) {
                     setGenCount();
                 }
             }
@@ -243,6 +237,10 @@ public class GifCreatorController implements Initializable {
         drawPreviewCanvas(cellSize, GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getDeadCellColor());
 
         timeline.play();
+    }
+
+    public void stop() {
+        timeline.stop();
     }
 
     public void setPreviewRate() {
@@ -629,7 +627,7 @@ public class GifCreatorController implements Initializable {
      * Close the GIF creator without making a GIF
      */
     public void cancelGifEvent() {
-
+        stop();
         Stage gifStage = (Stage) cancelGifBtn.getScene().getWindow();
         gifStage.close();
     }

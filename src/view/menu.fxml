@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="872.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <children>
-      <VBox layoutX="373.0" layoutY="213.0" prefHeight="446.0" prefWidth="554.0">
+      <VBox alignment="CENTER" layoutX="381.0" layoutY="92.0" prefHeight="636.0" prefWidth="496.0">
          <children>
             <StackPane prefHeight="31.0" prefWidth="554.0">
                <children>
-                  <Label prefHeight="14.0" prefWidth="114.0" style="-fx-font-size: 25;" text="Conway's" />
+                  <Label prefHeight="36.0" prefWidth="112.0" style="-fx-font-size: 25;" text="Conway's" />
                </children>
             </StackPane>
             <StackPane prefHeight="62.0" prefWidth="554.0">
@@ -18,27 +25,62 @@
                   <Label style="-fx-font-size: 60;" text="Game of Life" />
                </children>
             </StackPane>
+            <StackPane prefHeight="60.0" prefWidth="496.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="226.0" text="A cellular automoton" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </StackPane>
             <StackPane prefHeight="31.0" prefWidth="554.0">
                <children>
                   <Label style="-fx-font-size: 15;" text="- by Pål Andreassen and Simen Persch Andersen" />
                </children>
             </StackPane>
-            <StackPane prefHeight="79.0" prefWidth="554.0" />
-            <StackPane prefHeight="31.0" prefWidth="554.0">
+            <StackPane prefHeight="84.0" prefWidth="496.0" />
+            <StackPane prefHeight="75.0" prefWidth="496.0">
                <children>
-                  <Label style="-fx-font-size: 15;" text="Please choose your board state to begin" />
+                  <Label style="-fx-font-size: 15;" text="Please choose your board type to begin" />
                </children>
             </StackPane>
-            <StackPane prefHeight="110.0" prefWidth="554.0">
+            <GridPane prefHeight="131.0" prefWidth="579.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Button fx:id="staticBoardLoadButton" mnemonicParsing="false" onAction="#loadStaticBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
+                  <StackPane prefHeight="110.0" prefWidth="554.0">
+                     <children>
+                        <Button fx:id="staticBoardLoadButton" mnemonicParsing="false" onAction="#loadStaticBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="90.0" prefWidth="554.0" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="dynamicBoardLoadButton" mnemonicParsing="false" onAction="#loadDynamicBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Dynamic Board" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="51.0" prefWidth="248.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="60.0" prefWidth="186.0" text="A board that will not expand beyond it's set size" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="132.0" prefWidth="210.0" text="A board that allow cell patterns to evolve beyond the board's original size" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </StackPane>
                </children>
-            </StackPane>
-            <StackPane prefHeight="90.0" prefWidth="554.0">
-               <children>
-                  <Button fx:id="autoExpandBoardLoadButton" mnemonicParsing="false" onAction="#loadAutoExpandingEvent" prefHeight="60.0" prefWidth="190.0" text="Auto-expanding Board" />
-               </children>
-            </StackPane>
+            </GridPane>
          </children>
       </VBox>
    </children>

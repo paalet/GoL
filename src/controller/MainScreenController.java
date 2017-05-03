@@ -26,7 +26,9 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -90,9 +92,12 @@ public class MainScreenController implements Initializable {
         public void handle(ActionEvent event) {
 
             if (board instanceof DynamicBoard) {
-                ((DynamicBoard) board).autoBoardExpansion();
-                calculateCellSize();
-                boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+                boolean expansionOccurred = ((DynamicBoard) board).autoBoardExpansion();
+                if (expansionOccurred) {
+                    calculateCellSize();
+                    boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+                    displayDimensions();
+                }
             }
 
             long start = System.currentTimeMillis();
@@ -131,15 +136,22 @@ public class MainScreenController implements Initializable {
 
         // Initialise game values
         GoL.setIsRunning(false);
-        int[] initBornAmount = {3};
-        int[] initSurviveAmount = {2, 3};
-        GoL.setBornAmount(initBornAmount);
-        GoL.setSurviveAmount(initSurviveAmount);
+
+        LinkedList<Byte> initBirthRules = new LinkedList<>();
+        initBirthRules.add((byte) 3);
+        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+        initSurvivalRules.add((byte) 2);
+        initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
+
         GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
         boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
+
         GoL.setAliveCellColor(Color.valueOf("0x344c50ff"));
         GoL.setDeadCellColor(Color.valueOf("0xe1effdff"));
         GoL.setGridColor(Color.valueOf("000000"));
+
         GoL.setCurrRate(5.0);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setRate(GoL.getCurrRate());
@@ -149,12 +161,11 @@ public class MainScreenController implements Initializable {
         originText.setText("");
         commentText.setText("");
 
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
-
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
+        displayDimensions();
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
         displayRules();
 
@@ -175,7 +186,7 @@ public class MainScreenController implements Initializable {
         board = new DynamicBoard();
         boardType = "Dynamic";
         autoFillCheckBox.setSelected(true);
-        boardTypeLabel.setText("Board type: Auto-expanding Board");
+        boardTypeLabel.setText("Board type: Dynamic Board");
 
     }
 
@@ -196,7 +207,7 @@ public class MainScreenController implements Initializable {
     public void draw() {
 
         board.draw(boardCanvas, gc, GoL.getCellSize(), GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
-        if (!GoL.getIsRunning()) {
+        if (!GoL.getIsRunning() && GoL.getCellSize() >= 4) {
 
             board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
         }
@@ -246,18 +257,24 @@ public class MainScreenController implements Initializable {
         timeline.pause();
         GoL.setIsRunning(false);
         playButton.setText("Resume");
-        board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
+        if (GoL.getCellSize() >= 4) {
+            board.drawGrid(gc, GoL.getCellSize(), GoL.getGridColor());
+        }
     }
 
     public void resetEvent() throws IOException {
+
         if(GoL.getIsRunning()) {
             pause();
         }
         if(GoL.getLoadedData() != null) {
+
             HashMap<String, String> fileData = GoL.getLoadedData();
             applyFileData(fileData);
-        }
-        else {
+
+
+        } else {
+
             board.setHeight(8);
             board.setWidth(12);
             board.newBoard();
@@ -265,8 +282,8 @@ public class MainScreenController implements Initializable {
             boardCanvas.setWidth(986.0);
             GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
             cellSizeSlider.setValue(GoL.getCellSize());
+            displayDimensions();
             draw();
-
         }
     }
 
@@ -303,6 +320,10 @@ public class MainScreenController implements Initializable {
      */
     public void setCellSizeEvent() {
 
+        if (GoL.getIsRunning()) {
+            pause();
+        }
+
         gameMessagesText.setText("");
 
 
@@ -317,14 +338,14 @@ public class MainScreenController implements Initializable {
         try {
             boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
         } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.");
         }
         try {
             boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
         } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.");
         }
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        displayDimensions();
         draw();
 
 
@@ -426,32 +447,27 @@ public class MainScreenController implements Initializable {
             pause();
         }
 
-
-        // Create GIF Stage
+        // Create Rules Editor Stage
         Stage ruleEdStage = new Stage();
         FXMLLoader ruleEdLoader = new FXMLLoader(getClass().getResource("../view/rulesEditor.fxml"));
 
-            Parent gifRoot = ruleEdLoader.load();
-            Scene gifScene = new Scene(gifRoot);
-            ruleEdStage.setScene(gifScene);
+            Parent ruleEdRoot = ruleEdLoader.load();
+            Scene ruleEdScene = new Scene(ruleEdRoot);
+            ruleEdStage.setScene(ruleEdScene);
             RulesEditorController ruleEdCtrl = ruleEdLoader.getController();
 
 
         ruleEdStage.setTitle("Edit rules");
         ruleEdStage.initModality(Modality.APPLICATION_MODAL);
         ruleEdStage.showAndWait();
-
-    /*    RulesEditor rulesEditor = RulesEditor.getInstance();
-        rulesEditor.setVisible(true);
         displayRules();
-    */
     }
 
     public void openSetDimensionsWindow() throws InterruptedException {
 
 
         JFrame frame = new JFrame("Set Board Size");
-        new CustomInputDialog(frame, "<html><body><p style='text-align:center'>Enter your desired dimensions.</p></body></html>", board);
+        new DimensionsInputDialog(frame, "<html><body><p style='text-align:center'>Enter your desired dimensions.</p></body></html>", board);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -530,13 +546,13 @@ public class MainScreenController implements Initializable {
         String comments = commentText.getText();
 
         StringBuilder bornStringBuilder = new StringBuilder();
-        for(int i : GoL.getBornAmount()) {
+        for(byte i : GoL.getBirthRules()) {
             bornStringBuilder.append(i);
         }
         String bornString = new String(bornStringBuilder);
 
         StringBuilder surviveStringBuilder = new StringBuilder();
-        for(int i : GoL.getSurviveAmount()) {
+        for(byte i : GoL.getBirthRules()) {
             surviveStringBuilder.append(i);
         }
 
@@ -587,16 +603,20 @@ public class MainScreenController implements Initializable {
 
         // Apply rules if there are readable rules, if not, re-apply standard rules.
         if(FileManagement.readRules(fileData.get("rules")) != null) {
-            int rules[][] = FileManagement.readRules(fileData.get("rules"));
-            GoL.setBornAmount(rules[0]);
-            GoL.setSurviveAmount(rules[1]);
+            ArrayList<LinkedList<Byte>> rules = FileManagement.readRules(fileData.get("rules"));
+            GoL.setBirthRules(rules.get(0));
+            GoL.setSurvivalRules(rules.get(1));
             displayRules();
         }
         else {
-            int[] initBornAmount = {3};
-            int[] initSurviveAmount = {2, 3};
-            GoL.setBornAmount(initBornAmount);
-            GoL.setSurviveAmount(initSurviveAmount);
+
+            LinkedList<Byte> initBirthRules = new LinkedList<>();
+            initBirthRules.add((byte) 3);
+            LinkedList<Byte> initSurvivalRules = new LinkedList<>();
+            initSurvivalRules.add((byte) 2);
+            initSurvivalRules.add((byte) 3);
+            GoL.setBirthRules(initBirthRules);
+            GoL.setSurvivalRules(initSurvivalRules);
             displayRules();
         }
 
@@ -614,8 +634,8 @@ public class MainScreenController implements Initializable {
 
         //Set data as loaded data
         GoL.setLoadedData(fileData);
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
-        loadedDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        displayDimensions();
+        loadedDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
     }
 
     public void confirmFileData(HashMap<String, String> fileData) {
@@ -688,6 +708,7 @@ public class MainScreenController implements Initializable {
         String reportString = new String(report);
 
         CustomDialog importInfo = new CustomDialog("File load", true, reportString);
+
     }
 
     /**
@@ -695,16 +716,16 @@ public class MainScreenController implements Initializable {
      */
     public void displayRules() {
 
-        int[] bornArray = GoL.getBornAmount();
-        int[] surviveArray = GoL.getSurviveAmount();
+        LinkedList<Byte> birthRules = GoL.getBirthRules();
+        LinkedList<Byte> survivalRules = GoL.getSurvivalRules();
         StringBuilder rulesBuilder = new StringBuilder();
         rulesBuilder.append("B");
-        for (int aBornArray : bornArray) {
-            rulesBuilder.append(aBornArray);
+        for (byte b : birthRules) {
+            rulesBuilder.append(b);
         }
         rulesBuilder.append("/S");
-        for(int aSurviveArray : surviveArray) {
-            rulesBuilder.append(aSurviveArray);
+        for(byte s : survivalRules) {
+            rulesBuilder.append(s);
         }
         String rulesString = new String(rulesBuilder);
         rulesLabel.setText(rulesString);
@@ -721,6 +742,11 @@ public class MainScreenController implements Initializable {
         double boardHeightDouble = (double) boardHeightInt;
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
+    }
+    
+    public void displayDimensions() {
+
+        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
     }
 }
 

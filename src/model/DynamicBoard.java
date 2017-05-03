@@ -13,8 +13,8 @@ public class DynamicBoard extends Board {
     private int width = 12;
     private int height = 8;
     private int[] visitedCellWithDrag;
-    private ArrayList<ArrayList<Byte>> currentBoard = new ArrayList<>();
-    private ArrayList<ArrayList<Byte>> nextBoard = new ArrayList<>();
+    private ArrayList<ArrayList<Byte>> currentBoard;
+    private ArrayList<ArrayList<Byte>> nextBoard;
     private Color white = Color.valueOf("ffffff");
 
 
@@ -57,6 +57,8 @@ public class DynamicBoard extends Board {
      */
     public void newBoard() {
 
+        currentBoard = new ArrayList<>();
+        nextBoard = new ArrayList<>();
         for (int y = 0; y < height; y++) {
 
             currentBoard.add(new ArrayList<>());
@@ -83,6 +85,15 @@ public class DynamicBoard extends Board {
      */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+        double gapSize = 1;
+
+        if (size < 4) {
+
+            gapSize = 0;
+        } else if (size < 10) {
+
+            gapSize = .5;
+        }
         // Clear canvas
         gc.setFill(white);
         gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
@@ -100,7 +111,7 @@ public class DynamicBoard extends Board {
 
                 if (currentBoard.get(y).get(x) == 1) {
 
-                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
+                    gc.fillRect((x * size) + (gapSize / 2), (y * size) + (gapSize / 2), size - gapSize, size - gapSize);
                 }
             }
         }
@@ -115,6 +126,26 @@ public class DynamicBoard extends Board {
     public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
         gc.setStroke(gridColor);
+
+        // Reduce grid line thickness with smaller cell size
+        if (size < 7) {
+
+            gc.setLineWidth(.1);
+
+        } else if (size < 10) {
+
+            gc.setLineWidth(.2);
+
+        } else if (size < 20) {
+
+            gc.setLineWidth(.4);
+
+        } else {
+
+            gc.setLineWidth(.8);
+        }
+
+        // Draw grid
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {
@@ -405,19 +436,13 @@ public class DynamicBoard extends Board {
 
         if (rightEdge) {
 
-            System.out.println(width);
-            System.out.println(currentBoard.get(0).size());
-
             for (int y = 0; y < currentBoard.size(); y++) {
 
                 currentBoard.get(y).add((byte) 0);
                 nextBoard.get(y).add((byte) 0);
-
             }
             width++;
             expOccurred = true;
-            System.out.println(width);
-            System.out.println(currentBoard.get(0).size());
         }
         if (lowerEdge) {
 
@@ -443,7 +468,7 @@ public class DynamicBoard extends Board {
      * @param boardCanvas
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
+    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
 
         try {
             // Calculate target cell from mouse position
@@ -472,7 +497,7 @@ public class DynamicBoard extends Board {
                 }
 
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
 
             // Do nothing as a click on the the edge of the canvas is harmless
         }
@@ -515,7 +540,7 @@ public class DynamicBoard extends Board {
                 visitedCellWithDrag[1] = cellY;
             }
         }
-        catch(ArrayIndexOutOfBoundsException e) {
+        catch(IndexOutOfBoundsException e) {
 
             //Do nothing as a mouse drag outside the canvas is harmless
         }

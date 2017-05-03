@@ -8,10 +8,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -33,8 +30,9 @@ public class FileManagement {
         if (returnFile != null) {
 
             return returnFile;
+
         } else {
-            System.out.println("User aborted");
+
             return null;
         }
     }
@@ -64,7 +62,7 @@ public class FileManagement {
             CustomDialog errMsg = new CustomDialog("Error opening file from URL", true,
                     "There was a problem opening the specified URL.\r\n" +
                             "Please make sure you have entered the correct address.");
-            throw new IOException(e);
+            return null;
         }
 
     }
@@ -95,7 +93,7 @@ public class FileManagement {
             data = r.read();
         }
         String fileString = new String(fileStringBuilder);
-        int i = 0;
+        int index = 0;
 
         /**
          * Sifts out titles, origins and comments located in a .rle-file.
@@ -103,12 +101,12 @@ public class FileManagement {
         String title = null;
         String origin = null;
         StringBuilder commentBuilder = new StringBuilder();
-        while (fileString.indexOf(35, i) != -1) {
+        while (fileString.indexOf(35, index) != -1) {
 
-            int hashTag = fileString.indexOf(35, i);
+            int hashTag = fileString.indexOf(35, index);
             char nextChar = fileString.charAt(hashTag + 1);
-            int endOfLine = fileString.indexOf(10, i);
-            i = endOfLine + 1;
+            int endOfLine = fileString.indexOf(10, index);
+            index = endOfLine + 1;
             switch (nextChar) {
 
                 case 78:
@@ -137,7 +135,7 @@ public class FileManagement {
             /**
              * Finds the size of the x-coordinates a .rle file.
              */
-            int x = fileString.indexOf(120, i);
+            int x = fileString.indexOf(120, index);
             int comma = fileString.indexOf(44, x);
             String widthSubString = fileString.substring(x, comma);
             fileData.put("width", widthSubString);
@@ -146,7 +144,7 @@ public class FileManagement {
             /**
              * Finds the size of the y-coordinates in a .rle file.
              */
-            int y = fileString.indexOf(121, i);
+            int y = fileString.indexOf(121, index);
             comma = fileString.indexOf(44, y);
             String heightSubString = fileString.substring(y, comma);
             fileData.put("height", heightSubString);
@@ -162,7 +160,7 @@ public class FileManagement {
          */
         if (fileString.contains("rule")) {
 
-            int rulesIndex = fileString.indexOf("rule");
+            int rulesIndex = fileString.indexOf("rule", index);
             int rulesEndIndex = fileString.indexOf(10, rulesIndex);
             String rulesString = fileString.substring(rulesIndex, rulesEndIndex);
             fileData.put("rules", rulesString);
@@ -171,9 +169,9 @@ public class FileManagement {
         /**
          * Extracts a Game of Life board pattern.
          */
-        int endOfLine = fileString.indexOf(10, i);
-        i = endOfLine + 1;
-        String patternString = fileString.substring(i);
+        int endOfLine = fileString.indexOf(10, index);
+        index = endOfLine + 1;
+        String patternString = fileString.substring(index);
         fileData.put("pattern", patternString);
 
         return fileData;
@@ -210,8 +208,50 @@ public class FileManagement {
      * @param rulesString a String describing rule data .
      * @return array of int arrays with birth and survival rule cases.
      */
-    public static int[][] readRules(String rulesString) {
+    public static ArrayList<LinkedList<Byte>> readRules(String rulesString) {
 
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+
+        //Trims out "rules" in order to avoid conflict when searching for the index of "s" later in the method.
+        rulesString = rulesString.replace("rules", "");
+
+
+        char[] chars = rulesString.toCharArray();
+        boolean survivalPartOfRules = false;
+        for (char c : chars) {
+
+            // Check for "/", "S" or "s" which separates birth and survival rules in rulesString
+            if (c == 47 || c == 83 || c == 115) {
+
+                survivalPartOfRules = true;
+
+            // Insert numbers found of value 0-8 as rules in the correct linkedlist
+            } else if (c > 47 && c < 57){
+
+                String ruleNumber = Character.toString(c);
+                byte rule = Byte.parseByte(ruleNumber);
+                if (!survivalPartOfRules) {
+
+                    birthRules.add(rule);
+
+                } else {
+
+                    survivalRules.add(rule);
+                }
+
+            }
+        }
+
+        // Wrap and return rule linkedlists
+        ArrayList<LinkedList<Byte>> rulesWrapper = new ArrayList<>();
+        rulesWrapper.add(birthRules);
+        rulesWrapper.add(survivalRules);
+        return rulesWrapper;
+
+
+        /*
         //Trims out "rules" in order to avoid conflict when searching for the index of "s" later in the method.
         rulesString = rulesString.replace("rules", "");
 
@@ -307,7 +347,7 @@ public class FileManagement {
         {
             return null;
         }
-
+*/
     }
 
 

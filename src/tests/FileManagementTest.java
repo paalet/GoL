@@ -130,7 +130,7 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+/*
     @Test
     public void testReadRules_01() {
 
@@ -228,7 +228,7 @@ public class FileManagementTest {
         // Assert
         Assert.assertNull(actualResult);
     }
-
+*/
 
     @Test
     public void testReadPattern_01() throws IOException{

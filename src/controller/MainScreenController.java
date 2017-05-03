@@ -272,6 +272,7 @@ public class MainScreenController implements Initializable {
             HashMap<String, String> fileData = GoL.getLoadedData();
             applyFileData(fileData);
 
+
         } else {
 
             board.setHeight(8);

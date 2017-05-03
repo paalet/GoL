@@ -52,12 +52,18 @@
                <children>
                   <StackPane prefHeight="110.0" prefWidth="554.0">
                      <children>
-                        <Button tooltip="A board with a set size that will not re-adjust regardless of cell behavior." fx:id="staticBoardLoadButton" mnemonicParsing="false" onAction="#loadStaticBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Static Board" />
+                        <Button fx:id="staticBoardLoadButton" mnemonicParsing="false" onAction="#loadStaticBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Static Board">
+                           <tooltip>
+                              <Tooltip text="A board with a set size that will not re-adjust regardless of cell behavior" />
+                           </tooltip></Button>
                      </children>
                   </StackPane>
                   <StackPane prefHeight="90.0" prefWidth="554.0" GridPane.columnIndex="1">
                      <children>
-                        <Button tooltip="A board that will evolve its size based on cellular movements." fx:id="dynamicBoardLoadButton" mnemonicParsing="false" onAction="#loadDynamicBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Dynamic Board" />
+                        <Button fx:id="dynamicBoardLoadButton" mnemonicParsing="false" onAction="#loadDynamicBoardEvent" prefHeight="60.0" prefWidth="190.0" text="Dynamic Board" >
+                           <tooltip>
+                              <Tooltip text="A board that will evolve its size based on cellular movements" />
+                           </tooltip></Button>
                      </children>
                   </StackPane>
                </children>

@@ -213,14 +213,26 @@ public class StaticBoard extends Board {
     }
 
     public void nextGenerationConcurrent(int cores , int core) {
-
+        
         int widthPerCore = width / cores;
+        int modulo = width % cores;
 
+        int startWidth;
+        int endWidth;
+        // Make a number of threads equal to the modulo increase their workload by one column
+        if (core <= modulo) {
 
-        int startWidth = (core - 1) * widthPerCore;
-        int endWidth = startWidth + widthPerCore;
+            startWidth = (core - 1) * (widthPerCore + modulo - 1);
+            endWidth = startWidth + widthPerCore + 1;
 
+            // Set the workload for the remaining threads
+        } else {
 
+            startWidth = (core - 1) * widthPerCore + modulo;
+            endWidth = startWidth + widthPerCore;
+        }
+
+        //Check the status of each cell of the board, whether it is alive or dead.
         for (int y = 0; y < height; y++) {
 
             for (int x = startWidth; x < endWidth; x++) {

@@ -85,6 +85,15 @@ public class DynamicBoard extends Board {
      */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+        double gapSize = 1;
+
+        if (size < 4) {
+
+            gapSize = 0;
+        } else if (size < 10) {
+
+            gapSize = .5;
+        }
         // Clear canvas
         gc.setFill(white);
         gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
@@ -102,7 +111,7 @@ public class DynamicBoard extends Board {
 
                 if (currentBoard.get(y).get(x) == 1) {
 
-                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
+                    gc.fillRect((x * size) + (gapSize / 2), (y * size) + (gapSize / 2), size - gapSize, size - gapSize);
                 }
             }
         }

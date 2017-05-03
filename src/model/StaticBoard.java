@@ -62,6 +62,16 @@ public class StaticBoard extends Board {
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+
+        double gapSize = 1;
+
+        if (size < 4) {
+
+            gapSize = 0;
+        } else if (size < 10) {
+
+            gapSize = .5;
+        }
         // Fill board with deadCellColor
         gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
@@ -75,7 +85,7 @@ public class StaticBoard extends Board {
 
                 if (currentBoard[y][x] == 1) {
 
-                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
+                    gc.fillRect((x * size) + (gapSize / 2), (y * size) + (gapSize / 2), size - gapSize, size - gapSize);
                 }
             }
         }

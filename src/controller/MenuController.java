@@ -21,7 +21,7 @@ public class MenuController {
     @FXML
     private Button staticBoardLoadButton;
     @FXML
-    private Button autoExpandBoardLoadButton;
+    private Button dynamicBoardLoadButton;
 
     public void loadStaticBoardEvent() throws Exception {
 
@@ -37,7 +37,7 @@ public class MenuController {
 
     }
 
-    public void loadAutoExpandingEvent() throws Exception {
+    public void loadDynamicBoardEvent() throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();

@@ -5,6 +5,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Class with data related to game state and execution
@@ -18,8 +19,8 @@ public class GoL {
     private static Color deadCellColor;
     private static Color gridColor;
     private static double currRate;
-    private static int[] bornAmount;
-    private static int[] surviveAmount;
+    private static LinkedList<Byte> birthRules;
+    private static LinkedList<Byte> survivalRules;
     private static HashMap<String, String> loadedData;
 
 
@@ -89,24 +90,20 @@ public class GoL {
         return currRate;
     }
 
-    public static void setBornAmount(int[] newBornAmount) {
-
-        bornAmount = newBornAmount;
+    public static LinkedList<Byte> getBirthRules() {
+        return birthRules;
     }
 
-    public static int[] getBornAmount() {
-        return bornAmount;
-
+    public static LinkedList<Byte> getSurvivalRules() {
+        return survivalRules;
     }
 
-    public static void setSurviveAmount(int[] newSurviveAmount) {
-
-        surviveAmount = newSurviveAmount;
+    public static void setBirthRules(LinkedList<Byte> birthRules) {
+        GoL.birthRules = birthRules;
     }
 
-    public static int[] getSurviveAmount() {
-
-        return surviveAmount;
+    public static void setSurvivalRules(LinkedList<Byte> survivalRules) {
+        GoL.survivalRules = survivalRules;
     }
 
     public static void setLoadedData(HashMap<String, String> newFileData) {
@@ -236,9 +233,9 @@ public class GoL {
 
         if (aliveStatus == 1) {
 
-            for (int i = 0; i < surviveAmount.length; i++) {
+            for (int i = 0; i < survivalRules.size(); i++) {
 
-                if (neighbors == surviveAmount[i]) {
+                if (neighbors == survivalRules.get(i)) {
 
                     nextStatus = 1;
                 }
@@ -246,9 +243,9 @@ public class GoL {
         }
         else if (aliveStatus == 0) {
 
-            for (int i = 0; i < bornAmount.length; i++) {
+            for (int i = 0; i < birthRules.size(); i++) {
 
-                if (neighbors == bornAmount[i]) {
+                if (neighbors == birthRules.get(i)) {
 
                     nextStatus = 1;
                 }

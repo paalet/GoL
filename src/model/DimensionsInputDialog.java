@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 /**
  * Created by simenperschandersen on 28.04.2017.
  */
-public class CustomInputDialog extends JDialog implements ActionListener {
+public class DimensionsInputDialog extends JDialog implements ActionListener {
     private JButton okButton;
     private JButton cancelButton;
     private JFrame frame;
@@ -25,7 +25,7 @@ public class CustomInputDialog extends JDialog implements ActionListener {
     private JLabel multiplyLabel;
     public Board board;
 
-    public CustomInputDialog(JFrame frame, String message, Board board) {
+    public DimensionsInputDialog(JFrame frame, String message, Board board) {
 
         this.board = board;
         this.frame = frame;

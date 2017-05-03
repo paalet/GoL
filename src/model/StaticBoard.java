@@ -62,6 +62,16 @@ public class StaticBoard extends Board {
 
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
+
+        double gapSize = 1;
+
+        if (size < 4) {
+
+            gapSize = 0;
+        } else if (size < 10) {
+
+            gapSize = .5;
+        }
         // Fill board with deadCellColor
         gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
@@ -75,7 +85,7 @@ public class StaticBoard extends Board {
 
                 if (currentBoard[y][x] == 1) {
 
-                    gc.fillRect((x * size) + 0.5, (y * size) + 0.5, size - 1, size - 1);
+                    gc.fillRect((x * size) + (gapSize / 2), (y * size) + (gapSize / 2), size - gapSize, size - gapSize);
                 }
             }
         }
@@ -90,6 +100,26 @@ public class StaticBoard extends Board {
     public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
         gc.setStroke(gridColor);
+
+        // Reduce grid line thickness with smaller cell size
+        if (size < 7) {
+
+            gc.setLineWidth(.1);
+
+        } else if (size < 10) {
+
+            gc.setLineWidth(.2);
+
+        } else if (size < 20) {
+
+            gc.setLineWidth(.4);
+
+        } else {
+
+            gc.setLineWidth(.8);
+        }
+
+        // Draw grid
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {
@@ -511,8 +541,15 @@ public class StaticBoard extends Board {
 
             height = newCellAmountHeight;
             width = newCellAmountWidth;
-            currentBoard = newBoard;
-            nextBoard = newBoard;
+            currentBoard = new byte[height][width];
+            nextBoard = new byte[height][width];
+            for (int y = 0; y < height; y++) {
+
+                for (int x = 0; x < width; x++) {
+
+                    currentBoard[y][x] = newBoard[y][x];
+                }
+            }
 
         }
     }

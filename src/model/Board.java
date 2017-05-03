@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 public abstract class Board {
 
     private int width, height;
-    int a = 0;
-
 
 
 

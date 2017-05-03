@@ -531,8 +531,15 @@ public class StaticBoard extends Board {
 
             height = newCellAmountHeight;
             width = newCellAmountWidth;
-            currentBoard = newBoard;
-            nextBoard = newBoard;
+            currentBoard = new byte[height][width];
+            nextBoard = new byte[height][width];
+            for (int y = 0; y < height; y++) {
+
+                for (int x = 0; x < width; x++) {
+
+                    currentBoard[y][x] = newBoard[y][x];
+                }
+            }
 
         }
     }

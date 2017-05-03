@@ -96,7 +96,7 @@ public class MainScreenController implements Initializable {
                 if (expansionOccurred) {
                     calculateCellSize();
                     boardCanvas.setWidth(calculateCanvasWidth(board.getWidth()));
-                    currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
+                    displayDimensions();
                 }
             }
 
@@ -161,12 +161,11 @@ public class MainScreenController implements Initializable {
         originText.setText("");
         commentText.setText("");
 
-        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
-
         // Display game values
         aliveCellColorPicker.setValue(GoL.getAliveCellColor());
         deadCellColorPicker.setValue(GoL.getDeadCellColor());
         cellSizeSlider.setValue(GoL.getCellSize());
+        displayDimensions();
         fpsLabel.setText(GoL.getCurrRate() + " gen/s");
         displayRules();
 
@@ -187,7 +186,7 @@ public class MainScreenController implements Initializable {
         board = new DynamicBoard();
         boardType = "Dynamic";
         autoFillCheckBox.setSelected(true);
-        boardTypeLabel.setText("Board type: Auto-expanding Board");
+        boardTypeLabel.setText("Board type: Dynamic Board");
 
     }
 
@@ -282,6 +281,7 @@ public class MainScreenController implements Initializable {
             boardCanvas.setWidth(986.0);
             GoL.setCellSize(boardCanvas.getHeight() / board.getHeight());
             cellSizeSlider.setValue(GoL.getCellSize());
+            displayDimensions();
             draw();
         }
     }
@@ -337,14 +337,14 @@ public class MainScreenController implements Initializable {
         try {
             boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
         } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.");
         }
         try {
             boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
         } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.\nPlease alert the developers.");
+            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.");
         }
-        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
+        displayDimensions();
         draw();
 
 
@@ -707,6 +707,7 @@ public class MainScreenController implements Initializable {
         String reportString = new String(report);
 
         CustomDialog importInfo = new CustomDialog("File load", true, reportString);
+
     }
 
     /**
@@ -740,6 +741,11 @@ public class MainScreenController implements Initializable {
         double boardHeightDouble = (double) boardHeightInt;
         GoL.setCellSize(canvasHeightDouble / boardHeightDouble);
         cellSizeSlider.setValue(GoL.getCellSize());
+    }
+    
+    public void displayDimensions() {
+
+        currentDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
     }
 }
 

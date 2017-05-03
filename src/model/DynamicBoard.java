@@ -488,7 +488,7 @@ public class DynamicBoard extends Board {
                 }
 
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
 
             // Do nothing as a click on the the edge of the canvas is harmless
         }
@@ -531,7 +531,7 @@ public class DynamicBoard extends Board {
                 visitedCellWithDrag[1] = cellY;
             }
         }
-        catch(ArrayIndexOutOfBoundsException e) {
+        catch(IndexOutOfBoundsException e) {
 
             //Do nothing as a mouse drag outside the canvas is harmless
         }

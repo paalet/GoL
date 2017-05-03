@@ -30,8 +30,9 @@ public class FileManagement {
         if (returnFile != null) {
 
             return returnFile;
+            
         } else {
-            System.out.println("User aborted");
+
             return null;
         }
     }
@@ -61,7 +62,7 @@ public class FileManagement {
             CustomDialog errMsg = new CustomDialog("Error opening file from URL", true,
                     "There was a problem opening the specified URL.\r\n" +
                             "Please make sure you have entered the correct address.");
-            throw new IOException(e);
+            return null;
         }
 
     }

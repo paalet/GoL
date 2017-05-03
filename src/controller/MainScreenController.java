@@ -633,8 +633,8 @@ public class MainScreenController implements Initializable {
 
         //Set data as loaded data
         GoL.setLoadedData(fileData);
-        currentDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
-        loadedDimensionsLabel.setText("X = " + board.getWidth() + " / Y = " + board.getHeight());
+        displayDimensions();
+        loadedDimensionsLabel.setText("Width = " + board.getWidth() + " / Height = " + board.getHeight());
     }
 
     public void confirmFileData(HashMap<String, String> fileData) {

@@ -271,14 +271,10 @@ public class MainScreenController implements Initializable {
 
             HashMap<String, String> fileData = GoL.getLoadedData();
             applyFileData(fileData);
-<<<<<<< HEAD
-        }
-        else {
-=======
+
 
         } else {
 
->>>>>>> master
             board.setHeight(8);
             board.setWidth(12);
             board.newBoard();
@@ -336,19 +332,25 @@ public class MainScreenController implements Initializable {
             calculateBoardSize(656, 985);
         }
         else {
-            GoL.setCellSize(cellSizeSlider.getValue());
-        }
 
-        try {
-            boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
-        } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\n memory or exceeding canvas size limit.");
+            if ((board.getHeight() * cellSizeSlider.getValue()) > 5000) {
+                double sliderSize = Math.floor(5000/(double)board.getHeight());
+                gameMessagesText.setText("This value will exceed the size limit\nof the canvas.\nPlease choose a lower cell size.");
+                GoL.setCellSize(sliderSize);
+                cellSizeSlider.setValue(sliderSize);
+            } else if ((board.getWidth() * cellSizeSlider.getValue()) > 5000) {
+                double sliderSize = Math.floor(5000/(double)board.getWidth());
+                gameMessagesText.setText("This value will exceed the size limit\nof the canvas.\nPlease choose a lower cell size.");
+                GoL.setCellSize(sliderSize);
+                cellSizeSlider.setValue(sliderSize);
+            } else {
+                GoL.setCellSize(cellSizeSlider.getValue());
+            }
+
         }
-        try {
-            boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
-        } catch (RuntimeException er) {
-            gameMessagesText.setText("ERROR: Game crashed due to either lack of\nmemory or exceeding canvas size limit.");
-        }
+        boardCanvas.setWidth(GoL.getCellSize() * (double) board.getWidth());
+        boardCanvas.setHeight(GoL.getCellSize() * (double) board.getHeight());
+
         displayDimensions();
         draw();
 

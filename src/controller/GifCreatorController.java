@@ -27,7 +27,11 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Controller class for gifCreator.fxml. Creates a GIF based on the current live game board which is deep copied upon
+ * instantiating this class. Input fields let's the user manipulate parameters for the gif and a preview of the GIF
+ * is displayed.
+ */
 public class GifCreatorController implements Initializable {
 
 

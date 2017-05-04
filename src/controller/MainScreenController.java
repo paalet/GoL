@@ -190,7 +190,7 @@ public class MainScreenController implements Initializable {
 
     }
 
-    public void returnToMenuEvent() throws Exception {
+    public void returnToMenuEvent() throws IOException {
         GoL.setLoadedData(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
         Stage primaryStage = (Stage) pane.getScene().getWindow();

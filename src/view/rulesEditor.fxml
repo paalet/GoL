@@ -47,15 +47,15 @@
                </font></Label>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="373.0" spacing="2.0">
                <children>
-                  <Button fx:id="b0Btn" mnemonicParsing="false" onAction="#b0Event" prefWidth="40.0" text="0" />
-                  <Button fx:id="b1Btn" mnemonicParsing="false" onAction="#b1Event" prefWidth="40.0" text="1" />
-                  <Button fx:id="b2Btn" mnemonicParsing="false" onAction="#b2Event" prefWidth="40.0" text="2" />
-                  <Button fx:id="b3Btn" mnemonicParsing="false" onAction="#b3Event" prefWidth="40.0" text="3" />
-                  <Button fx:id="b4Btn" mnemonicParsing="false" onAction="#b4Event" prefWidth="40.0" text="4" />
-                  <Button fx:id="b5Btn" mnemonicParsing="false" onAction="#b5Event" prefWidth="40.0" text="5" />
-                  <Button fx:id="b6Btn" mnemonicParsing="false" onAction="#b6Event" prefWidth="40.0" text="6" />
-                  <Button fx:id="b7Btn" mnemonicParsing="false" onAction="#b7Event" prefWidth="40.0" text="7" />
-                  <Button fx:id="b8Btn" mnemonicParsing="false" onAction="#b8Event" prefWidth="40.0" text="8" />
+                  <Button fx:id="b0Btn" mnemonicParsing="false" onAction="#b0Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="0" />
+                  <Button fx:id="b1Btn" mnemonicParsing="false" onAction="#b1Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="1" />
+                  <Button fx:id="b2Btn" mnemonicParsing="false" onAction="#b2Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="2" />
+                  <Button fx:id="b3Btn" mnemonicParsing="false" onAction="#b3Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="3" />
+                  <Button fx:id="b4Btn" mnemonicParsing="false" onAction="#b4Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="4" />
+                  <Button fx:id="b5Btn" mnemonicParsing="false" onAction="#b5Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="5" />
+                  <Button fx:id="b6Btn" mnemonicParsing="false" onAction="#b6Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="6" />
+                  <Button fx:id="b7Btn" mnemonicParsing="false" onAction="#b7Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="7" />
+                  <Button fx:id="b8Btn" mnemonicParsing="false" onAction="#b8Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="8" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -81,15 +81,15 @@
                </font></Label>
             <HBox alignment="CENTER" prefHeight="42.0" prefWidth="281.0" spacing="2.0">
                <children>
-                  <Button fx:id="s0Btn" mnemonicParsing="false" onAction="#s0Event" prefWidth="40.0" text="0" />
-                  <Button fx:id="s1Btn" mnemonicParsing="false" onAction="#s1Event" prefWidth="40.0" text="1" />
-                  <Button fx:id="s2Btn" mnemonicParsing="false" onAction="#s2Event" prefWidth="40.0" text="2" />
-                  <Button fx:id="s3Btn" mnemonicParsing="false" onAction="#s3Event" prefWidth="40.0" text="3" />
-                  <Button fx:id="s4Btn" mnemonicParsing="false" onAction="#s4Event" prefWidth="40.0" text="4" />
-                  <Button fx:id="s5Btn" mnemonicParsing="false" onAction="#s5Event" prefWidth="40.0" text="5" />
-                  <Button fx:id="s6Btn" mnemonicParsing="false" onAction="#s6Event" prefWidth="40.0" text="6" />
-                  <Button fx:id="s7Btn" mnemonicParsing="false" onAction="#s7Event" prefWidth="40.0" text="7" />
-                  <Button fx:id="s8Btn" mnemonicParsing="false" onAction="#s8Event" prefWidth="40.0" text="8" />
+                  <Button fx:id="s0Btn" mnemonicParsing="false" onAction="#s0Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="0" />
+                  <Button fx:id="s1Btn" mnemonicParsing="false" onAction="#s1Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="1" />
+                  <Button fx:id="s2Btn" mnemonicParsing="false" onAction="#s2Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="2" />
+                  <Button fx:id="s3Btn" mnemonicParsing="false" onAction="#s3Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="3" />
+                  <Button fx:id="s4Btn" mnemonicParsing="false" onAction="#s4Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="4" />
+                  <Button fx:id="s5Btn" mnemonicParsing="false" onAction="#s5Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="5" />
+                  <Button fx:id="s6Btn" mnemonicParsing="false" onAction="#s6Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="6" />
+                  <Button fx:id="s7Btn" mnemonicParsing="false" onAction="#s7Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="7" />
+                  <Button fx:id="s8Btn" mnemonicParsing="false" onAction="#s8Event" prefWidth="40.0" style="-fx-focus-traversable: false;" text="8" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

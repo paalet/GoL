@@ -4,18 +4,20 @@ package tests;
 import model.FileManagement;
 import org.junit.Assert;
 import org.junit.Test;
+import sun.awt.image.ImageWatched;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Class for testing the logic in model.FileManagement.
  */
 public class FileManagementTest {
-
-
-    // TODO: 04.04.2017 Teste loadfile-metodene og få til testReadFile
 
 
     @Test
@@ -32,9 +34,10 @@ public class FileManagementTest {
         expectedResult.put("height", "y = 7");
         expectedResult.put("rules", "rule = b3/s23\n");
         expectedResult.put("pattern", "2b2o3b$bobo3b$o2bob2o$2obo2bo$bobo3b$bo2bo2b$2b2o!");
+        expectedResult.put("File Path", "testpath");
 
         // Act
-        HashMap<String, String> actualResult = FileManagement.readFile(new FileReader(rleFile), "Test");
+        HashMap<String, String> actualResult = FileManagement.readFile(new FileReader(rleFile), "testpath");
 
         // Assert
         Assert.assertEquals(expectedResult, actualResult);
@@ -117,34 +120,25 @@ public class FileManagementTest {
 
 
     @Test
-    public void testReadDimension_06() throws IOException {
-
-        // Arrange
-        String dimensionString = new String("x=10");
-        int expectedResult = 10;
-
-        // Act
-        int actualResult = FileManagement.readDimension(dimensionString);
-
-        // Assert
-        Assert.assertEquals(expectedResult, actualResult);
-    }
-
-/*
-    @Test
     public void testReadRules_01() {
 
         // Arrange
-        String rulesString = new String("rule = b3/s23");
-        int[] bornAmount = {3};
-        int[] surviveAmount = {2,3};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+        String rulesString = "rule = b3/s23";
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
 
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -153,15 +147,30 @@ public class FileManagementTest {
 
         // Arrange
         String rulesString = new String("rule = b123/s12345678");
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {1,2,3,4,5,6,7,8};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 1);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 7);
+        survivalRules.add((byte) 8);
+
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
 
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -170,15 +179,23 @@ public class FileManagementTest {
 
         // Arrange
         String rulesString = new String("rules = b12/s234");
-        int[] bornAmount = {1,2};
-        int[] surviveAmount = {2,3,4};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
 
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -187,15 +204,21 @@ public class FileManagementTest {
 
         // Arrange
         String rulesString = new String("rule = B3/S23");
-        int[] bornAmount = {3};
-        int[] surviveAmount = {2,3};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
 
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -204,15 +227,36 @@ public class FileManagementTest {
 
         // Arrange
         String rulesString = new String("rule = b0123456789/s0123456789");
-        int[] bornAmount = {0,1,2,3,4,5,6,7,8,9};
-        int[] surviveAmount = {0,1,2,3,4,5,6,7,8,9};
-        int[][] expectedResult = {bornAmount, surviveAmount};
+
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 0);
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 4);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 6);
+        birthRules.add((byte) 7);
+        birthRules.add((byte) 8);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 1);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 7);
+        survivalRules.add((byte) 8);
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
 
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -222,16 +266,27 @@ public class FileManagementTest {
         // Arrange
         String rulesString = new String("rule = b38/s23¤8");
 
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 8);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 8);
+        ArrayList<LinkedList<Byte>> expectedResult = new ArrayList<>();
+        expectedResult.add(birthRules);
+        expectedResult.add(survivalRules);
+
         // Act
-        int[][] actualResult = FileManagement.readRules(rulesString);
+        ArrayList<LinkedList<Byte>> actualResult = FileManagement.readRules(rulesString);
 
         // Assert
-        Assert.assertNull(actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
-*/
+
 
     @Test
-    public void testReadPattern_01() throws IOException{
+    public void testReadPatternStaticBoard_01() throws IOException{
 
         // Pattern 1beacon.rle
 
@@ -258,36 +313,7 @@ public class FileManagementTest {
 
 
     @Test
-    public void testReadPattern_02() throws IOException{
-
-        // Pattern 5blink.rle
-
-        // Arrange
-        String patternString = new String("5bo$4bob2o$o3bo3b2o$o8bo$o3bo$3b3obo3bo$bobo2b2o2bobo$obo8bo$2o!");
-        int width = 13;
-        int height = 9;
-        byte [][] expectedResult = {
-                {0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,0,0,0,1,0,1,1,0,0,0,0,0},
-                {1,0,0,0,1,0,0,0,1,1,0,0,0},
-                {1,0,0,0,0,0,0,0,0,1,0,0,0},
-                {1,0,0,0,1,0,0,0,0,0,0,0,0},
-                {0,0,0,1,1,1,0,1,0,0,0,1,0},
-                {0,1,0,1,0,0,1,1,0,0,1,0,1},
-                {1,0,1,0,0,0,0,0,0,0,0,1,0},
-                {1,1,0,0,0,0,0,0,0,0,0,0,0}
-        };
-
-        // Act
-        byte[][] actualResult = FileManagement.readPatternStaticBoard(patternString, width, height);
-
-        // Assert
-        Assert.assertArrayEquals(expectedResult, actualResult);
-    }
-
-
-    @Test
-    public void testReadPattern_03() throws IOException{
+    public void testReadPatternStaticBoard_02() throws IOException{
 
         // Pattern barge.rle
 
@@ -312,7 +338,7 @@ public class FileManagementTest {
 
 
     @Test
-    public void testReadPattern_04() throws IOException{
+    public void testReadPatternStaticBoard_03() throws IOException{
 
         // Pattern beehat.rle
 

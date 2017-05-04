@@ -17,11 +17,13 @@ public class GoLTest {
     public void testRules_01() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 0;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -38,11 +40,13 @@ public class GoLTest {
     public void testRules_02() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 1;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -59,11 +63,13 @@ public class GoLTest {
     public void testRules_03() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 2;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -80,11 +86,13 @@ public class GoLTest {
     public void testRules_04() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 3;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -101,11 +109,13 @@ public class GoLTest {
     public void testRules_05() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 4;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -122,11 +132,13 @@ public class GoLTest {
     public void testRules_06() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 5;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -143,11 +155,13 @@ public class GoLTest {
     public void testRules_07() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 6;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -164,11 +178,13 @@ public class GoLTest {
     public void testRules_08() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 7;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -185,11 +201,13 @@ public class GoLTest {
     public void testRules_09() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 8;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -206,11 +224,13 @@ public class GoLTest {
     public void testRules_10() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 0;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -227,11 +247,13 @@ public class GoLTest {
     public void testRules_11() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 1;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -248,11 +270,13 @@ public class GoLTest {
     public void testRules_12() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 2;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -269,11 +293,13 @@ public class GoLTest {
     public void testRules_13() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 3;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -290,11 +316,13 @@ public class GoLTest {
     public void testRules_14() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 4;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -311,11 +339,13 @@ public class GoLTest {
     public void testRules_15() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 5;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -332,11 +362,13 @@ public class GoLTest {
     public void testRules_16() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 6;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -353,11 +385,13 @@ public class GoLTest {
     public void testRules_17() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 7;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -374,11 +408,13 @@ public class GoLTest {
     public void testRules_18() {
 
         // Arrange
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 8;
         int aliveStatus = 1;
         byte expectedResult = 0;

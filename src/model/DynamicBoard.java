@@ -255,13 +255,13 @@ public class DynamicBoard extends Board {
         // Make a number of threads equal to the modulo increase their workload by one column
         if (core <= modulo) {
 
-            startWidth = (core - 1) * (widthPerCore + modulo - 1);
+            startWidth = (core - 1) * (widthPerCore + 1);
             endWidth = startWidth + widthPerCore + 1;
 
         // Set the workload for the remaining threads
         } else {
 
-            startWidth = (core - 1) * widthPerCore + modulo;
+            startWidth = ((core - 1) * widthPerCore) + modulo;
             endWidth = startWidth + widthPerCore;
         }
 

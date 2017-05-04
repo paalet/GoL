@@ -465,6 +465,7 @@ public class MainScreenController implements Initializable {
 
         ruleEdStage.setTitle("Edit rules");
         ruleEdStage.initModality(Modality.APPLICATION_MODAL);
+        ruleEdStage.setOnCloseRequest(we -> ruleEdCtrl.sortRules());
         ruleEdStage.showAndWait();
         displayRules();
     }

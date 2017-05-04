@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     /**
-     * Loads menu.fxml and sets it as the Scene of primary Stage.
+     * Loads menu.fxml and sets it as the Scene of primary Stage before showing it.
      * @param primaryStage is the default starting Stage of the application
      * @throws Exception if menu.fxml can not be loaded.
      */

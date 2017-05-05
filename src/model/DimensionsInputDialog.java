@@ -145,6 +145,9 @@ public class DimensionsInputDialog extends JDialog implements ActionListener {
 
                 ok = false;
             }
+            if(y > 1500 || x > 1500 || y < 0 || x < 0 ) {
+                ok = false;
+            }
 
             // Sets new board size and closes frame
             if(ok) {
@@ -155,8 +158,7 @@ public class DimensionsInputDialog extends JDialog implements ActionListener {
 
             // Shows a dialog telling user that input is incorrect
             else {
-
-                CustomDialog wrongInteger = new CustomDialog("Wrong format", true, "<html><body><div style='text-align: center'>Invalid height/width format.<br>Only integers allowed.</div></body></html>");
+                new CustomDialog("Caution", true, "<html><body><div style='text-align: center'>Invalid height/width.<br>Only numeric values between 1 and 1500 allowed.</div></body></html>");
             }
         }
     }

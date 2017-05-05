@@ -45,6 +45,14 @@ public abstract class Board {
      */
     public abstract void nextGeneration();
 
+    /**
+     * Similar method to nextGeneration, only adjusted for compatibility with thread seperation.
+     * Splits up the board in x number of parts, each handled by a seperate thread, which results in a nextBoard array/arraylist which are copied to the currentBoard and later drawn with draw()
+     * The rest of the cells which may not add up in a divition by the amount of threads(one for each core in the machine) is handled by a modulo calculation which are added to the last thread.
+     * @param cores Represents the amount of cores in the active computers CPU. Used to calculate how many rows of cells each core/thread shall handle.
+     * @param core Represents the thread with the corresponding core number calling the method. Used to decide what part of the board the active core/thread shall be allocated.
+     */
+
 
     public abstract void nextGenerationConcurrent(int cores, int core);
 

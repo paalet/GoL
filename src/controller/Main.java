@@ -18,18 +18,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception{
-<<<<<<< HEAD
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/menu.fxml"));
-            primaryStage.setTitle("Game of Life");
-            primaryStage.setScene(new Scene(root, 1299, 872));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-=======
+
     try {
         Parent root = FXMLLoader.load(getClass().getResource("/menu.fxml"));
         primaryStage.setTitle("Game of Life");
@@ -40,7 +29,6 @@ public class Main extends Application {
     } catch (Exception e) {
         e.printStackTrace();
     }
->>>>>>> master
     }
 
     /**

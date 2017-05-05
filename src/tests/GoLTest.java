@@ -18,13 +18,13 @@ class GoLTest {
     void testRules_01() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -44,13 +44,13 @@ class GoLTest {
     void testRules_02() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -70,13 +70,13 @@ class GoLTest {
     void testRules_03() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 2;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -96,13 +96,13 @@ class GoLTest {
     void testRules_04() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -122,13 +122,13 @@ class GoLTest {
     void testRules_05() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -148,13 +148,13 @@ class GoLTest {
     void testRules_06() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -174,13 +174,13 @@ class GoLTest {
     void testRules_07() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -200,13 +200,13 @@ class GoLTest {
     void testRules_08() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -226,13 +226,13 @@ class GoLTest {
     void testRules_09() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -252,13 +252,13 @@ class GoLTest {
     void testRules_10() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -278,13 +278,13 @@ class GoLTest {
     void testRules_11() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -304,13 +304,13 @@ class GoLTest {
     void testRules_12() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 2;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -330,13 +330,13 @@ class GoLTest {
     void testRules_13() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -356,13 +356,13 @@ class GoLTest {
     void testRules_14() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -382,13 +382,13 @@ class GoLTest {
     void testRules_15() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -408,13 +408,13 @@ class GoLTest {
     void testRules_16() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -434,13 +434,13 @@ class GoLTest {
     void testRules_17() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -460,13 +460,13 @@ class GoLTest {
     void testRules_18() {
 
         // Arrange
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 3);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -478,20 +478,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-/*
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_19() {
+    void testRules_19() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        LinkedList<Byte> BirthRules = new LinkedList<>();
-        BirthRules.add((byte) 3);
-        LinkedList<Byte> SurvivalRules = new LinkedList<>();
-        SurvivalRules.add((byte) 2);
-        SurvivalRules.add((byte) 3);
-        GoL.setBirthRules(BirthRules);
-        GoL.setSurvivalRules(SurvivalRules);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -503,15 +507,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_20() {
+    void testRules_20() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -523,15 +536,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_21() {
+    void testRules_21() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 2;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -543,15 +565,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_22() {
+    void testRules_22() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -563,15 +594,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_23() {
+    void testRules_23() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -583,15 +623,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_24() {
+    void testRules_24() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -603,15 +652,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_25() {
+    void testRules_25() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -623,15 +681,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_26() {
+    void testRules_26() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -643,15 +710,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_27() {
+    void testRules_27() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -663,15 +739,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_28() {
+    void testRules_28() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -683,15 +768,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_29() {
+    void testRules_29() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -703,15 +797,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_30() {
+    void testRules_30() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 2;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -723,15 +826,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_31() {
+    void testRules_31() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -743,15 +855,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_32() {
+    void testRules_32() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -763,15 +884,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_33() {
+    void testRules_33() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -783,15 +913,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_34() {
+    void testRules_34() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -803,15 +942,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_35() {
+    void testRules_35() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -823,15 +971,24 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_36() {
+    void testRules_36() {
 
         // Arrange
-        int[] bornAmount = {1,2,3};
-        int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 2);
+        birthRules.add((byte) 3);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 3);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 5);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -843,15 +1000,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_37() {
+    void testRules_37() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -863,15 +1032,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_38() {
+    void testRules_38() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -883,15 +1064,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_39() {
+    void testRules_39() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);;
         int neighbors = 2;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -903,15 +1096,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_40() {
+    void testRules_40() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -923,15 +1128,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_41() {
+    void testRules_41() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -943,15 +1160,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_42() {
+    void testRules_42() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -963,15 +1192,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_43() {
+    void testRules_43() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -983,15 +1224,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_44() {
+    void testRules_44() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 0;
         byte expectedResult = 1;
@@ -1003,15 +1256,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_45() {
+    void testRules_45() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 0;
         byte expectedResult = 0;
@@ -1023,15 +1288,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_46() {
+    void testRules_46() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 0;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -1043,15 +1320,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_47() {
+    void testRules_47() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 1;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -1063,15 +1352,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_48() {
+    void testRules_48() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 2;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -1083,15 +1384,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_49() {
+    void testRules_49() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 3;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -1103,15 +1416,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_50() {
+    void testRules_50() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};;
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 4;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -1123,15 +1448,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_51() {
+    void testRules_51() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 5;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -1145,13 +1482,22 @@ class GoLTest {
 
 
     @Test
-    public void testRules_52() {
+    void testRules_52() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 6;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -1163,15 +1509,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_53() {
+    void testRules_53() {
 
         // Arrange
-        int[] bornAmount = {1,3,5,7};
-        int[] surviveAmount = {0,2,4,6,8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 7;
         int aliveStatus = 1;
         byte expectedResult = 0;
@@ -1183,15 +1541,27 @@ class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_54() {
+    void testRules_54() {
 
         // Arrange
-        int[] bornAmount = {1, 3, 5, 7};
-        int[] surviveAmount = {0, 2, 4, 6, 8};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> birthRules = new LinkedList<>();
+        birthRules.add((byte) 1);
+        birthRules.add((byte) 3);
+        birthRules.add((byte) 5);
+        birthRules.add((byte) 7);
+        LinkedList<Byte> survivalRules = new LinkedList<>();
+        survivalRules.add((byte) 0);
+        survivalRules.add((byte) 2);
+        survivalRules.add((byte) 4);
+        survivalRules.add((byte) 6);
+        survivalRules.add((byte) 8);
+        GoL.setBirthRules(birthRules);
+        GoL.setSurvivalRules(survivalRules);
         int neighbors = 8;
         int aliveStatus = 1;
         byte expectedResult = 1;
@@ -1201,5 +1571,5 @@ class GoLTest {
 
         // Assert
         Assert.assertEquals(expectedResult, actualResult);
-    }*/
+    }
 }

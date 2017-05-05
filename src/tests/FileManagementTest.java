@@ -24,7 +24,7 @@ public class FileManagementTest {
     public void testReadFile() throws IOException {
 
         // Arrange
-        File rleFile = new File("/1beaccon.rle");
+        File rleFile = new File("/1beacon.rle");
         HashMap<String, String> expectedResult = new HashMap<>();
         expectedResult.put("title", " 1 beacon\n");
         expectedResult.put("origin", null);

@@ -202,7 +202,7 @@ public class MainScreenController implements Initializable {
      */
     public void returnToMenuEvent() throws IOException {
         GoL.setLoadedData(null);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/menu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/menu.fxml"));
         Stage primaryStage = (Stage) pane.getScene().getWindow();
         Pane root = loader.load();
         Scene scene = new Scene(root, 1299, 872);
@@ -319,7 +319,7 @@ public class MainScreenController implements Initializable {
 
         // Create GIF Stage
         Stage gifStage = new Stage();
-        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("../view/gifCreator.fxml"));
+        FXMLLoader gifLoader = new FXMLLoader(getClass().getResource("/gifCreator.fxml"));
         GifCreatorController gifController = new GifCreatorController(board);
         gifLoader.setController(gifController);
 
@@ -471,7 +471,7 @@ public class MainScreenController implements Initializable {
 
         // Create Rules Editor Stage
         Stage ruleEdStage = new Stage();
-        FXMLLoader ruleEdLoader = new FXMLLoader(getClass().getResource("../view/rulesEditor.fxml"));
+        FXMLLoader ruleEdLoader = new FXMLLoader(getClass().getResource("/rulesEditor.fxml"));
 
         Parent ruleEdRoot = ruleEdLoader.load();
         Scene ruleEdScene = new Scene(ruleEdRoot);
@@ -571,7 +571,7 @@ public class MainScreenController implements Initializable {
         }
 
         Stage fileEditor = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/previewPattern.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/previewPattern.fxml"));
         Pane root = loader.load();
 
         Scene scene = new Scene(root, 900, 700);

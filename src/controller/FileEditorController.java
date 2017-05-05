@@ -275,7 +275,7 @@ public class FileEditorController implements Initializable {
         Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
         primaryStage.close();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         loader.load();
 
         HashMap<String, String> fileData = FileManagement.readFile(new FileReader(returnFile), absolutePath);

@@ -4,7 +4,6 @@ import model.GoL;
 import model.StaticBoard;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.LinkedList;
 
 /**

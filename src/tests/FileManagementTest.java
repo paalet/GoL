@@ -4,13 +4,10 @@ package tests;
 import model.FileManagement;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.awt.image.ImageWatched;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 

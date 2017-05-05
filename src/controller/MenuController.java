@@ -27,7 +27,7 @@ public class MenuController {
     public void loadStaticBoardEvent() throws Exception {
 
         // Set up stage
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
         Scene scene = new Scene(root, 1299, 872);
@@ -48,7 +48,7 @@ public class MenuController {
     public void loadDynamicBoardEvent() throws Exception {
 
         // Set up stage
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
         Scene scene = new Scene(root, 1299, 872);

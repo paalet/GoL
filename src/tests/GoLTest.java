@@ -2,18 +2,20 @@ package tests;
 
 import model.GoL;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
-
 
 /**
  * Class for testing the logic in model.GoL.
  */
-public class GoLTest {
+class GoLTest {
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_01() {
+    void testRules_01() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -34,9 +36,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_02() {
+    void testRules_02() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -57,9 +62,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_03() {
+    void testRules_03() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -80,9 +88,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_04() {
+    void testRules_04() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -103,9 +114,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_05() {
+    void testRules_05() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -126,9 +140,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_06() {
+    void testRules_06() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -149,9 +166,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_07() {
+    void testRules_07() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -172,9 +192,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_08() {
+    void testRules_08() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -195,9 +218,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_09() {
+    void testRules_09() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -218,9 +244,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_10() {
+    void testRules_10() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -241,9 +270,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_11() {
+    void testRules_11() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -264,9 +296,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_12() {
+    void testRules_12() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -287,9 +322,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_13() {
+    void testRules_13() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -310,9 +348,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_14() {
+    void testRules_14() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -333,9 +374,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_15() {
+    void testRules_15() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -356,9 +400,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_16() {
+    void testRules_16() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -379,9 +426,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_17() {
+    void testRules_17() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -402,9 +452,12 @@ public class GoLTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that rules() returns correct live status based on implemented rules, cell status
+     * and number of live neighbors.
+     */
     @Test
-    public void testRules_18() {
+    void testRules_18() {
 
         // Arrange
         LinkedList<Byte> BirthRules = new LinkedList<>();
@@ -432,8 +485,13 @@ public class GoLTest {
         // Arrange
         int[] bornAmount = {1,2,3};
         int[] surviveAmount = {3,4,5};
-        GoL.setBornAmount(bornAmount);
-        GoL.setSurviveAmount(surviveAmount);
+        LinkedList<Byte> BirthRules = new LinkedList<>();
+        BirthRules.add((byte) 3);
+        LinkedList<Byte> SurvivalRules = new LinkedList<>();
+        SurvivalRules.add((byte) 2);
+        SurvivalRules.add((byte) 3);
+        GoL.setBirthRules(BirthRules);
+        GoL.setSurvivalRules(SurvivalRules);
         int neighbors = 0;
         int aliveStatus = 0;
         byte expectedResult = 0;

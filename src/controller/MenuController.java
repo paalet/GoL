@@ -2,19 +2,15 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * Created by simenperschandersen on 21.04.2017.
+ * Controller class for menu.fxml. Let's user choose which board type to start a game with.
  */
 public class MenuController {
-
 
     @FXML
     private Pane menuPane;
@@ -23,39 +19,44 @@ public class MenuController {
     @FXML
     private Button dynamicBoardLoadButton;
 
+    /**
+     * Actionevent for staticBoardLoadButton. Loads mainScreen.fxml as the scene of primaryStage and initializes a
+     * static board through a MainScreenController object.
+     * @throws Exception if mainScreen.fxml con not be loaded
+     */
     public void loadStaticBoardEvent() throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        // Set up stage
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
         Scene scene = new Scene(root, 1299, 872);
         primaryStage.setScene(scene);
 
+        // Create controller, initialize board and show stage
         MainScreenController mainScreenController = loader.getController();
         mainScreenController.initializeStaticBoard();
         primaryStage.show();
 
     }
 
+    /**
+     * Actionevent for dynamicBoardLoadButton. Loads mainScreen.fxml as the scene of primaryStage and initializes a
+     * dynamic board through a MainScreenController object.
+     * @throws Exception if mainScreen.fxml can not be loaded
+     */
     public void loadDynamicBoardEvent() throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        // Set up stage
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         Stage primaryStage = (Stage) menuPane.getScene().getWindow();
         Pane root = loader.load();
         Scene scene = new Scene(root, 1299, 872);
         primaryStage.setScene(scene);
 
+        // Create controller, initialize board and show stage
         MainScreenController mainScreenController = loader.getController();
         mainScreenController.initializeDynamicBoard();
         primaryStage.show();
-
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainScreen.fxml"));
-        Stage primaryStage = (Stage) menuPane.getScene().getWindow();
-        Scene scene = new Scene(root, 825, 723);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        */
-
     }
 }

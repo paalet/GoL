@@ -26,7 +26,7 @@ import static javafx.scene.paint.Color.BLACK;
 /**
  * Created by simenperschandersen on 19.04.2017.
  */
-public class FileEditor implements Initializable {
+public class FileEditorController implements Initializable {
     @FXML
     private TextField previewTitleField;
     @FXML
@@ -275,7 +275,7 @@ public class FileEditor implements Initializable {
         Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
         primaryStage.close();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainScreen.fxml"));
         loader.load();
 
         HashMap<String, String> fileData = FileManagement.readFile(new FileReader(returnFile), absolutePath);

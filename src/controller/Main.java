@@ -18,13 +18,16 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+    try {
         Parent root = FXMLLoader.load(getClass().getResource("../view/menu.fxml"));
         primaryStage.setTitle("Game of Life");
         primaryStage.setScene(new Scene(root, 1299, 872
         ));
         primaryStage.setResizable(false);
         primaryStage.show();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     /**

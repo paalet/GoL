@@ -97,7 +97,7 @@ public class FileEditorController implements Initializable {
     private String boardType;
 
     /**
-     * Initiliazes the grahhic contexts for each canvas represented in the FXML
+     * Initiliazes the graphic contexts for each canvas represented in the FXML
      */
 
     @Override

@@ -270,13 +270,12 @@ public class DynamicBoard extends Board {
         }
         return expOccurred;
     }
+
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
      * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
      * At the end of the loops, the nextBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
      */
-
-
     public void nextGeneration() {
 
         //Check the status of each cell of the board, whether it is alive or dead.
@@ -366,7 +365,6 @@ public class DynamicBoard extends Board {
      * @param cores Represents the amount of cores in the active computers CPU. Used to calculate how many rows of cells each core/thread shall handle.
      * @param core Represents the thread with the corresponding core number calling the method. Used to decide what part of the board the active core/thread shall be allocated.
      */
-
     public void nextGenerationConcurrent(int cores, int core) {
 
 
@@ -375,15 +373,16 @@ public class DynamicBoard extends Board {
 
         int startWidth;
         int endWidth;
+
         // Make a number of threads equal to the modulo increase their workload by one column
         if (core <= modulo) {
 
             startWidth = (core - 1) * (widthPerCore + 1);
             endWidth = startWidth + widthPerCore + 1;
 
-        // Set the workload for the remaining threads
         } else {
 
+            // Set the workload for the remaining threads
             startWidth = ((core - 1) * widthPerCore) + modulo;
             endWidth = startWidth + widthPerCore;
         }

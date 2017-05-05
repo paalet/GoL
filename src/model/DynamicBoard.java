@@ -337,7 +337,7 @@ public class DynamicBoard extends Board {
 
     }
 
-    public void copyBoard() {
+    public void updateCurrentFromNextBoard() {
         // Update currentBoard with values from nextBoard
         for (int y = 0; y < currentBoard.size(); y++) {
 
@@ -347,6 +347,61 @@ public class DynamicBoard extends Board {
             }
         }
     }
+
+
+    public void setBoardSizeToDimensions(Board board, int newHeight, int newWidth) {
+
+        // Adjust board height
+        if (newHeight < height) {
+
+            for (int y = height - 1; y >= newHeight; y--) {
+
+                currentBoard.remove(y);
+            }
+            height = newHeight;
+
+        } else if (newHeight > height) {
+
+            for (int y = height; y < newHeight; y++) {
+
+                currentBoard.add(new ArrayList<>());
+                nextBoard.add(new ArrayList<>());
+                for (int x = 0; x < width; x++) {
+
+                    currentBoard.get(y).add((byte) 0);
+                    nextBoard.get(y).add((byte) 0);
+                }
+            }
+            height = newHeight;
+        }
+
+        // Adjust board width
+        if (newWidth < width) {
+
+            for (int y = 0; y < height; y++) {
+
+                for (int x = width - 1; x >= newWidth; x--) {
+
+                    currentBoard.get(y).remove(x);
+                    nextBoard.get(y).remove(x);
+                }
+            }
+            width = newWidth;
+
+        } else if (newWidth > width) {
+
+            for (int y = 0; y < height; y++) {
+
+                for (int x = width; x < newWidth; x++) {
+
+                    currentBoard.get(y).add((byte) 0);
+                    nextBoard.get(y).add((byte) 0);
+                }
+            }
+        }
+        width = newWidth;
+    }
+
 
     /**
      * Expands the board arraylist if there are live cells at the edge of the board. This is done by first iterating through

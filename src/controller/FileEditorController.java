@@ -26,7 +26,7 @@ import static javafx.scene.paint.Color.BLACK;
 /**
  * Created by simenperschandersen on 19.04.2017.
  */
-public class FileEditor implements Initializable {
+public class FileEditorController implements Initializable {
     @FXML
     private TextField previewTitleField;
     @FXML

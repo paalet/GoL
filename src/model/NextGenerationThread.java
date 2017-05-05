@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by simenperschandersen on 27.04.2017.
+ *
  */
 public class NextGenerationThread implements Runnable {
 

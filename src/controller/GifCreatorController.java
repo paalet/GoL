@@ -17,10 +17,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 
+import javax.swing.filechooser.FileSystemView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -33,7 +35,6 @@ import java.util.regex.Pattern;
  * is displayed.
  */
 public class GifCreatorController implements Initializable {
-
 
     @FXML
     private Button cancelGifBtn;
@@ -59,6 +60,7 @@ public class GifCreatorController implements Initializable {
     @FXML
     private Label inputFeedbackLbl;
 
+    private Board gifBoard;
     private int width;
     private int height;
 
@@ -70,40 +72,33 @@ public class GifCreatorController implements Initializable {
     private ArrayList<ArrayList<Byte>> nextDynamicBoard = new ArrayList<>();
     private ArrayList<ArrayList<Byte>> firstDynamicBoard = new ArrayList<>();
 
+    private GraphicsContext gc;
     private double cellSize;
-
-    private int loopCount;
-
-
-    private Board gifBoard;
     private ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
     private int genCount;
-
-
-
-    GraphicsContext gc;
+    private int loopCount;
 
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
 
-
             if(gifBoard instanceof StaticBoard) {
+
                 nextGenerationStaticBoard();
+
             } else if (gifBoard instanceof DynamicBoard) {
-                nextGenerationDynamic();
+
+                nextGenerationDynamicBoard();
             }
             drawPreviewCanvas(cellSize, GoL.getAliveCellColor(), GoL.getDeadCellColor(), GoL.getGridColor());
-
-
         }
     }));
 
-
-
-
-
-    public GifCreatorController(Board gameBoard) {
+    /**
+     * Contructor does a deep copy of the game board. This board can be manipulated without affecting the live game board.
+     * @param gameBoard the current live game board
+     */
+    GifCreatorController(Board gameBoard) {
 
         if (gameBoard instanceof StaticBoard) {
 
@@ -112,12 +107,9 @@ public class GifCreatorController implements Initializable {
         } else if (gameBoard instanceof DynamicBoard) {
 
             gifBoard = new DynamicBoard((DynamicBoard) gameBoard);
-
         }
-
         height = gifBoard.getHeight();
         width = gifBoard.getWidth();
-
     }
 
 
@@ -167,11 +159,9 @@ public class GifCreatorController implements Initializable {
         });
 
         start();
-
     }
 
     public void start() {
-
 
         if(gifBoard instanceof DynamicBoard) {
             ArrayList<ArrayList<Byte>> dynBoard = ((DynamicBoard) gifBoard).getCurrentBoard();
@@ -335,7 +325,7 @@ public class GifCreatorController implements Initializable {
 
     }
 
-    public void nextGenerationDynamic () {
+    public void nextGenerationDynamicBoard() {
 
         for (int y = 0; y < height; y++) {
 
@@ -515,8 +505,8 @@ public class GifCreatorController implements Initializable {
 
     /**
      * Regex check genCount input for positive integer and apply it.
-     * @param ok
-     * @return
+     * @param ok control variable
+     * @return boolean as is if input passes regex, false if not
      */
     private boolean inputGenCount(boolean ok) {
 
@@ -535,10 +525,10 @@ public class GifCreatorController implements Initializable {
 
     /**
      * Regex check GPS input input for positive integer and apply it.
-     * @param ok
-     * @return
+     * @param ok control variable
+     * @return boolean as is if input passes regex, false if not
      */
-    private boolean inputGps(boolean ok) {
+    private boolean inputGenPerSec(boolean ok) {
 
         Pattern intPattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = intPattern.matcher(gpsTxtFld.getText());
@@ -554,8 +544,8 @@ public class GifCreatorController implements Initializable {
 
     /**
      * Regex check size input for positive integer and apply it.
-     * @param ok
-     * @return
+     * @param ok control variable
+     * @return boolean as is if input passes regex, false if not
      */
     private boolean inputSize(boolean ok) {
 
@@ -579,6 +569,27 @@ public class GifCreatorController implements Initializable {
     }
 
     /**
+     * Set the filepath for saving the GIF at users wanted location. User interaction through FileChooser.
+     * @param ok control variable
+     * @return boolean as is if file path is created, false if not
+     */
+    public static boolean inputPathFromFileChooser(boolean ok) {
+
+        FileChooser pathChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
+        pathChooser.getExtensionFilters().add(extFilter);
+        pathChooser.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
+        try {
+            GifCreator.setPath(pathChooser.showSaveDialog(null).getPath());
+        } catch(NullPointerException e) {
+            new CustomDialog("GIF not created", true,
+                    "GIF creation canceled. Choose a filename and target directory to create GIF.");
+            ok = false;
+        }
+        return ok;
+    }
+
+    /**
      * Create a GIF. This is done by applying input data from GUI, creating a GIFWriter object,
      * writing to .gif file through use of GIFWriter and logic in model.GifCreator. Finally feedback is provided
      * to user and stage closed.
@@ -591,7 +602,7 @@ public class GifCreatorController implements Initializable {
 
         // Input variables from GUI. ok set to false if either can not be set
         ok = inputGenCount(ok);
-        ok = inputGps(ok);
+        ok = inputGenPerSec(ok);
         ok = inputSize(ok);
         if (!ok) {
 
@@ -599,7 +610,7 @@ public class GifCreatorController implements Initializable {
 
         } else {
 
-            ok = GifCreator.inputPathFromFileChooser(ok);
+            ok = inputPathFromFileChooser(ok);
             if (ok) {
                 try {
                     // Create GIFWriter object and write to .gif

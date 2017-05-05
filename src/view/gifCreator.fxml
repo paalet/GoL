@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="550.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox layoutX="98.0" layoutY="481.0" prefHeight="47.0" prefWidth="204.0" style="-fx-padding: 10;">
          <children>
@@ -64,7 +73,7 @@
             </ChoiceBox>
          </children>
       </GridPane>
-      <Label fx:id="inputFeedbackLbl" layoutX="37.0" layoutY="265.0" prefHeight="17.0" prefWidth="263.0" />
+      <Label fx:id="inputFeedbackLbl" layoutX="52.0" layoutY="217.0" prefHeight="17.0" prefWidth="297.0" />
       <Canvas fx:id="previewCanvas" height="220.0" layoutX="36.0" layoutY="245.0" width="328.0" />
    </children>
 </AnchorPane>

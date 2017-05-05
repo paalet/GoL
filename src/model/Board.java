@@ -6,18 +6,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
- * Abstract lass containing data and logic related to the size, contents and drawing of the game board.
+ * Abstract class ensuring logic related to the contents, size and drawing of the game board.
  */
 public abstract class Board {
 
     private int width, height;
 
-
-
     /**
-     * A draw function that loops through every cell and sets the appropriate color based on its alive status.
-     * ArrayOutOfBoundsExceptions to catch the cases when it exceeds values in the array.
-     *
+     * A draw function that loops through every cell and draws a square of the appropriate color based on its alive status.
      * @param boardCanvas
      * @param gc
      * @param size
@@ -51,8 +47,19 @@ public abstract class Board {
 
     public abstract void nextGenerationConcurrent(int cores, int core);
 
-    public abstract void copyBoard();
+    /**
+     *
+     */
+    public abstract void updateCurrentFromNextBoard();
 
+
+    /**
+     * Expand or shrink the board to fit new dimensions.
+     * @param board the current live game board
+     * @param newHeight the target height of the board
+     * @param newWidth the target width of the board
+     */
+    public abstract void setBoardSizeToDimensions(Board board, int newHeight, int newWidth);
 
 
     /**

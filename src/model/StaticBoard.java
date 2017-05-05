@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 /**
  * Concrete class extending Board for implementation of the Game with a static board size.
  */
@@ -304,11 +306,34 @@ public class StaticBoard extends Board {
 
     }
 
-    public void copyBoard() {
+    public void updateCurrentFromNextBoard() {
+
         for (int y = 0; y < height; y++) {
 
             System.arraycopy(nextBoard[y], 0, currentBoard[y], 0, width);
         }
+    }
+
+    public void setBoardSizeToDimensions(Board board, int newHeight, int newWidth) {
+
+        // Create new board arrays according to new size
+        byte[][] newCurrentBoard = new byte[newHeight][newWidth];
+        byte[][] newNextBoard = new byte[newHeight][newWidth];
+
+        // Copy cell status from currentBoard
+        for (int y = 0; y < newHeight && y < height; y++) {
+
+            for (int x = 0; x < newWidth && x < width; x++) {
+
+                newCurrentBoard[y][x] = currentBoard[y][x];
+            }
+        }
+
+        // Set new board and dimensions
+        height = newHeight;
+        width = newWidth;
+        currentBoard = newCurrentBoard;
+        nextBoard = newNextBoard;
     }
 
 

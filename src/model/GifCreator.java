@@ -1,22 +1,12 @@
 package model;
 
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
-
 import javax.swing.filechooser.FileSystemView;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
+/**
+ * Class handling logic related to the creation of GIFs.
+ */
 public class GifCreator {
 
     private static int milliSecondsPerGen;
@@ -27,9 +17,14 @@ public class GifCreator {
     private static java.awt.Color aliveCellColor;
     private static java.awt.Color deadCellColor;
 
-
-
-    public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCount) throws Exception {
+    /**
+     * Creates a GIF with use of a lieng.GIFWriter object. Done by drawing images and inserting them in a recursive manner.
+     * @param gwriter the writer object that handles drawing and inserting images to GIF stream
+     * @param gifBoard copy of the current live game board
+     * @param genCount number of generations to portray in GIF
+     * @throws Exception if lieng.GIFWriter operations fail
+     */
+    public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCount) throws IOException {
 
         if (genCount == 0) {
 
@@ -46,9 +41,14 @@ public class GifCreator {
         }
     }
 
-
+    /**
+     * Draw image representing the board with lieng.GIFWriter object.
+     * @param gwriter the writer object that handles drawing
+     * @param gifBoard copy of the current live game board
+     */
     private static void drawGifImage(lieng.GIFWriter gwriter, Board gifBoard) {
 
+        // Loop through a static board and draw cells with color depending on status
         if (gifBoard instanceof StaticBoard) {
             for (int y = 0; y < ((StaticBoard) gifBoard).getCurrentBoard().length; y++) {
 
@@ -64,6 +64,8 @@ public class GifCreator {
                     }
                 }
             }
+
+        // Loop through a dynamic board and draw cells with color depending on status
         } else if (gifBoard instanceof DynamicBoard) {
 
             for (int y = 0; y < gifBoard.getHeight(); y++) {
@@ -90,7 +92,12 @@ public class GifCreator {
         milliSecondsPerGen = 1000 / gps;
     }
 
-
+    /**
+     * Sets cellsize and image dimensions for preview of GIF.
+     * @param gifBoard copy of the current live game board
+     * @param dim which dimension to base calculations on
+     * @param inputSize height or width of the preview picture
+     */
     public static void setImageSize(Board gifBoard, String dim, int inputSize) {
 
         if (gifBoard instanceof StaticBoard) {
@@ -102,13 +109,14 @@ public class GifCreator {
                 imageHeight = cellSize * ((StaticBoard) gifBoard).getCurrentBoard().length;
                 imageWidth = cellSize * ((StaticBoard) gifBoard).getCurrentBoard()[0].length;
 
-                // Calculate image and cell sizes from width input
+            // Calculate image and cell sizes from width input
             } else if (dim == "width") {
 
                 cellSize = inputSize / ((StaticBoard) gifBoard).getCurrentBoard()[0].length;
                 imageWidth = cellSize * ((StaticBoard) gifBoard).getCurrentBoard()[0].length;
                 imageHeight = cellSize * ((StaticBoard) gifBoard).getCurrentBoard().length;
             }
+
         } else if (gifBoard instanceof DynamicBoard) {
 
             // Calculate image and cell sizes from height input
@@ -127,24 +135,6 @@ public class GifCreator {
             }
         }
     }
-
-
-    public static boolean inputPathFromFileChooser(boolean ok) {
-
-        FileChooser pathChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
-                pathChooser.getExtensionFilters().add(extFilter);
-                pathChooser.setInitialDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
-        try {
-            path = pathChooser.showSaveDialog(null).getPath();
-        } catch(NullPointerException e) {
-            new CustomDialog("GIF not created", true,
-                    "GIF creation canceled. Choose a filename and target directory to create GIF.");
-            ok = false;
-        }
-        return ok;
-    }
-
 
     public static void setAliveCellColor(java.awt.Color aliveCellColor) {
         GifCreator.aliveCellColor = aliveCellColor;
@@ -168,5 +158,9 @@ public class GifCreator {
 
     public static String getPath() {
         return path;
+    }
+
+    public static void setPath(String path) {
+        GifCreator.path = path;
     }
 }

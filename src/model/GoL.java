@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- * Class with data related to game state and execution
+ * Class with data related to game state and execution. Contains logic for implementing the rule set onto a cell.
  */
 public class GoL {
 

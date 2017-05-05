@@ -10,7 +10,7 @@ import java.util.LinkedList;
 /**
  * Class for testing the logic in abstract class model.Board
  */
-public class BoardTest {
+public class StaticBoardTest {
 
     @Test
     public void testNextGeneration_board01(){
@@ -50,6 +50,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -99,6 +101,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -148,6 +152,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -197,6 +203,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -246,6 +254,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -295,6 +305,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -340,6 +352,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -393,6 +407,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -446,6 +462,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -499,6 +517,8 @@ public class BoardTest {
         LinkedList<Byte> initSurvivalRules = new LinkedList<>();
         initSurvivalRules.add((byte) 2);
         initSurvivalRules.add((byte) 3);
+        GoL.setBirthRules(initBirthRules);
+        GoL.setSurvivalRules(initSurvivalRules);
         testStaticBoard.setCurrentBoard(testBoard);
 
         // Act
@@ -508,59 +528,4 @@ public class BoardTest {
         String actualBoardString = testStaticBoard.toString();
         Assert.assertEquals(expectedBoardString, actualBoardString);
     }
-
-
-    @Test
-    public void testNextGeneration_multipleGenerations(){
-
-        /*
-         Boardsize: 10x10
-         Rules:     b3 / s2,3
-        */
-
-        // Arrange
-        byte[][] testBoard = {
-                {1,0,1,0,0,0,0,0,0,0},
-                {0,1,1,0,0,0,0,0,0,0},
-                {0,1,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0}
-        };
-        String expectedBoardString = new String(
-                "0000000000" +
-                "0000000000" +
-                "0000000000" +
-                "0000000000" +
-                "0000000000" +
-                "0000000000" +
-                "0000000000" +
-                "0000000101" +
-                "0000000011" +
-                "0000000010");
-        StaticBoard testStaticBoard = new StaticBoard();
-        testStaticBoard.setHeight(10);
-        testStaticBoard.setWidth(10);
-        testStaticBoard.newBoard();
-        LinkedList<Byte> initBirthRules = new LinkedList<>();
-        initBirthRules.add((byte) 3);
-        LinkedList<Byte> initSurvivalRules = new LinkedList<>();
-        initSurvivalRules.add((byte) 2);
-        initSurvivalRules.add((byte) 3);
-
-        // Act
-        testStaticBoard.setCurrentBoard(testBoard);
-        for (int i = 0; i < 28; i++) {
-            testStaticBoard.nextGeneration();
-        }
-
-        // Assert
-        String actualBoardString = testStaticBoard.toString();
-        Assert.assertEquals(expectedBoardString, actualBoardString);
-    }
-
 }

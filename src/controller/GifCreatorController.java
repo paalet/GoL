@@ -617,7 +617,7 @@ public class GifCreatorController implements Initializable {
                     gwriter = new lieng.GIFWriter(GifCreator.getImageWidth(),
                             GifCreator.getImageHeight(),
                             GifCreator.getPath(),
-                            GifCreator.getMilliSecondsPerGen());
+                            GifCreator.getMilliSecPerGen());
                     gwriter.setBackgroundColor(java.awt.Color.black);
                     gwriter.flush();
                     GifCreator.writeGif(gwriter, gifBoard, genCount);

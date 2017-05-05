@@ -19,7 +19,10 @@ import java.util.LinkedList;
  */
 public class FileManagementTest {
 
-
+    /**
+     * Test that the hashmap returned from readFile represents what is in the file "testpatterns/1beacon.rle.
+     * @throws IOException if file can not be read
+     */
     @Test
     public void testReadFile() throws IOException {
 
@@ -43,9 +46,11 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readDimension with a parameter string of "x = 7" returns int 7.
+     */
     @Test
-    public void testReadDimension_01() throws IOException {
+    public void testReadDimension_01() {
 
         // Arrange
         String dimensionString = new String("x = 7");
@@ -58,7 +63,9 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readDimension with a parameter string of "y = 1140" returns int 1140.
+     */
     @Test
     public void testReadDimension_02() throws IOException {
 
@@ -73,7 +80,9 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readDimension with a parameter string of "x = 015" returns int 15.
+     */
     @Test
     public void testReadDimension_03() throws IOException {
 
@@ -88,7 +97,9 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readDimension with a parameter string of "y = -1" returns int 0.
+     */
     @Test
     public void testReadDimension_04() throws IOException {
 
@@ -103,7 +114,9 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readDimension with a parameter string of "x = !" returns int 0.
+     */
     @Test
     public void testReadDimension_05() throws IOException {
 
@@ -118,7 +131,9 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rule = b3/s23" returns 3 as birth rule and 2 and 3 as survival rules.
+     */
     @Test
     public void testReadRules_01() {
 
@@ -141,7 +156,10 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rule = b123/s12345678" returns 1, 2 and 3 as birth rules and
+     * 1, 2, 3, 4, 5, 6, 7 and 8 as survival rules.
+     */
     @Test
     public void testReadRules_02() {
 
@@ -173,7 +191,10 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rules = b12/s234" returns 1 and 2 as birth rules and
+     * 2, 3 and 4 as survival rules.
+     */
     @Test
     public void testReadRules_03() {
 
@@ -198,7 +219,10 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rule = B3/S23" returns 3 as birth rule and
+     * 2 and 3 as survival rules.
+     */
     @Test
     public void testReadRules_04() {
 
@@ -221,7 +245,10 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rule = b0123456789/s0123456789" returns 0 through 8 as both birth and
+     * survival rules, but no rule of 9.
+     */
     @Test
     public void testReadRules_05() {
 
@@ -259,7 +286,10 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readRules with a parameter string of "rule = b38/s23¤8" returns 3 and 8 as birth rules and
+     * 2, 3 and 8 as survival rules.
+     */
     @Test
     public void testReadRules_06() {
 
@@ -284,9 +314,11 @@ public class FileManagementTest {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readPatternStaticBoard returns the correct board
+     */
     @Test
-    public void testReadPatternStaticBoard_01() throws IOException{
+    public void testReadPatternStaticBoard_01() {
 
         // Pattern 1beacon.rle
 
@@ -311,7 +343,9 @@ public class FileManagementTest {
         Assert.assertArrayEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readPatternStaticBoard returns the correct board
+     */
     @Test
     public void testReadPatternStaticBoard_02() throws IOException{
 
@@ -336,7 +370,9 @@ public class FileManagementTest {
         Assert.assertArrayEquals(expectedResult, actualResult);
     }
 
-
+    /**
+     * Test that readPatternStaticBoard returns the correct board
+     */
     @Test
     public void testReadPatternStaticBoard_03() throws IOException{
 

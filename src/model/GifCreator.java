@@ -1,7 +1,5 @@
 package model;
 
-import javafx.stage.FileChooser;
-import javax.swing.filechooser.FileSystemView;
 import java.io.IOException;
 
 /**
@@ -9,7 +7,7 @@ import java.io.IOException;
  */
 public class GifCreator {
 
-    private static int milliSecondsPerGen;
+    private static int milliSecPerGen;
     private static int cellSize;
     private static int imageHeight;
     private static int imageWidth;
@@ -22,7 +20,7 @@ public class GifCreator {
      * @param gwriter the writer object that handles drawing and inserting images to GIF stream
      * @param gifBoard copy of the current live game board
      * @param genCount number of generations to portray in GIF
-     * @throws Exception if lieng.GIFWriter operations fail
+     * @throws IOException if lieng.GIFWriter operations fail
      */
     public static void writeGif(lieng.GIFWriter gwriter, Board gifBoard, int genCount) throws IOException {
 
@@ -86,12 +84,6 @@ public class GifCreator {
 
     }
 
-
-    public static void calculateAndSetMilliSecondsPerGen(int gps) {
-
-        milliSecondsPerGen = 1000 / gps;
-    }
-
     /**
      * Sets cellsize and image dimensions for preview of GIF.
      * @param gifBoard copy of the current live game board
@@ -136,6 +128,15 @@ public class GifCreator {
         }
     }
 
+    /**
+     * Converts genPerSec to milliseconds to work with lieng.GIFWriter before applying it to milliSecPerGen.
+     * @param genPerSec the number of generations per second input in the GUI
+     */
+    public static void calculateAndSetMilliSecondsPerGen(int genPerSec) {
+
+        milliSecPerGen = 1000 / genPerSec;
+    }
+
     public static void setAliveCellColor(java.awt.Color aliveCellColor) {
         GifCreator.aliveCellColor = aliveCellColor;
     }
@@ -144,8 +145,8 @@ public class GifCreator {
         GifCreator.deadCellColor = deadCellColor;
     }
 
-    public static int getMilliSecondsPerGen() {
-        return milliSecondsPerGen;
+    public static int getMilliSecPerGen() {
+        return milliSecPerGen;
     }
 
     public static int getImageHeight() {

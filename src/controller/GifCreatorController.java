@@ -270,12 +270,17 @@ public class GifCreatorController implements Initializable {
             rate = Double.parseDouble(genCount);
         }
         catch(NumberFormatException numError) {
-            gpsTxtFld.setText("5");
-            new CustomDialog("Wrong format", true, "<html><body><div style='text-align: center'>Wrong number format.<br>Only numeric values allowed.</div></body></html>");
+            ok = false;
+        }
+        if(rate > 300 || rate < 0) {
             ok = false;
         }
         if(ok) {
             timeline.setRate(rate);
+        }
+        else {
+            gpsTxtFld.setText("5");
+            new CustomDialog("Caution", true, "<html><body><div style='text-align: center'>Invalid number.<br>Only numeric values between 1 and 300 allowed.</div></body></html>");
         }
     }
 

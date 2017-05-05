@@ -5,10 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-
 /**
- * Concrete class extending Board for implementation of the Game with a static board size.
+ * Class handling logic related to the contents, size and drawing of the game board. This class is based on arrays to represent
+ * the game board and is not built to expand when live cells are at the edges of the board.
  */
 public class StaticBoard extends Board {
 
@@ -17,7 +16,7 @@ public class StaticBoard extends Board {
     private int[] visitedCellWithDrag;
     private byte[][] currentBoard;
     private byte[][] nextBoard;
-
+    private Color white = Color.valueOf("ffffff");
 
     /**
      * Constructor sets initial board size and ensures correct size of currentBoard and nextBoard through newBoard().
@@ -30,11 +29,10 @@ public class StaticBoard extends Board {
         newBoard();
     }
 
-
     /**
      * Constructor for creation of a deep copy of a StaticBoard object. To be used when operations must be made on
      * a board object without changing the state of the original.
-     * @param inputBoard StaticBoard object to be deep copied.
+     * @param inputBoard StaticBoard object to be deep copied
      */
     public StaticBoard(StaticBoard inputBoard) {
 
@@ -44,16 +42,16 @@ public class StaticBoard extends Board {
         newBoard();
         // Copy the currentBoard array
         for (int y = 0; y < height; y++) {
+
             for (int x = 0; x < width; x++) {
+
                 currentBoard[y][x] = inputBoard.currentBoard[y][x];
             }
         }
-
     }
 
-
     /**
-     * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.
+     * Create new arrays for currentBoard and nextBoard.
      */
     public void newBoard() {
 
@@ -61,28 +59,45 @@ public class StaticBoard extends Board {
         nextBoard = new byte[height][width];
     }
 
-
+    /**
+     * A draw function that loops through every cell of the board and draws a square of the appropriate color at the cells'
+     * position on the canvas. Gap between squares is reduced the smaller the cell size to improve visual quality.
+     * @param boardCanvas the canvas to draw onto
+     * @param gc GraphicsContext of the canvas
+     * @param size size of each cell
+     * @param aliveCellColor color used to draw live cells
+     * @param deadCellColor color used to draw dead cells
+     * @param gridColor color used to draw edge around canvas
+     */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
-
 
         double gapSize = 1;
 
         if (size < 4) {
 
             gapSize = 0;
+
         } else if (size < 10) {
 
             gapSize = .5;
         }
+
+        // Clear canvas
+        gc.setFill(white);
+        gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
+
         // Fill board with deadCellColor
         gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
+
         // Draw boarder around the board
         gc.setStroke(gridColor);
         gc.strokeRect(0, 0, width * size, height * size);
+
         // Draw live cells
         gc.setFill(aliveCellColor);
         for (int y = 0; y < height; y++) {
+
             for (int x = 0; x < width; x++) {
 
                 if (currentBoard[y][x] == 1) {
@@ -94,10 +109,11 @@ public class StaticBoard extends Board {
     }
 
     /**
-     * Draws a cell grid on the cnavas
-     * @param gc
-     * @param size
-     * @param gridColor
+     * Draws a cell grid on the canvas. This method is only called when the game is paused to provide visual aid when user is drawing on the
+     * game board or analysing the pattern. Grid line width is reduced the smaller the cell size to correspond with draw().
+     * @param gc the GraphicsContent to draw onto the canvas with
+     * @param size size of each cell
+     * @param gridColor color used to draw the grid
      */
     public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
@@ -306,6 +322,9 @@ public class StaticBoard extends Board {
 
     }
 
+    /**
+     * Copy the values from nextBoard to currentBoard. This moves the game to the next generation.
+     */
     public void updateCurrentFromNextBoard() {
 
         for (int y = 0; y < height; y++) {
@@ -314,6 +333,12 @@ public class StaticBoard extends Board {
         }
     }
 
+    /**
+     * Expand or shrink the board to fit new dimensions given in DimensionInputDialog.
+     * @param board the current live game board
+     * @param newHeight the target height of the board
+     * @param newWidth the target width of the board
+     */
     public void setBoardSizeToDimensions(Board board, int newHeight, int newWidth) {
 
         // Create new board arrays according to new size
@@ -336,95 +361,10 @@ public class StaticBoard extends Board {
         nextBoard = newNextBoard;
     }
 
-
     /**
-     *A functions to change the alive status of each cell, and give this cell ist new color based on this status.
-     * Gets the coordinates of the click, calculates which cell is located in this coordinate based on the part of the board currently visible on the canvas.
-     * visitedCellWithDrag is used in order to avoid giving the cell a new status whenever the mouse drag is exited, and therefore this mouse release event is activated.
-     * @param event
-     * @param gc
-     * @param boardCanvas
-     * @throws ArrayIndexOutOfBoundsException
-     */
-    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
-
-        try {
-            // Calculate target cell from mouse position
-            double posX = event.getX();
-            double posY = event.getY();
-            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
-
-            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
-            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
-
-            int cellX = (int) cellPosX;
-            int cellY = (int) cellPosY;
-
-            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
-                visitedCellWithDrag[0] = 999999999;
-                visitedCellWithDrag[1] = 999999999;
-            } else {
-                // Change cell status
-                if (currentBoard[cellY][cellX] == 1) {
-
-                    currentBoard[cellY][cellX] = 0;
-                } else {
-
-                    currentBoard[cellY][cellX] = 1;
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // Do nothing as a click on the edge of the canvas is harmless
-        }
-    }
-
-    /**
-     * Functionally the same as cellClick.
-     * visitedCellWithDrag is an array which contains the board coordinates of the last visited cell, in order to avoid multiple re-calculations your mouse is hovering in.
-     * @param event
-     * @param gc
-     * @param boardCanvas
-     */
-
-    public void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
-
-        try {
-            double posX = event.getX();
-            double posY = event.getY();
-            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
-            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
-
-            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
-            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
-
-            int cellX = (int) cellPosX;
-            int cellY = (int) cellPosY;
-
-            if (!(visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY)) {
-
-                if (currentBoard[cellY][cellX] == 1) {
-
-                    currentBoard[cellY][cellX] = 0;
-
-                } else {
-
-                    currentBoard[cellY][cellX] = 1;
-                }
-                visitedCellWithDrag[0] = cellX;
-                visitedCellWithDrag[1] = cellY;
-            }
-        }
-        catch(ArrayIndexOutOfBoundsException e) {
-
-            //Do nothing as a mouse drag outside the canvas is harmless
-        }
-    }
-
-    /**
-     * Adds new rows to the board array if the new cellsizes set makes the board not fully cover the canvas, in order to fulfill this need.
-     * @param canvasHeight
-     * @param canvasWidth
+     * Adds new rows to the board array if the new cell sizes set makes the board not fully cover the canvas, in order to auto-fill the board.
+     * @param canvasHeight height of canvas
+     * @param canvasWidth width of canvas
      */
     public void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
@@ -466,10 +406,93 @@ public class StaticBoard extends Board {
         }
     }
 
-    public byte[][] getCurrentBoard() {
-        return currentBoard;
+    /**
+     * Change the alive status of each cell, and give this cell its new color based on this status.
+     * Gets the coordinates of the click, calculates which cell is located in this coordinate based on the part of the board currently
+     * visible on the canvas. visitedCellWithDrag is used in order to avoid giving the cell a new status whenever the mouse drag is exited,
+     * and therefore this mouse release event is activated.
+     * @param event of the mouse click on canvas
+     * @param gc GraphicsContext of the canvas to draw with
+     * @param boardCanvas the canvas clicked
+     */
+    public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException  {
+
+        try {
+            // Calculate target cell from mouse position
+            double posX = event.getX();
+            double posY = event.getY();
+            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+
+            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
+
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
+
+            if (visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY) {
+                visitedCellWithDrag[0] = 999999999;
+                visitedCellWithDrag[1] = 999999999;
+            } else {
+                // Change cell status
+                if (currentBoard[cellY][cellX] == 1) {
+
+                    currentBoard[cellY][cellX] = 0;
+                } else {
+
+                    currentBoard[cellY][cellX] = 1;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Do nothing as a click on the edge of the canvas is harmless
+        }
     }
 
+    /**
+     * Functionally the same as cellClick. visitedCellWithDrag is an array which contains the board coordinates of the
+     * last visited cell, in order to avoid multiple re-calculations of the cell currently targeted by the mouse pointer.
+     * @param event of the mouse click and drag on canvas
+     * @param gc GraphicsContext of the canvas to draw with
+     * @param boardCanvas the canvas clicked
+     */
+    public void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
+
+        try {
+            double posX = event.getX();
+            double posY = event.getY();
+            double yCellsInFrame = boardCanvas.getHeight() / GoL.getCellSize();
+            double xCellsInFrame = boardCanvas.getWidth() / GoL.getCellSize();
+
+            double cellPosX = posX / (boardCanvas.getWidth() / xCellsInFrame);
+            double cellPosY = posY / (boardCanvas.getHeight() / yCellsInFrame);
+
+            int cellX = (int) cellPosX;
+            int cellY = (int) cellPosY;
+
+            if (!(visitedCellWithDrag[0] == cellX && visitedCellWithDrag[1] == cellY)) {
+
+                if (currentBoard[cellY][cellX] == 1) {
+
+                    currentBoard[cellY][cellX] = 0;
+
+                } else {
+
+                    currentBoard[cellY][cellX] = 1;
+                }
+                visitedCellWithDrag[0] = cellX;
+                visitedCellWithDrag[1] = cellY;
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+
+            //Do nothing as a mouse drag outside the canvas is harmless
+        }
+    }
+
+    /**
+     * Copy values from an input board into currentBoard
+     * @param newBoard an array of values to copy
+     */
     public void setCurrentBoard(byte[][] newBoard) {
 
         currentBoard = new byte[height][width];
@@ -482,6 +505,9 @@ public class StaticBoard extends Board {
         }
     }
 
+    public byte[][] getCurrentBoard() {
+        return currentBoard;
+    }
 
     public int getWidth() {
         return width;

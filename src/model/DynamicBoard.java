@@ -1,13 +1,16 @@
 package model;
 
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 
+/**
+ * Class handling logic related to the contents, size and drawing of the game board. This class is based on collections to represent
+ * the game board and is built to automatically increase in size if there are live cells at the edges to allow for growth beyond
+ * the set size.
+ */
 public class DynamicBoard extends Board {
 
     private int width = 12;
@@ -16,7 +19,6 @@ public class DynamicBoard extends Board {
     private ArrayList<ArrayList<Byte>> currentBoard;
     private ArrayList<ArrayList<Byte>> nextBoard;
     private Color white = Color.valueOf("ffffff");
-
 
     /**
      * Constructor sets initial board size and ensures correct size of currentBoard and nextBoard through newBoard().
@@ -27,15 +29,12 @@ public class DynamicBoard extends Board {
         height = 8;
         visitedCellWithDrag = new int[2];
         newBoard();
-
     }
-
 
     /**
      * Constructor for creation of a deep copy of a DynamicBoard object. To be used when operations must be made on
      * a board object without changing the state of the original.
-     *
-     * @param inputBoard DynamicBoard object to be deep copied.
+     * @param inputBoard DynamicBoard object to be deep copied
      */
     public DynamicBoard(DynamicBoard inputBoard) {
 
@@ -45,15 +44,16 @@ public class DynamicBoard extends Board {
         newBoard();
         // Copy the currentBoard arraylist
         for (int y = 0; y < inputBoard.currentBoard.size(); y++) {
+
             for (int x = 0; x < inputBoard.currentBoard.get(y).size(); x++) {
+
                 currentBoard.get(y).set(x, inputBoard.currentBoard.get(y).get(x));
             }
         }
     }
 
-
     /**
-     * A load function that simply creates new arrays for the live board, and the next board on which new values in each generation is put in.
+     * Creates new lists for currentBoard and nextBoard.
      */
     public void newBoard() {
 
@@ -72,16 +72,15 @@ public class DynamicBoard extends Board {
         }
     }
 
-
     /**
-     * A draw function that loops through every cell and sets the appropriate color based on its alive status.
-     * ArrayOutOfBoundsExceptions to catch the cases when it exceeds values in the array.
-     *
-     * @param boardCanvas
-     * @param gc
-     * @param size
-     * @param aliveCellColor
-     * @param deadCellColor
+     * A draw function that loops through every cell of the board and draws a square of the appropriate color at the cells'
+     * position on the canvas. Gap between squares is reduced the smaller the cell size to improve visual quality.
+     * @param boardCanvas the canvas to draw onto
+     * @param gc GraphicsContext of the canvas
+     * @param size size of each cell
+     * @param aliveCellColor color used to draw live cells
+     * @param deadCellColor color used to draw dead cells
+     * @param gridColor color used to draw edge around canvas
      */
     public void draw(Canvas boardCanvas, GraphicsContext gc, double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
@@ -90,19 +89,24 @@ public class DynamicBoard extends Board {
         if (size < 4) {
 
             gapSize = 0;
+
         } else if (size < 10) {
 
             gapSize = .5;
         }
+
         // Clear canvas
         gc.setFill(white);
         gc.fillRect(0, 0, boardCanvas.getWidth(), boardCanvas.getHeight());
+
         // Fill board with deadCellColor
         gc.setFill(deadCellColor);
         gc.fillRect(0, 0,width * size, height * size);
+
         // Draw boarder around the board
         gc.setStroke(gridColor);
         gc.strokeRect(0, 0, width * size, height * size);
+
         // Draw live cells
         gc.setFill(aliveCellColor);
         for (int y = 0; y < height; y++) {
@@ -118,10 +122,11 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Draws a cell grid on the cnavas
-     * @param gc
-     * @param size
-     * @param gridColor
+     * Draws a cell grid on the canvas. This method is only called when the game is paused to provide visual aid when user is drawing on the
+     * game board or analysing the pattern. Grid line width is reduced the smaller the cell size to correspond with draw().
+     * @param gc the GraphicsContent to draw onto the canvas with
+     * @param size size of each cell
+     * @param gridColor color used to draw the grid
      */
     public void drawGrid(GraphicsContext gc, double size, Color gridColor) {
 
@@ -155,6 +160,116 @@ public class DynamicBoard extends Board {
         }
     }
 
+    /**
+     * Expands the board arraylist if there are live cells at the edge of the board. This is done by first iterating through
+     * the board to find which sides have live cells and thus need to be expanded. Then rows are added to the board, and
+     * cell values are moved if needed, to set a complete row of dead cells at the correct edges of the board.
+     * @return
+     */
+    public boolean autoBoardExpansion() {
+
+        boolean expOccurred = false;
+
+        // Check for live cells at the edge of the board
+        boolean upperEdge = false;
+        boolean rightEdge = false;
+        boolean lowerEdge = false;
+        boolean leftEdge = false;
+
+        for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+            // Check the northern edge for live cells
+            if (currentBoard.get(0).get(x) == 1) {
+
+                upperEdge = true;
+            }
+
+            // Check the lower edge for live cells
+            if (currentBoard.get(currentBoard.size() - 1).get(x) == 1) {
+
+                lowerEdge = true;
+            }
+        }
+        for (int y = 0; y < currentBoard.size(); y++) {
+
+            // Check the left edge for live cells
+            if (currentBoard.get(y).get(0) == 1) {
+
+                leftEdge = true;
+            }
+
+            // Check the right edge for live cells
+            if (currentBoard.get(y).get(currentBoard.get(y).size() - 1) == 1) {
+
+                rightEdge = true;
+            }
+        }
+
+        // Expand the board side for side if live cells have been found found at the edge of the board
+        if (leftEdge) {
+
+            for (int y = 0; y < currentBoard.size(); y++) {
+
+                currentBoard.get(y).add((byte )0);
+                nextBoard.get(y).add((byte) 0);
+
+                for (int x = currentBoard.get(y).size() - 1; x > 0; x--) {
+
+                    currentBoard.get(y).set(x, currentBoard.get(y).get(x - 1));
+                }
+                currentBoard.get(y).set(0, (byte) 0);
+            }
+            width++;
+            expOccurred = true;
+        }
+
+        if (upperEdge) {
+
+            currentBoard.add( new ArrayList<>());
+            nextBoard.add( new ArrayList<>());
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+                currentBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
+                nextBoard.get(nextBoard.size() - 1).add(x, (byte) 0);
+            }
+            for (int y = currentBoard.size() - 1; y > 0; y--) {
+
+                for (int x = 0; x < currentBoard.get(y).size(); x++) {
+
+                    currentBoard.get(y).set(x, currentBoard.get(y - 1).get(x));
+                }
+            }
+            for (int  x = 0; x < currentBoard.get(0).size(); x++) {
+
+                currentBoard.get(0).set(x, (byte) 0);
+            }
+            height++;
+            expOccurred = true;
+        }
+
+        if (rightEdge) {
+
+            for (int y = 0; y < currentBoard.size(); y++) {
+
+                currentBoard.get(y).add((byte) 0);
+                nextBoard.get(y).add((byte) 0);
+            }
+            width++;
+            expOccurred = true;
+        }
+        if (lowerEdge) {
+
+            currentBoard.add(new ArrayList<>());
+            nextBoard.add(new ArrayList<>());
+            for (int x = 0; x < currentBoard.get(0).size(); x++) {
+
+                currentBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
+                nextBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
+            }
+            height++;
+            expOccurred = true;
+        }
+        return expOccurred;
+    }
     /**
      * Loops through every cell and counts the amount of live neighbor cells in each direction.
      * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
@@ -337,8 +452,11 @@ public class DynamicBoard extends Board {
 
     }
 
+    /**
+     * Copy the values from nextBoard to currentBoard. This moves the game to the next generation.
+     */
     public void updateCurrentFromNextBoard() {
-        // Update currentBoard with values from nextBoard
+
         for (int y = 0; y < currentBoard.size(); y++) {
 
             for (int x = 0; x < currentBoard.get(y).size(); x++) {
@@ -348,7 +466,12 @@ public class DynamicBoard extends Board {
         }
     }
 
-
+    /**
+     * Expand or shrink the board to fit new dimensions given in DimensionInputDialog.
+     * @param board the current live game board
+     * @param newHeight the target height of the board
+     * @param newWidth the target width of the board
+     */
     public void setBoardSizeToDimensions(Board board, int newHeight, int newWidth) {
 
         // Adjust board height
@@ -402,126 +525,50 @@ public class DynamicBoard extends Board {
         width = newWidth;
     }
 
-
     /**
-     * Expands the board arraylist if there are live cells at the edge of the board. This is done by first iterating through
-     * the board to find which sides have live cells and thus need to be expanded. Then rows are added to the board, and
-     * cell values are moved if needed, to set a complete row of dead cells at the correct edges of the board.
-     * @return
+     * Adds new rows to the board array if the new cell sizes set makes the board not fully cover the canvas, in order to auto-fill the board.
+     * @param canvasHeight height of canvas
+     * @param canvasWidth width of canvas
      */
-    public boolean autoBoardExpansion() {
+    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
 
-        boolean expOccurred = false;
+        double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
+        int newCellAmountWidth = (int) cellAmountDoubleWidth;
+        double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
+        double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
+        int newCellAmountHeight = (int) cellAmountDoubleHeight;
 
-        // Check for live cells at the edge of the board
-        boolean upperEdge = false;
-        boolean rightEdge = false;
-        boolean lowerEdge = false;
-        boolean leftEdge = false;
+        // Expand board to fit new size
+        if (newCellAmountWidth > width || newCellAmountHeight > height) {
 
-        for (int x = 0; x < currentBoard.get(0).size(); x++) {
+            for (int y = 0; y < newCellAmountHeight; y++) {
 
-            // Check the northern edge for live cells
-            if (currentBoard.get(0).get(x) == 1) {
+                if (currentBoard.size() == y) {
 
-                upperEdge = true;
-            }
-
-            // Check the lower edge for live cells
-            if (currentBoard.get(currentBoard.size() - 1).get(x) == 1) {
-
-                lowerEdge = true;
-            }
-        }
-        for (int y = 0; y < currentBoard.size(); y++) {
-
-            // Check the left edge for live cells
-            if (currentBoard.get(y).get(0) == 1) {
-
-                leftEdge = true;
-            }
-
-            // Check the right edge for live cells
-            if (currentBoard.get(y).get(currentBoard.get(y).size() - 1) == 1) {
-
-                rightEdge = true;
-            }
-        }
-
-        // Expand the board side for side if live cells have been found found at the edge of the board
-        if (leftEdge) {
-
-            for (int y = 0; y < currentBoard.size(); y++) {
-
-                currentBoard.get(y).add((byte )0);
-                nextBoard.get(y).add((byte) 0);
-
-                for (int x = currentBoard.get(y).size() - 1; x > 0; x--) {
-
-                    currentBoard.get(y).set(x, currentBoard.get(y).get(x - 1));
+                    currentBoard.add(new ArrayList<>());
+                    nextBoard.add(new ArrayList<>());
                 }
-                currentBoard.get(y).set(0, (byte) 0);
-            }
-            width++;
-            expOccurred = true;
-        }
+                for (int x = currentBoard.get(y).size(); x < newCellAmountWidth; x++) {
 
-        if (upperEdge) {
-
-            currentBoard.add( new ArrayList<>());
-            nextBoard.add( new ArrayList<>());
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-                currentBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
-                nextBoard.get(nextBoard.size() - 1).add(x, (byte) 0);
-            }
-            for (int y = currentBoard.size() - 1; y > 0; y--) {
-
-                for (int x = 0; x < currentBoard.get(y).size(); x++) {
-
-                    currentBoard.get(y).set(x, currentBoard.get(y - 1).get(x));
+                    currentBoard.get(y).add(x, (byte) 0);
+                    nextBoard.get(y).add(x, (byte) 0);
                 }
-            }
-            for (int  x = 0; x < currentBoard.get(0).size(); x++) {
 
-                currentBoard.get(0).set(x, (byte) 0);
             }
-            height++;
-            expOccurred = true;
+
+            height = newCellAmountHeight;
+            width = newCellAmountWidth;
         }
-
-        if (rightEdge) {
-
-            for (int y = 0; y < currentBoard.size(); y++) {
-
-                currentBoard.get(y).add((byte) 0);
-                nextBoard.get(y).add((byte) 0);
-            }
-            width++;
-            expOccurred = true;
-        }
-        if (lowerEdge) {
-
-            currentBoard.add(new ArrayList<>());
-            nextBoard.add(new ArrayList<>());
-            for (int x = 0; x < currentBoard.get(0).size(); x++) {
-
-                currentBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
-                nextBoard.get(currentBoard.size() - 1).add(x, (byte) 0);
-            }
-            height++;
-            expOccurred = true;
-        }
-        return expOccurred;
     }
 
     /**
-     *A functions to change the alive status of each cell, and give this cell ist new color based on this status.
-     * Gets the coordinates of the click, calculates which cell is located in this coordinate based on the part of the board currently visible on the canvas.
-     * visitedCellWithDrag is used in order to avoid giving the cell a new status whenever the mouse drag is exited, and therefore this mouse release event is activated.
-     * @param event
-     * @param gc
-     * @param boardCanvas
-     * @throws ArrayIndexOutOfBoundsException
+     * Change the alive status of each cell, and give this cell its new color based on this status.
+     * Gets the coordinates of the click, calculates which cell is located in this coordinate based on the part of the board currently
+     * visible on the canvas. visitedCellWithDrag is used in order to avoid giving the cell a new status whenever the mouse drag is exited,
+     * and therefore this mouse release event is activated.
+     * @param event of the mouse click on canvas
+     * @param gc GraphicsContext of the canvas to draw with
+     * @param boardCanvas the canvas clicked
      */
     public void cellClick(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) {
 
@@ -559,13 +606,12 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Functionally the same as cellClick.
-     * visitedCellWithDrag is an array which contains the board coordinates of the last visited cell, in order to avoid multiple re-calculations your mouse is hovering in.
-     * @param event
-     * @param gc
-     * @param boardCanvas
+     * Functionally the same as cellClick. visitedCellWithDrag is an array which contains the board coordinates of the
+     * last visited cell, in order to avoid multiple re-calculations of the cell currently targeted by the mouse pointer.
+     * @param event of the mouse click and drag on canvas
+     * @param gc GraphicsContext of the canvas to draw with
+     * @param boardCanvas the canvas clicked
      */
-
     public void cellDrag(MouseEvent event, GraphicsContext gc, Canvas boardCanvas) throws ArrayIndexOutOfBoundsException {
 
         // Calculate target cell from mouse position
@@ -602,48 +648,8 @@ public class DynamicBoard extends Board {
     }
 
     /**
-     * Adds new rows to the board array if the new cellsizes set makes the board not fully cover the canvas, in order to fulfill this need.
-     * @param canvasHeight
-     * @param canvasWidth
-     */
-    public void calculateBoardSize(double canvasHeight, double canvasWidth) {
-
-        double cellAmountDoubleWidth = Math.ceil(canvasWidth / GoL.getCellSize());
-        int newCellAmountWidth = (int) cellAmountDoubleWidth;
-        double roundedWidth = ((double) newCellAmountWidth * GoL.getCellSize());
-        double cellAmountDoubleHeight = Math.ceil(canvasHeight / GoL.getCellSize());
-        int newCellAmountHeight = (int) cellAmountDoubleHeight;
-
-        // Expand board to fit new size
-        if (newCellAmountWidth > width || newCellAmountHeight > height) {
-
-            for (int y = 0; y < newCellAmountHeight; y++) {
-
-                if (currentBoard.size() == y) {
-
-                    currentBoard.add(new ArrayList<>());
-                    nextBoard.add(new ArrayList<>());
-                }
-                for (int x = currentBoard.get(y).size(); x < newCellAmountWidth; x++) {
-
-                    currentBoard.get(y).add(x, (byte) 0);
-                    nextBoard.get(y).add(x, (byte) 0);
-                }
-
-            }
-
-            height = newCellAmountHeight;
-            width = newCellAmountWidth;
-        }
-    }
-
-    public ArrayList<ArrayList<Byte>> getCurrentBoard() {
-        return currentBoard;
-    }
-
-    /**
      * Sets a new currentBoard from arraylistinput. Expands currentBoard if it is of smaller size than input.
-     * @param newBoard
+     * @param newBoard input arraylist to copy values from
      */
     public void setCurrentBoard(ArrayList<ArrayList<Byte>> newBoard){
 
@@ -664,6 +670,10 @@ public class DynamicBoard extends Board {
                 }
             }
         }
+    }
+
+    public ArrayList<ArrayList<Byte>> getCurrentBoard() {
+        return currentBoard;
     }
 
     public int getWidth() {return width;}

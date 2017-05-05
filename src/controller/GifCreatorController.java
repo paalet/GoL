@@ -77,6 +77,9 @@ public class GifCreatorController implements Initializable {
     private ObservableList<String> dimensions = FXCollections.observableArrayList("Height in pixels", "Width in pixels");
     private int genCount;
     private int loopCount;
+    /**
+     * Timeline which runs nextGeneration, based on the board type, and draw for each timeline loop.
+     */
 
     private Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000.0), new EventHandler<ActionEvent>() {
         @Override
@@ -111,6 +114,13 @@ public class GifCreatorController implements Initializable {
         height = gifBoard.getHeight();
         width = gifBoard.getWidth();
     }
+
+    /**
+     * Inititalize method which sets certain required values, initializes graphic contexts, prepares and activates the timeline, and adds change listeners to the generation count text field and the generations/sec text field.
+     *
+     * @param location
+     * @param resources
+     */
 
 
     @Override
@@ -160,6 +170,12 @@ public class GifCreatorController implements Initializable {
 
         start();
     }
+
+    /**
+     * Start method which is initalized in the initalize() method.
+     * Copies the board state the GIF creator is opened after to three seperate array/arraylist, depending on the type of Board: current'Boardtype'Board, next'Boardtype' board, and first'Boardtype'Board.
+     * The preview canvas is then drawn based on the current board, followed by a start of the timeline, which loops an X amount of times through nextGeneration and draws after each loop.
+     */
 
     public void start() {
 
@@ -233,9 +249,18 @@ public class GifCreatorController implements Initializable {
         timeline.play();
     }
 
+    /**
+     * Stops the timeline. Is called upon when the stage closes, in order to avoid the timeline being run in the background, draining resources and potentially distorting future calculations.
+     */
+
     public void stop() {
         timeline.stop();
     }
+
+    /**
+     * Sets the rate(Generations/sec) of the gif preview.
+     * If the value is not an int value, the value is reverted to the default value "5" and the user is alerted of the mistake.
+     */
 
     public void setPreviewRate() {
         boolean ok = true;
@@ -253,6 +278,11 @@ public class GifCreatorController implements Initializable {
             timeline.setRate(rate);
         }
     }
+
+    /**
+     * Sets the amount of generation the GIF preview shall loop before it resets back to the starting board.
+     * If the value is not an int value, the value is reverted to the default value "20" and the user is alerted of the mistake.
+     */
 
     public void setGenCount() {
         boolean ok = true;
@@ -272,6 +302,11 @@ public class GifCreatorController implements Initializable {
         }
     }
 
+    /**
+     * Calculates the size each cell needs to have in order to fit the entire board in the preview canvas.
+     * @return Double value representing the cell size.
+     */
+
     public double calculateCellSize() {
 
         if(gifBoard.getHeight() < gifBoard.getWidth()) {
@@ -286,6 +321,14 @@ public class GifCreatorController implements Initializable {
             return previewCanvas.getHeight() / gifBoard.getHeight();
         }
     }
+
+    /**
+     * Draw function which goes through each cell and represents its state on the canvas with a fillRect function from the 2D graphic context
+     * @param size Represents the size of each cell
+     * @param aliveCellColor The color each alive cell is drawn in.
+     * @param deadCellColor The color each dead cell is drawn in.
+     * @param gridColor The color of the grid.
+     */
 
     public void drawPreviewCanvas(double size, Color aliveCellColor, Color deadCellColor, Color gridColor) {
 
@@ -324,6 +367,12 @@ public class GifCreatorController implements Initializable {
         }
 
     }
+
+    /**
+     * Functionally similar to the Board objects nextGeneration, only with a loopCount parameter that counts the amount of loops it has taken.
+     * If the loop amount surpassed the amount its set to loop, currentBoard is reverted back to its first state.@
+     * For dynamic boards.
+     */
 
     public void nextGenerationDynamicBoard() {
 
@@ -416,6 +465,12 @@ public class GifCreatorController implements Initializable {
             loopCount = 1;
         }
     }
+
+    /**
+     * Functionally similar to the Board objects nextGeneration, only with a loopCount parameter that counts the amount of loops it has taken.
+     * If the loop amount surpassed the amount its set to loop, currentBoard is reverted back to its first state.@
+     * For static boards.
+     */
 
     public void nextGenerationStaticBoard() {
 

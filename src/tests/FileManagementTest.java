@@ -17,14 +17,14 @@ import java.util.LinkedList;
 public class FileManagementTest {
 
     /**
-     * Test that the hashmap returned from readFile represents what is in the file "testpatterns/1beacon.rle.
+     * Test that the hashmap returned from readFile represents what is in the file "1beacon.rle."
      * @throws IOException if file can not be read
      */
     @Test
     public void testReadFile() throws IOException {
 
         // Arrange
-        File rleFile = new File("testpatterns/1beacon.rle");
+        File rleFile = new File("/1beaccon.rle");
         HashMap<String, String> expectedResult = new HashMap<>();
         expectedResult.put("title", " 1 beacon\n");
         expectedResult.put("origin", null);

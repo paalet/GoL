@@ -206,7 +206,7 @@ public class DynamicBoard extends Board {
         }
 
         // Expand the board side for side if live cells have been found found at the edge of the board
-        if (leftEdge) {
+        if (leftEdge && width < 1500) {
 
             for (int y = 0; y < currentBoard.size(); y++) {
 
@@ -223,7 +223,7 @@ public class DynamicBoard extends Board {
             expOccurred = true;
         }
 
-        if (upperEdge) {
+        if (upperEdge && height < 1500) {
 
             currentBoard.add( new ArrayList<>());
             nextBoard.add( new ArrayList<>());
@@ -246,7 +246,7 @@ public class DynamicBoard extends Board {
             expOccurred = true;
         }
 
-        if (rightEdge) {
+        if (rightEdge && width < 1500) {
 
             for (int y = 0; y < currentBoard.size(); y++) {
 
@@ -256,7 +256,7 @@ public class DynamicBoard extends Board {
             width++;
             expOccurred = true;
         }
-        if (lowerEdge) {
+        if (lowerEdge && height < 1500) {
 
             currentBoard.add(new ArrayList<>());
             nextBoard.add(new ArrayList<>());

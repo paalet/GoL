@@ -96,6 +96,10 @@ public class FileEditorController implements Initializable {
     private int boardHeight = 0;
     private String boardType;
 
+    /**
+     * Initiliazes the grahhic contexts for each canvas represented in the FXML
+     */
+
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         mainGc = mainCanvas.getGraphicsContext2D();
@@ -117,6 +121,10 @@ public class FileEditorController implements Initializable {
 
 
     }
+
+    /**
+     * The following set methods sets the corresponding text field, text area and label FXML elements with String value.
+     */
 
     public void setTitleArea(String title) {
         previewTitleField.setText(title);
@@ -143,11 +151,24 @@ public class FileEditorController implements Initializable {
 
     }
 
+    /**
+     * Event actived upon clicking the "Close" button on the scene.
+     * Closes the stage.
+     */
     public void closeEvent() {
 
         Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
         primaryStage.close();
     }
+
+    /**
+     * Event actived upon clicking the "Save" button.
+     * Opens a save dialog which allows the user to specify the file name and location for the .rle file the user wants to save the active data in.
+     * If there is an active file open, specifiec under the "File path" list location, the file and the locaiton of this file exists on the active computer, this file is automatically overwritten
+     * allowing the user to quickly save any changes to the active file without going through a save dialog window.
+     * If everyone goes right and it returns a valid file, specified in the returnFile parameter, this file is sent to the saveFile(File returnFile) method which handles the writing of the file
+     * @throws IOException
+     */
 
     public void saveFileEvent() throws IOException {
         File returnFile;
@@ -191,6 +212,12 @@ public class FileEditorController implements Initializable {
 
     }
 
+    /**
+     * This method works similaryily to the saveEvent() method, only this method will open a save dialog where the user has the option to speicfy the name and the location of file, no matter what active file may already be loaded.
+     * The File returnFile is sent to the saveFile(File returnFile) which handles the writing of the file.
+     * @throws IOException
+     */
+
     public void saveAsEvent() throws IOException {
         FileChooser chooser = new FileChooser();
         File initDirectory = new File(System.getProperty("user.home"));
@@ -216,6 +243,23 @@ public class FileEditorController implements Initializable {
 
         }
     }
+
+    /**
+     * This method builds a String based upon what contents may be in the text fields, text areas and labels, representing the specifications of the file.
+     * The String is built after standard RLE formatting rules, where values are represented as follows:
+     * #N Title String
+     * #O Origin String
+     * *C Comments String. May be multiple lines.
+     * Rules = BXX/SXX
+     * Dimensions = x = XX / y = XX
+     * The board is counted and represented for each horizontal line where XXo represents the amount of alive cells following each other, XXb representing the amount of dead cells following each other
+     * $ represents the end of a row and ! represents the end of the last line on the board.
+     * The reading and String result of the reading of the Board is handled separately by the readBoardToString() method.
+     * When the writing of the file is complete, the user is notified of its success with the name and location of the file.
+     * This file is then read by the readFile method in the FileManagement model class, which sets the saved file as the actively loaded file.
+     * @param returnFile
+     * @throws IOException
+     */
 
     public void saveFile(File returnFile) throws IOException {
         StringBuilder rleFileStringBuilder = new StringBuilder();
@@ -290,6 +334,13 @@ public class FileEditorController implements Initializable {
 
     }
 
+    /**
+     * Reads the board and a builds a String following standard RLE formatting rules.
+     * The board is counted and represented for each horizontal line where XXo represents the amount of alive cells following each other, XXb representing the amount of dead cells following each other
+     * $ represents the end of a row and ! represents the end of the last line on the board.
+     * @return
+     */
+
     public String readBoardToString() {
         int activeValue = 0;
         if (boardType.equals("Dynamic")) {
@@ -354,6 +405,17 @@ public class FileEditorController implements Initializable {
 
     }
 
+    /**
+     * Draws all canvases when a static board is being previewed.
+     * The main board represents the active board on the main stage, while each preview canvas represents one generation after another.
+     * For each preview canvas, nextBoard is being run one time through the nextGenerationStatic method, which result is drawn onto their respective canvases.
+     * @param boardWidth Represents the amount of cells on the height of the board.
+     * @param boardHeight Represents the amount of cells on the widt of the board.
+     * @param board The active board, copied from the main stage.
+     * @param height Represents the amount of cells on the height of the board.
+     * @param width Represents the amount of cells on the widt of the board.
+     */
+
     public void drawAllCanvasesStatic(int boardWidth, int boardHeight, byte[][] board, int height, int width) {
         staticBoard = board;
         boardType = "Static";
@@ -415,6 +477,17 @@ public class FileEditorController implements Initializable {
 
 
     }
+
+    /**
+     * Draws all canvases when a dynamic board is being previewed.
+     * The main board represents the active board on the main stage, while each preview canvas represents one generation after another.
+     * For each preview canvas, nextBoard is being run one time through the nextGenerationDynamic method, which result is drawn onto their respective canvases.
+     * @param boardWidth Represents the amount of cells on the height of the board.
+     * @param boardHeight Represents the amount of cells on the widt of the board.
+     * @param board The active board, copied from the main stage.
+     * @param height Represents the amount of cells on the height of the board.
+     * @param width Represents the amount of cells on the widt of the board.
+     */
 
     public void drawAllCanvasesDynamic(int boardWidth, int boardHeight, ArrayList<ArrayList<Byte>> board, int height, int width) {
         dynamicBoard = board;
@@ -478,6 +551,14 @@ public class FileEditorController implements Initializable {
 
     }
 
+    /**
+     * Calculates the size each cells needs to have in order to fit in the canvas the method gets as input.
+     * @param canvas Input parameter representing the canvas to be calculated based on.
+     * @param height Input parameter representing the amount of cells on the height of the board that needs to fit in the canvas.
+     * @param width Input parameter representing the amount of cells on the width of the board that needs to fit in the canvas.
+     * @return Returns the cell size as a double value.
+     */
+
     public double calculateCellSize(Canvas canvas, int height, int width) {
         double canvasHeight = canvas.getHeight();
         double canvasWidth = canvas.getWidth();
@@ -494,6 +575,17 @@ public class FileEditorController implements Initializable {
 
 
     }
+
+    /**
+     * Draws the canvas based on the input parameters. Goes through the board in a loop and fills each cell based on its value and with the corresponding color with a fillRect.
+     * @param gc The graphics context of the canvas.
+     * @param cellSize The size each cells needs
+     * @param aliveCellColor The color each alive cell shall be drawn in.
+     * @param deadCellColor The color each dead cell shall be drawn in.
+     * @param board The board the draw function is based upon.
+     * @param height The height of the board the function is called upon.
+     * @param width The width of the board the function is called upon.
+     */
 
 
     public void drawStatic(GraphicsContext gc, double cellSize, Color aliveCellColor, Color deadCellColor, byte[][] board, int height, int width) {
@@ -521,6 +613,17 @@ public class FileEditorController implements Initializable {
         }
     }
 
+    /**
+     * Draws the canvas based on the input parameters. Goes through the board in a loop and fills each cell based on its value and with the corresponding color with a fillRect.
+     * @param gc The graphics context of the canvas.
+     * @param cellSize The size each cells needs
+     * @param aliveCellColor The color each alive cell shall be drawn in.
+     * @param deadCellColor The color each dead cell shall be drawn in.
+     * @param board The board the draw function is based upon.
+     * @param height The height of the board the function is called upon.
+     * @param width The width of the board the function is called upon.
+     */
+
     public void drawDynamic(GraphicsContext gc, Canvas canvas, double cellSize, Color aliveCellColor, Color deadCellColor, ArrayList<ArrayList<Byte>> board, int height, int width) {
 
         gc.strokeRect(0, 0,     canvas.getWidth(), canvas.getHeight());
@@ -547,6 +650,13 @@ public class FileEditorController implements Initializable {
 
         }
     }
+
+    /**
+     * Loops through every cell and counts the amount of live neighbor cells in each direction.
+     * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
+     * At the end of the loops, the evolvedBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
+     * For static boards.
+     */
 
     public byte[][] nextGenerationStatic(byte[][] evolvingBoard, int height, int width) {
         byte[][] evolvedBoard = new byte[height][width];
@@ -631,6 +741,13 @@ public class FileEditorController implements Initializable {
         return evolvedBoard;
 
     }
+
+    /**
+     * Loops through every cell and counts the amount of live neighbor cells in each direction.
+     * The next status of each cell is put in the nextBoard array, and what this status should be is based on the rules currently in use in the GoL class.
+     * At the end of the loops, the evolvedBoard is set to be the new currentBoard. This is done in order to avoid mix of data between the old, and the new state of the board, which would result in false patterns.
+     * For dynamic boards.
+     */
 
     public ArrayList<ArrayList<Byte>> nextGenerationDynamic(ArrayList<ArrayList<Byte>> evolvingBoard, int height, int width) {
 
